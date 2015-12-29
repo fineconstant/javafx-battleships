@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40"
+            fx:controller="com.kduda.battleships.controllers.BattleshipsController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="true" text="_Game">
+                <MenuItem mnemonicParsing="true" text="_Exit"/>
+            </Menu>
+            <Menu mnemonicParsing="true" text="_Settings">
+                <MenuItem mnemonicParsing="true" text="_Difficulty"/>
+            </Menu>
+
+        </MenuBar>
+    </top>
+    <center>
+        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="myBoard"/>
+            <GridPane fx:id="opponentBoard"/>
+        </HBox>
+    </center>
+</BorderPane>
