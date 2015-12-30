@@ -14,9 +14,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("views/battleships.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("views/battleshipsScene.fxml"));
+        setUserAgentStylesheet(STYLESHEET_CASPIAN);
         primaryStage.setTitle("Battleships");
-        primaryStage.setScene(new Scene(root, 1500,800));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 }
