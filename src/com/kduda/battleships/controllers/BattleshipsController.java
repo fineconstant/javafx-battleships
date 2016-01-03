@@ -17,7 +17,7 @@ public class BattleshipsController implements Initializable {
         ArrayList<GridPane> boards = new ArrayList<>();
         boards.add(myBoard);
         boards.add(opponentBoard);
-//        initializeBoards(boards);
+        initializeBoards(boards);
     }
 
     private void initializeBoards(ArrayList<GridPane> boards) {

@@ -17,7 +17,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("views/battleshipsScene.fxml"));
 //        setUserAgentStylesheet(STYLESHEET_CASPIAN);
         primaryStage.setTitle("Battleships");
-        primaryStage.setScene(new Scene(root,900,800));
+        primaryStage.setScene(new Scene(root,1024,768));
         primaryStage.show();
     }
 }
