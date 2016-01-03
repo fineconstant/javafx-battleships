@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="1500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40"
+            minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40"
             fx:controller="com.kduda.battleships.controllers.BattleshipsController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
@@ -19,9 +18,12 @@
         </MenuBar>
     </top>
     <center>
-        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <GridPane fx:id="myBoard"/>
-            <GridPane fx:id="opponentBoard"/>
+        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="opponentBoard" hgap="5.0" vgap="5.0"/>
+            <GridPane fx:id="myBoad" hgap="5.0" vgap="5.0"/>
+            <BorderPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </BorderPane.margin>
         </HBox>
     </center>
 </BorderPane>
