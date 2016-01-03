@@ -1,5 +1,7 @@
 package com.kduda.battleships.models;
 
-public class Board {
-    private int[][] board = new int[22][14];
+import javafx.scene.Parent;
+
+public class Board extends Parent {
+    public int units = 19;
 }
