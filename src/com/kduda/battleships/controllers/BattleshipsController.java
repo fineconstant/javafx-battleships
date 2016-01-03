@@ -14,19 +14,5 @@ public class BattleshipsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<GridPane> boards = new ArrayList<>();
-        boards.add(myBoard);
-        boards.add(opponentBoard);
-        initializeBoards(boards);
-    }
-
-    private void initializeBoards(ArrayList<GridPane> boards) {
-        for (int row = 0; row < 22; row++) {
-            for (int col = 0; col < 14; col++) {
-                for (GridPane board : boards) {
-                    board.add(new Button(col + " " + row), col, row);
-                }
-            }
-        }
     }
 }
