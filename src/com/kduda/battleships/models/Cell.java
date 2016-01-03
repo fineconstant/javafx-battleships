@@ -16,7 +16,23 @@ public class Cell extends Rectangle {
         this.x = x;
         this.y = y;
         this.board = board;
-        setFill(Color.LIGHTGRAY);
+        setFill(Color.BLUE);
         setStroke(Color.BLACK);
+    }
+
+    public boolean shoot() {
+        wasShot = true;
+        setFill(Color.GRAY);
+
+        if (unit != null) {
+            unit.hit();
+            setFill(Color.RED);
+            if (!unit.isAlive()) {
+                board.units--;
+            }
+            return true;
+        }
+
+        return false;
     }
 }
