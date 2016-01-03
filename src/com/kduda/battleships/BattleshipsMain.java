@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class BattleshipsMain extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -17,7 +17,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("views/battleshipsScene.fxml"));
 //        setUserAgentStylesheet(STYLESHEET_CASPIAN);
         primaryStage.setTitle("Battleships");
-        primaryStage.setScene(new Scene(root);
+        primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
