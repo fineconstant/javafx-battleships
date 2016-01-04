@@ -1,7 +1,7 @@
 package com.kduda.battleships.controllers;
 
-import com.kduda.battleships.models.Board;
-import com.kduda.battleships.models.Cell;
+import com.kduda.battleships.models.board.Board;
+import com.kduda.battleships.models.board.Cell;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 
@@ -22,6 +22,8 @@ public class BattleshipsController implements Initializable {
     private void initializeBoards() {
         enemyBoard = new Board(true, event -> {
             //TODO: click handler
+            if (!BattleshipsConfig.INSTANCE.isGameRunning)
+                return;
         }, event -> {
             //TODO: hover handler
 
@@ -30,8 +32,19 @@ public class BattleshipsController implements Initializable {
 
         playerBoard = new Board(false, event -> {
             //TODO: click handler: rozstawianie, koniec statkow -> rozpocznij gre
+            if (BattleshipsConfig.INSTANCE.isGameRunning)
+                return;
+
+            Cell cell = (Cell) event.getSource();
+//TODO: stawianie statkow
+//           boolean unitPlacedSuccessfully = playerBoard.placeUnit();
+//            MouseButton button = event.getButton();
+//            System.out.println();
         }, event -> {
             //TODO: hover handler
+            if (BattleshipsConfig.INSTANCE.isGameRunning)
+                return;
+            Cell cell = (Cell) event.getSource();
         });
         playerBoardArea.getChildren().addAll(playerBoard);
 

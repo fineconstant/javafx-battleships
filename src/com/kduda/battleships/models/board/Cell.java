@@ -1,22 +1,24 @@
-package com.kduda.battleships.models;
+package com.kduda.battleships.models.board;
 
+import com.kduda.battleships.models.Position;
+import com.kduda.battleships.models.board.Board;
+import com.kduda.battleships.models.units.Unit;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
 public class Cell extends Rectangle {
-    public final int X;
-    public final int Y;
+    public final Position POSITION;
+    private final Board BOARD;
     public Unit unit = null;
     public boolean wasShot = false;
-    private Board board;
+
     public Cell(int x, int y, Board board) {
         super(40, 40);
 
-        this.board = board;
+        this.BOARD = board;
 
-        this.X = x;
-        this.Y = y;
+        this.POSITION = new Position(x, y);
 
         setStartingFillColor(y);
 
@@ -38,10 +40,12 @@ public class Cell extends Rectangle {
             unit.hit();
             setFill(Color.RED);
             if (!unit.isAlive()) {
-                board.units--;
+                BOARD.units--;
             }
             return true;
         }
         return false;
     }
+
+
 }

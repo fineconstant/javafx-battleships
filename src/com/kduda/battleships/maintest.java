@@ -15,10 +15,6 @@ package com.kduda.battleships;
 //
 //
 //    private Parent createContent() {
-//        BorderPane root = new BorderPane();
-//        root.setPrefSize(600, 800);
-//
-//
 //        enemyBoard = new Board(true, event -> {
 //            if (!running)
 //                return;
@@ -49,14 +45,8 @@ package com.kduda.battleships;
 //                }
 //            }
 //        });
-//
-//        VBox vbox = new VBox(50, enemyBoard, playerBoard);
-//        vbox.setAlignment(Pos.CENTER);
-//
-//        root.setCenter(vbox);
-//
-//        return root;
 //    }
+
 
 //    private void enemyMove() {
 //        while (enemyTurn) {
