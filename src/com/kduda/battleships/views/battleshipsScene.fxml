@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="1100.0" prefWidth="1250.0" stylesheets="@styles/battleshipsScene.css"
+            xmlns="http://javafx.com/javafx/8.0.40"
+            fx:controller="com.kduda.battleships.controllers.BattleshipsController">
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="800.0" prefWidth="800.0" stylesheets="@styles/battleshipsScene.css"
-            xmlns="http://javafx.com/javafx/8.0.40" fx:controller="com.kduda.battleships.controllers.BattleshipsController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="true" text="_Game">
@@ -17,17 +16,47 @@
             <Menu mnemonicParsing="true" text="_Settings">
                 <MenuItem mnemonicParsing="true" text="_Difficulty"/>
             </Menu>
-
         </MenuBar>
     </top>
+
     <center>
-        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
-            <GridPane fx:id="opponentBoard" hgap="5.0" vgap="5.0"/>
-            <Separator orientation="VERTICAL" prefHeight="200.0"/>
-            <GridPane fx:id="myBoard" hgap="5.0" vgap="5.0"/>
+        <HBox alignment="CENTER">
+            <VBox fx:id="enemyBoardArea">
+                <Label text="Enemy Battlefield"/>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0">
+                <HBox.margin>
+                    <Insets left="15.0" right="15.0"/>
+                </HBox.margin>
+            </Separator>
+            <VBox fx:id="playerBoardArea">
+                <Label text="Your Battlefield"/>
+            </VBox>
             <BorderPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </BorderPane.margin>
         </HBox>
     </center>
+
+    <bottom>
+        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </BorderPane.margin>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+                <Label text="Enemy units:"/>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0"/>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+                <Label text="Your units:"/>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0"/>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                <Button mnemonicParsing="false" text="Button"/>
+                <Button mnemonicParsing="false" text="Button"/>
+                <Button mnemonicParsing="false" text="Button"/>
+            </VBox>
+        </HBox>
+    </bottom>
+
 </BorderPane>
