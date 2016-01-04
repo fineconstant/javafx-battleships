@@ -23,7 +23,7 @@ public class Cell extends Rectangle {
             this.TYPE = CellType.Land;
             setFill(Color.SANDYBROWN);
         } else {
-            this.TYPE = CellType.Water;
+            this.TYPE = CellType.Sea;
             setFill(Color.BLUE);
         }
 
