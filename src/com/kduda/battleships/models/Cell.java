@@ -5,19 +5,18 @@ import javafx.scene.shape.Rectangle;
 
 
 public class Cell extends Rectangle {
-    public int x, y;
+    public final int X;
+    public final int Y;
     public Unit unit = null;
     public boolean wasShot = false;
-
     private Board board;
-
     public Cell(int x, int y, Board board) {
         super(40, 40);
 
         this.board = board;
 
-        this.x = x;
-        this.y = y;
+        this.X = x;
+        this.Y = y;
 
         setStartingFillColor(y);
 
