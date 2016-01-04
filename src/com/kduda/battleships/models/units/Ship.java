@@ -1,6 +1,6 @@
 package com.kduda.battleships.models.units;
 
-public class Ship implements Unit {
+public abstract class Ship implements Unit {
     public int type;
     public boolean vertical = true;
     private int health;
