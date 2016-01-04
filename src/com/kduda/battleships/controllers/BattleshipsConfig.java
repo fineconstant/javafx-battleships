@@ -4,5 +4,5 @@ public enum BattleshipsConfig {
     INSTANCE;
 
     boolean isGameRunning = false;
-    boolean isEnemuTurn = false;
+    boolean isEnemyTurn = false;
 }
