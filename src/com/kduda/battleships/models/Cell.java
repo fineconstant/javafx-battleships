@@ -19,12 +19,12 @@ public class Cell extends Rectangle {
         this.x = x;
         this.y = y;
 
-        setFillColor(y);
+        setStartingFillColor(y);
 
         setStroke(Color.BLACK);
     }
 
-    private void setFillColor(int y) {
+    private void setStartingFillColor(int y) {
         if (y > 11)
             setFill(Color.SANDYBROWN);
         else
