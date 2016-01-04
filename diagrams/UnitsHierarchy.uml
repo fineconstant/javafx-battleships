@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.kduda.battleships.models.units.Ship</OriginalElement>
+  <nodes>
+    <node x="-12.0" y="472.0">com.kduda.battleships.models.units.Ship</node>
+    <node x="454.0" y="263.0">com.kduda.battleships.models.units.Plane</node>
+    <node x="257.0" y="499.0">com.kduda.battleships.models.units.Tank</node>
+    <node x="0.0" y="247.0">com.kduda.battleships.models.units.GroundLevelUnit</node>
+    <node x="17.5" y="0.0">com.kduda.battleships.models.units.Unit</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.kduda.battleships.models.units.GroundLevelUnit" target="com.kduda.battleships.models.units.Unit">
+      <point x="0.0" y="-75.0" />
+      <point x="0.0" y="98.5" />
+    </edge>
+    <edge source="com.kduda.battleships.models.units.Tank" target="com.kduda.battleships.models.units.GroundLevelUnit">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.kduda.battleships.models.units.Ship" target="com.kduda.battleships.models.units.GroundLevelUnit">
+      <point x="0.0" y="-28.5" />
+      <point x="0.0" y="75.0" />
+    </edge>
+    <edge source="com.kduda.battleships.models.units.Plane" target="com.kduda.battleships.models.units.Unit">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="143.0" y="135.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
