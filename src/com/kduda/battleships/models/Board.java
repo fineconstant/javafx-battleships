@@ -12,13 +12,14 @@ public class Board extends Parent {
     private boolean isEnemyBoard = false;
 
 
-    public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> handler) {
+    public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler, EventHandler<? super MouseEvent> mouseMovedHandler) {
         this.isEnemyBoard = isEnemyBoard;
         for (int y = 0; y < 22; y++) {
             HBox row = new HBox();
             for (int x = 0; x < 14; x++) {
                 Cell cell = new Cell(x, y, this);
-                cell.setOnMouseClicked(handler);
+                cell.setOnMouseClicked(mouseClickHandler);
+                cell.setOnMouseMoved(mouseMovedHandler);
                 row.getChildren().add(cell);
             }
             column.getChildren().add(row);

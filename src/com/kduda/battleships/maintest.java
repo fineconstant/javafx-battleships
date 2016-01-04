@@ -1,20 +1,5 @@
 package com.kduda.battleships;
 
-import java.util.Random;
-
-import com.kduda.battleships.models.Board;
-import com.kduda.battleships.models.Cell;
-import com.kduda.battleships.models.Ship;
-import javafx.application.Application;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
 
 //public class maintest extends Application {
 //
@@ -110,10 +95,6 @@ import javafx.stage.Stage;
 //    @Override
 //    public void start(Stage primaryStage) throws Exception {
 //        Scene scene = new Scene(createContent());
-//        primaryStage.setTitle("Battleship");
-//        primaryStage.setScene(scene);
-//        primaryStage.setResizable(false);
-//        primaryStage.show();
 //    }
 //
 //    public static void main(String[] args) {

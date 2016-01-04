@@ -20,14 +20,17 @@ public class BattleshipsController implements Initializable {
     }
 
     private void initializeBoards() {
-        enemyBoard = new Board(true, e -> {
+        enemyBoard = new Board(true, event -> {
             //TODO: click handler
+        }, event -> {
             //TODO: hover handler
+
         });
         enemyBoardArea.getChildren().add(enemyBoard);
 
-        playerBoard = new Board(false, e -> {
-            //TODO: click handler
+        playerBoard = new Board(false, event -> {
+            //TODO: click handler: rozstawianie, koniec statkow -> rozpocznij gre
+        }, event -> {
             //TODO: hover handler
         });
         playerBoardArea.getChildren().addAll(playerBoard);
