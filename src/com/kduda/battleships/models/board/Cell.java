@@ -8,6 +8,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Cell extends Rectangle {
     public final Position POSITION;
+    public final CellType TYPE;
     private final Board BOARD;
     public Unit unit = null;
     public boolean wasShot = false;
@@ -15,21 +16,20 @@ public class Cell extends Rectangle {
     public Cell(int x, int y, Board board) {
         super(40, 40);
 
+        this.POSITION = new Position(x, y);
         this.BOARD = board;
 
-        this.POSITION = new Position(x, y);
-
-        setStartingFillColor(y);
+        if (y > 11) {
+            this.TYPE = CellType.Land;
+            setFill(Color.SANDYBROWN);
+        } else {
+            this.TYPE = CellType.Water;
+            setFill(Color.BLUE);
+        }
 
         setStroke(Color.BLACK);
     }
 
-    private void setStartingFillColor(int y) {
-        if (y > 11)
-            setFill(Color.SANDYBROWN);
-        else
-            setFill(Color.BLUE);
-    }
 
     public boolean shootCell() {
         wasShot = true;
