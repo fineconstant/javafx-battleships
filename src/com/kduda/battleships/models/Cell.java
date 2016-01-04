@@ -12,15 +12,26 @@ public class Cell extends Rectangle {
     private Board board;
 
     public Cell(int x, int y, Board board) {
-        super(30, 30);
+        super(40, 40);
+
+        this.board = board;
+
         this.x = x;
         this.y = y;
-        this.board = board;
-        setFill(Color.BLUE);
+
+        setFillColor(y);
+
         setStroke(Color.BLACK);
     }
 
-    public boolean shoot() {
+    private void setFillColor(int y) {
+        if (y > 11)
+            setFill(Color.SANDYBROWN);
+        else
+            setFill(Color.BLUE);
+    }
+
+    public boolean shootCell() {
         wasShot = true;
         setFill(Color.GRAY);
 
@@ -32,7 +43,6 @@ public class Cell extends Rectangle {
             }
             return true;
         }
-
         return false;
     }
 }
