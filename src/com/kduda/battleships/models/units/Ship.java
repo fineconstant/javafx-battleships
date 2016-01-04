@@ -1,23 +1,10 @@
 package com.kduda.battleships.models.units;
 
-public class Ship implements Unit {
-    public int type;
-    public boolean vertical = true;
-    private int health;
+import javafx.geometry.Orientation;
 
-    public Ship(int type, boolean vertical) {
-        this.type = type;
-        this.vertical = vertical;
-        this.health = type;
-    }
+public class Ship extends Unit {
 
-    @Override
-    public boolean isAlive() {
-        return this.health > 0;
-    }
-
-    @Override
-    public void hit() {
-
+    public Ship(int type, Orientation orientation) {
+        super(type, orientation);
     }
 }

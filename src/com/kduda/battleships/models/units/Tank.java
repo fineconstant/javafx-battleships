@@ -1,13 +1,10 @@
 package com.kduda.battleships.models.units;
 
-public class Tank implements Unit {
-    @Override
-    public boolean isAlive() {
-        return false;
-    }
+import javafx.geometry.Orientation;
 
-    @Override
-    public void hit() {
+public class Tank extends Unit {
 
+    public Tank(int type, Orientation orientation) {
+        super(type, orientation);
     }
 }
