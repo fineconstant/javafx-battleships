@@ -1,4 +1,4 @@
-package com.kduda.battleships.models;
+package com.kduda.battleships.models.board;
 
 public class Position {
     private final int X;
