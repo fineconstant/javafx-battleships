@@ -3,18 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="1100.0" prefWidth="1250.0" stylesheets="@styles/battleshipsScene.css"
-            xmlns="http://javafx.com/javafx/8.0.40"
-            fx:controller="com.kduda.battleships.controllers.BattleshipsController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1250.0" stylesheets="@styles/battleshipsScene.css" xmlns="http://javafx.com/javafx/8.0.40" fx:controller="com.kduda.battleships.controllers.BattleshipsController">
 
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="true" text="_Game">
-                <MenuItem mnemonicParsing="true" text="_Exit"/>
+                <MenuItem mnemonicParsing="true" text="_Exit" />
             </Menu>
             <Menu mnemonicParsing="true" text="_Settings">
-                <MenuItem mnemonicParsing="true" text="_Difficulty"/>
+                <MenuItem mnemonicParsing="true" text="_Difficulty" />
             </Menu>
         </MenuBar>
     </top>
@@ -22,18 +19,18 @@
     <center>
         <HBox alignment="CENTER">
             <VBox fx:id="enemyBoardArea">
-                <Label text="Enemy Battlefield"/>
+                <Label text="Enemy Battlefield" />
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0">
                 <HBox.margin>
-                    <Insets left="15.0" right="15.0"/>
+                    <Insets left="15.0" right="15.0" />
                 </HBox.margin>
             </Separator>
             <VBox fx:id="playerBoardArea">
-                <Label text="Your Battlefield"/>
+                <Label text="Your Battlefield" />
             </VBox>
             <BorderPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </BorderPane.margin>
         </HBox>
     </center>
@@ -41,20 +38,35 @@
     <bottom>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </BorderPane.margin>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-                <Label text="Enemy units:"/>
+            <VBox>
+                <Label text="Enemy units left: " />
+                <Label text="One mast ships: " />
+                <Label text="Two mast ships: " />
+                <Label text="Three mast ships" />
+                <Label text="Light tanks: " />
+                <Label text="Medium tanks: " />
+                <Label text="Heavy tanks: " />
+                <Label text="Planes: " />
             </VBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0"/>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-                <Label text="Your units:"/>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox>
+                <Label text="Your units left:" />
+                <Label text="One mast ships: " />
+                <Label text="Two mast ships: " />
+                <Label text="Three mast ships" />
+                <Label text="Light tanks: " />
+                <Label text="Medium tanks: " />
+                <Label text="Heavy tanks: " />
+                <Label text="Planes: " />
             </VBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0"/>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+         <Region HBox.hgrow="ALWAYS" />
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                <Button mnemonicParsing="false" text="Button"/>
-                <Button mnemonicParsing="false" text="Button"/>
-                <Button mnemonicParsing="false" text="Button"/>
+                <Button mnemonicParsing="false" text="Button" />
+                <Button mnemonicParsing="false" text="Button" />
+                <Button mnemonicParsing="false" text="Button" />
             </VBox>
         </HBox>
     </bottom>
