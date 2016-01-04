@@ -1,7 +1,6 @@
 package com.kduda.battleships.models.board;
 
 import com.kduda.battleships.models.Position;
-import com.kduda.battleships.models.board.Board;
 import com.kduda.battleships.models.units.Unit;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
