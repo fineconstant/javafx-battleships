@@ -5,17 +5,17 @@ import javafx.geometry.Orientation;
 public enum UnitFactory {
     INSTANCE;
 
-    Unit createUnit(UnitType type, int size, Orientation orientation) {
+    Unit createGrounLevelUnit(UnitType type, int size, Orientation orientation) {
         switch (type) {
             case Ship:
                 return new Ship(size, orientation);
             case Tank:
-                break;
-            case Plane:
-                break;
+                return new Tank(size, orientation);
         }
         return null;
     }
 
-
+    Unit createPlane(int size, Direction direction) {
+        return new Plane(size, direction);
+    }
 }
