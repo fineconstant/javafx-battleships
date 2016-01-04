@@ -1,4 +1,4 @@
-package com.kduda.battleships.models;
+package com.kduda.battleships.models.board;
 
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
