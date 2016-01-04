@@ -1,4 +1,6 @@
-package com.kduda.battleships.models;
+package com.kduda.battleships.models.units;
+
+import com.kduda.battleships.models.units.Unit;
 
 public class Ship implements Unit {
     public int type;

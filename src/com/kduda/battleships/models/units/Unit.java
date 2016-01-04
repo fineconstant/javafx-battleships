@@ -1,4 +1,4 @@
-package com.kduda.battleships.models;
+package com.kduda.battleships.models.units;
 
 public interface Unit {
     boolean isAlive();
