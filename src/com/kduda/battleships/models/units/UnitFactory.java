@@ -1,11 +1,12 @@
 package com.kduda.battleships.models.units;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 
 public enum UnitFactory {
     INSTANCE;
-    ArrayList<Unit> units;
+    List<Unit> units;
     ListIterator<Unit> unitsIterator;
 
     UnitFactory() {
