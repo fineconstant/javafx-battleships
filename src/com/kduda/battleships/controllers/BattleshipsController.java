@@ -6,6 +6,7 @@ import com.kduda.battleships.models.board.Position;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitFactory;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -23,55 +24,51 @@ public class BattleshipsController implements Initializable {
     }
 
     private void initializeBoards() {
-        enemyBoard = new Board(true, event -> {
-            //TODO: click handler
-            if (!BattleshipsConfig.INSTANCE.isGameRunning)
-                return;
-        }, event -> {
-            //TODO: hover handler
-            return;
-        });
+        enemyBoard = new Board(true, this::enemyBoardClick, this::enemyBoardHover);
         enemyBoardArea.getChildren().add(enemyBoard);
 
-        playerBoard = new Board(false, event -> {
-            if (BattleshipsConfig.INSTANCE.isGameRunning)
-                return;
-
-
-
-            //TODO: rozstawianie statkow
-            Unit unit = UnitFactory.INSTANCE.getNextUnit();
-            if (unit == null) {
-                //TODO: start game
-                startGame();
-            }
-            Cell cell = (Cell) event.getSource();
-            Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
-            playerBoard.placeUnit(unit, cellPosition);
-
-        }, event -> {
-            //TODO: hover handler
-            if (BattleshipsConfig.INSTANCE.isGameRunning)
-                return;
-            Cell cell = (Cell) event.getSource();
-        });
+        playerBoard = new Board(false, this::playerBoardClick, this::playerBoardHover);
         playerBoardArea.getChildren().addAll(playerBoard);
 
 
-        //HANDLERS
+    }
 
-//        playerBoard = new Board(false, event -> {
-//            if (running)
-//                return;
-//
-//            Cell cell = (Cell) event.getSource();
-//            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
-//                if (--shipsToPlace == 0) {
-//                    startGame();
-//                }
-//            }
-//        });
+    private void enemyBoardClick(MouseEvent event) {
+        //TODO: click handler
+        if (!BattleshipsConfig.INSTANCE.isGameRunning)
+            return;
+    }
 
+    private void enemyBoardHover(MouseEvent event) {
+        //TODO: hover handler
+        return;
+    }
+
+    private void playerBoardHover(MouseEvent event) {
+        //TODO: hover handler
+        if (BattleshipsConfig.INSTANCE.isGameRunning)
+            return;
+    }
+
+    private void playerBoardClick(MouseEvent event) {
+        if (BattleshipsConfig.INSTANCE.isGameRunning)
+            return;
+
+        Unit unit = UnitFactory.INSTANCE.getNextUnit();
+
+        if (unit == null) {
+            startGame();
+        }
+        Cell cell = (Cell) event.getSource();
+        Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
+        boolean isPlacementSuccessful = playerBoard.placeUnit(unit, cellPosition);
+
+        if (!isPlacementSuccessful)
+            UnitFactory.INSTANCE.getPreviousUnit();
+    }
+
+
+    //HANDLERS
 
 //        enemyBoard = new Board(true, event -> {
 //            if (!running)
@@ -93,9 +90,8 @@ public class BattleshipsController implements Initializable {
 //        });
 
 
-    }
-
     private void startGame() {
+        //TODO: implementacja
         System.out.println("game started");
         BattleshipsConfig.INSTANCE.isGameRunning = true;
     }

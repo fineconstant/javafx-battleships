@@ -44,33 +44,33 @@ public class Board extends Parent {
     }
 
     private boolean placeGroundLevelUnit(GroundLevelUnit unit, Position cellPosition) {
-        //TODO: if can place unit
-        int unitLength = unit.LENGTH;
-        int xPosition = cellPosition.getX();
-        int yPosition = cellPosition.getY();
+        if (isPlacementValid(unit, cellPosition)) {
+            int unitLength = unit.LENGTH;
+            int xPosition = cellPosition.getX();
+            int yPosition = cellPosition.getY();
 
-        if (unit.getOrientation() == Orientation.VERTICAL) {
-
-            for (int i = cellPosition.getY(); i < yPosition + unitLength; i++) {
-                Cell cell = getCell(xPosition, i);
-                cell.setUnit(unit);
-                if (!this.isEnemyBoard) {
-                    cell.setFill(Color.WHITE);
-                    cell.setStroke(Color.GREEN);
+            if (unit.getOrientation() == Orientation.VERTICAL) {
+                for (int i = cellPosition.getY(); i < yPosition + unitLength; i++) {
+                    Cell cell = getCell(xPosition, i);
+                    cell.setUnit(unit);
+                    if (!this.isEnemyBoard) {
+                        cell.setFill(Color.WHITE);
+                        cell.setStroke(Color.GREEN);
+                    }
+                }
+            } else {
+                for (int i = cellPosition.getX(); i < xPosition + unitLength; i++) {
+                    Cell cell = getCell(i, yPosition);
+                    cell.setUnit(unit);
+                    if (!this.isEnemyBoard) {
+                        cell.setFill(Color.WHITE);
+                        cell.setStroke(Color.GREEN);
+                    }
                 }
             }
-        } else {
-            for (int i = cellPosition.getX(); i < xPosition + unitLength; i++) {
-                Cell cell = getCell(i, yPosition);
-                cell.setUnit(unit);
-                if (!this.isEnemyBoard) {
-                    cell.setFill(Color.WHITE);
-                    cell.setStroke(Color.GREEN);
-                }
-            }
-
+            return true;
         }
-        return true;
+        return false;
     }
 
     private void placePlane(Plane plane, Position cellPosition) {
@@ -82,58 +82,13 @@ public class Board extends Parent {
         return (Cell) row.getChildren().get(x);
     }
 
+    public boolean isPlacementValid(GroundLevelUnit unit, Position cellPosition) {
 
-//    public boolean placeShip(Ship ship, int x, int y) {
-//        if (canPlaceShip(ship, x, y)) {
-//            int length = ship.type;
-//
-//            if (ship.vertical) {
-//                for (int i = y; i < y + length; i++) {
-//                    Cell cell = getCell(x, i);
-//                    cell.ship = ship;
-//                    if (!isEnemyBoard) {
-//                        cell.setFill(Color.WHITE);
-//                        cell.setStroke(Color.GREEN);
-//                    }
-//                }
-//            } else {
-//                for (int i = x; i < x + length; i++) {
-//                    Cell cell = getCell(i, y);
-//                    cell.ship = ship;
-//                    if (!isEnemyBoard) {
-//                        cell.setFill(Color.WHITE);
-//                        cell.setStroke(Color.GREEN);
-//                    }
-//                }
-//            }
-//
-//            return true;
-//        }
-//
-//        return false;
-//    }
-//
 
-//
-//    private Cell[] getNeighbors(int x, int y) {
-//        Point2D[] points = new Point2D[]{
-//                new Point2D(x - 1, y),
-//                new Point2D(x + 1, y),
-//                new Point2D(x, y - 1),
-//                new Point2D(x, y + 1)
-//        };
-//
-//        List<Cell> neighbors = new ArrayList<Cell>();
-//
-//        for (Point2D p : points) {
-//            if (isValidPoint(p)) {
-//                neighbors.add(getCell((int) p.getX(), (int) p.getY()));
-//            }
-//        }
-//
-//        return neighbors.toArray(new Cell[0]);
-//    }
-//
+        return true;
+    }
+
+
 //    private boolean canPlaceShip(Ship ship, int x, int y) {
 //        int length = ship.type;
 //
@@ -175,6 +130,29 @@ public class Board extends Parent {
 //
 //        return true;
 //    }
+
+
+//
+//    private Cell[] getNeighbors(int x, int y) {
+//        Point2D[] points = new Point2D[]{
+//                new Point2D(x - 1, y),
+//                new Point2D(x + 1, y),
+//                new Point2D(x, y - 1),
+//                new Point2D(x, y + 1)
+//        };
+//
+//        List<Cell> neighbors = new ArrayList<Cell>();
+//
+//        for (Point2D p : points) {
+//            if (isValidPoint(p)) {
+//                neighbors.add(getCell((int) p.getX(), (int) p.getY()));
+//            }
+//        }
+//
+//        return neighbors.toArray(new Cell[0]);
+//    }
+//
+
 //
 //    private boolean isValidPoint(Point2D point) {
 //        return isValidPoint(point.getX(), point.getY());
