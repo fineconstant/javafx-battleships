@@ -6,10 +6,10 @@ public class GroundLevelUnit extends Unit {
     public final int LENGTH;
     private Orientation orientation;
 
-    public GroundLevelUnit(int size, Orientation orientation) {
+    public GroundLevelUnit(int size) {
         super(size);
         this.LENGTH = size;
-        this.orientation = orientation;
+        this.orientation = Orientation.VERTICAL;
     }
 
     public Orientation getOrientation() {

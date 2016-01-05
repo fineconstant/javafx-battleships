@@ -3,9 +3,9 @@ package com.kduda.battleships.models.units;
 public class Plane extends Unit {
     private Direction direction;
 
-    public Plane(int size, Direction direction) {
+    public Plane(int size) {
         super(size);
-        this.direction = direction;
+        this.direction = Direction.North;
     }
 
     public Direction getDirection() {
