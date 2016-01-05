@@ -61,9 +61,9 @@ public class BattleshipsController implements Initializable {
         }
         Cell cell = (Cell) event.getSource();
         Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
-        boolean isPlacementSuccessful = playerBoard.placeUnit(unit, cellPosition);
+        boolean wasPlacementSuccessful = playerBoard.placeUnit(unit, cellPosition);
 
-        if (!isPlacementSuccessful)
+        if (!wasPlacementSuccessful)
             UnitFactory.INSTANCE.getPreviousUnit();
     }
 
