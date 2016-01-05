@@ -56,7 +56,7 @@ public class BattleshipsController implements Initializable {
 
         //TODO: hint gdzie bedzie jednostka i czy ok
         Cell cell = (Cell) event.getSource();
-//        playerBoard.highlightHint(unit);
+        playerBoard.showPlacementHint(currentUnit, cell);
 
     }
 

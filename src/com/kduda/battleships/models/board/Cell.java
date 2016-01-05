@@ -5,15 +5,19 @@ import com.kduda.battleships.models.units.Ship;
 import com.kduda.battleships.models.units.Tank;
 import com.kduda.battleships.models.units.Unit;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 
 public class Cell extends Rectangle {
     public final Position POSITION;
     public final CellType TYPE;
+
     private final Board BOARD;
     public boolean wasShot = false;
     private Unit unit = null;
+    private Paint currentFill;
+    private Paint currentStroke;
 
     public Cell(int x, int y, Board board) {
         super(30, 30);
@@ -30,6 +34,8 @@ public class Cell extends Rectangle {
         }
 
         setStroke(Color.BLACK);
+
+        saveCurrentColors();
     }
 
     public Unit getUnit() {
@@ -67,5 +73,10 @@ public class Cell extends Rectangle {
             return false;
 
         return true;
+    }
+
+    public void saveCurrentColors() {
+        this.currentFill = this.getFill();
+        this.currentStroke = this.getStroke();
     }
 }

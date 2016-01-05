@@ -174,6 +174,36 @@ public class Board extends Parent {
             if (isValidPoint(xPosition, yPosition))
                 neighbors.add(getCell(xPosition, yPosition));
         }
+        //noinspection ToArrayCallWithZeroLengthArrayArgument
         return neighbors.toArray(new Cell[0]);
+    }
+
+    public void showPlacementHint(Unit unit, Cell cell) {
+        cell.saveCurrentColors();
+
+        Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
+
+        if (unit instanceof GroundLevelUnit) {
+            GroundLevelUnit currentUnit = (GroundLevelUnit) unit;
+
+            if (currentUnit.getOrientation() == Orientation.VERTICAL) {
+                if (isVerticalLocationValid(currentUnit, cellPosition)) {
+
+
+                } else {
+                }
+
+            } else {
+                if (isHorizontalLocationValid(currentUnit, cellPosition)) {
+
+
+                } else {
+                }
+            }
+        } else {
+            //TODO: hint dla samolotu
+        }
+
+
     }
 }
