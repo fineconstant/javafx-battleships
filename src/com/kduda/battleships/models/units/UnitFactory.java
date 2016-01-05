@@ -1,12 +1,12 @@
 package com.kduda.battleships.models.units;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.ListIterator;
 
 public enum UnitFactory {
     INSTANCE;
     ArrayList<Unit> units;
-    Iterator<Unit> unitsIterator;
+    ListIterator<Unit> unitsIterator;
 
     UnitFactory() {
         initializeUnitsList();
@@ -40,7 +40,7 @@ public enum UnitFactory {
         units.add(createPlane());
         units.add(createPlane());
 
-        unitsIterator = units.iterator();
+        unitsIterator = units.listIterator();
     }
 
     Unit createGroundLevelUnit(UnitType type, int size) {
@@ -60,6 +60,13 @@ public enum UnitFactory {
     public Unit getNextUnit() {
         if (unitsIterator.hasNext())
             return unitsIterator.next();
+        else
+            return null;
+    }
+
+    public Unit getPreviousUnit() {
+        if (unitsIterator.hasPrevious())
+            return unitsIterator.previous();
         else
             return null;
     }
