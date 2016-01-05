@@ -99,84 +99,56 @@ public class Board extends Parent {
         return false;
     }
 
-
-    public Cell getCell(int x, int y) {
-        HBox row = (HBox) column.getChildren().get(y);
-        return (Cell) row.getChildren().get(x);
-    }
-
+    //TODO: remove duplication
     private boolean isVerticalLocationValid(GroundLevelUnit unit, Position cellPosition) {
         int unitLength = unit.LENGTH;
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
         for (int i = yPosition; i < yPosition + unitLength; i++) {
-            if (!isValidPoint(xPosition, i))
-                return false;
+            if (!isValidPoint(xPosition, i)) return false;
 
             Cell cell = getCell(xPosition, i);
 
-            if (!cell.isSurfaceValid(unit))
-                return false;
+            if (!cell.isSurfaceValid(unit)) return false;
 
-            if (!cell.isEmpty())
-                return false;
+            if (!cell.isEmpty()) return false;
 
-            for (Cell neighbor : getAdjacentCells(xPosition, i)) {
-                if (!neighbor.isEmpty())
-                    return false;
-            }
+            for (Cell neighbor : getAdjacentCells(xPosition, i))
+                if (!neighbor.isEmpty()) return false;
         }
         return true;
     }
-//    private boolean canPlaceShip(Ship ship, int x, int y) {
-//        int length = ship.type;
-//
-//        if (ship.vertical) {
-//            for (int i = y; i < y + length; i++) {
-//                if (!isValidPoint(x, i))
-//                    return false;
-//
-//                Cell cell = getCell(x, i);
-//                if (cell.ship != null)
-//                    return false;
-//
-//                for (Cell neighbor : getNeighbors(x, i)) {
-//                    if (!isValidPoint(x, i))
-//                        return false;
-//
-//                    if (neighbor.ship != null)
-//                        return false;
-//                }
-//            }
-//        } else {
-//            for (int i = x; i < x + length; i++) {
-//                if (!isValidPoint(i, y))
-//                    return false;
-//
-//                Cell cell = getCell(i, y);
-//                if (cell.ship != null)
-//                    return false;
-//
-//                for (Cell neighbor : getNeighbors(i, y)) {
-//                    if (!isValidPoint(i, y))
-//                        return false;
-//
-//                    if (neighbor.ship != null)
-//                        return false;
-//                }
-//            }
-//        }
-//
-//        return true;
-//    }
 
+    //TODO: remove duplication
     private boolean isHorizontalLocationValid(GroundLevelUnit unit, Position cellPosition) {
+        int unitLength = unit.LENGTH;
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        for (int i = xPosition; i < xPosition + unitLength; i++) {
+            if (!isValidPoint(i, yPosition)) return false;
+
+            Cell cell = getCell(i, yPosition);
+
+            if (!cell.isSurfaceValid(unit)) return false;
+
+            if (!cell.isEmpty()) return false;
+
+            for (Cell neighbor : getAdjacentCells(i, yPosition))
+                if (!neighbor.isEmpty()) return false;
+        }
         return true;
     }
 
+
     private boolean isValidPoint(int x, int y) {
         return x >= 0 && x < 14 && y >= 0 && y < 22;
+    }
+
+    public Cell getCell(int x, int y) {
+        HBox row = (HBox) column.getChildren().get(y);
+        return (Cell) row.getChildren().get(x);
     }
 
     private Cell[] getAdjacentCells(int x, int y) {
@@ -201,6 +173,4 @@ public class Board extends Parent {
         }
         return neighbors.toArray(new Cell[0]);
     }
-
-
 }
