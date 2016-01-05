@@ -30,7 +30,6 @@ public enum UnitFactory {
         units.add(createGroundLevelUnit(UnitType.Tank, 2));
         units.add(createGroundLevelUnit(UnitType.Tank, 2));
 
-
         units.add(createPlane());
         units.add(createPlane());
         units.add(createPlane());
