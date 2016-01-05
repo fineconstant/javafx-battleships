@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class Board extends Parent {
     public int units = 19;
@@ -29,6 +30,9 @@ public class Board extends Parent {
     }
 
     public boolean placeUnit(Unit unit, Position position) {
+        Cell cell = getCell(position);
+        cell.setUnit(unit);
+        cell.setFill(Color.GREEN);
         return true;
     }
 
