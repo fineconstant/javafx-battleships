@@ -4,9 +4,7 @@ import com.kduda.battleships.models.board.Board;
 import com.kduda.battleships.models.board.Cell;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitFactory;
-import com.kduda.battleships.models.units.UnitType;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -35,13 +33,16 @@ public class BattleshipsController implements Initializable {
         enemyBoardArea.getChildren().add(enemyBoard);
 
         playerBoard = new Board(false, event -> {
-            //TODO: click handler: rozstawianie, koniec statkow -> rozpocznij gre
             if (BattleshipsConfig.INSTANCE.isGameRunning)
                 return;
 
-            //TODO: stawianie statkow
+            //TODO: rozstawianie statkow
+            Unit unit = UnitFactory.INSTANCE.getNextUnit();
+            if (unit == null) {
+                //TODO: start game
+                startGame();
+            }
             Cell cell = (Cell) event.getSource();
-            Unit unit = UnitFactory.INSTANCE.createGroundLevelUnit(UnitType.Ship, 3, Orientation.VERTICAL);
             playerBoard.placeUnit(unit, cell);
 
         }, event -> {
@@ -67,6 +68,8 @@ public class BattleshipsController implements Initializable {
 //            }
 //        });
 
+
+
 //        enemyBoard = new Board(true, event -> {
 //            if (!running)
 //                return;
@@ -87,5 +90,10 @@ public class BattleshipsController implements Initializable {
 //        });
 
 
+    }
+
+    private void startGame() {
+        System.out.println("game started");
+        BattleshipsConfig.INSTANCE.isGameRunning = true;
     }
 }
