@@ -11,6 +11,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board extends Parent {
     public int units = 19;
     private VBox column = new VBox();
@@ -63,7 +66,8 @@ public class Board extends Parent {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
-        for (int i = cellPosition.getY(); i < yPosition + unitLength; i++) {
+        //TODO: remove duplication
+        for (int i = yPosition; i < yPosition + unitLength; i++) {
             Cell cell = getCell(xPosition, i);
             cell.setUnit(unit);
             if (!this.isEnemyBoard) {
@@ -78,7 +82,8 @@ public class Board extends Parent {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
-        for (int i = cellPosition.getX(); i < xPosition + unitLength; i++) {
+        //TODO: remove duplication
+        for (int i = xPosition; i < xPosition + unitLength; i++) {
             Cell cell = getCell(i, yPosition);
             cell.setUnit(unit);
             if (!this.isEnemyBoard) {
@@ -101,13 +106,25 @@ public class Board extends Parent {
     }
 
     private boolean isVerticalLocationValid(GroundLevelUnit unit, Position cellPosition) {
+        int unitLength = unit.LENGTH;
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        for (int i = yPosition; i < yPosition + unitLength; i++) {
+            if (!isValidPoint(xPosition, i))
+                return false;
+
+            Cell cell = getCell(xPosition, i);
+            if (!cell.isEmpty())
+                return false;
+
+            for (Cell neighbor : getAdjacentCells(xPosition, i)) {
+                if (!neighbor.isEmpty())
+                    return false;
+            }
+        }
         return true;
     }
-
-    private boolean isHorizontalLocationValid(GroundLevelUnit unit, Position cellPosition) {
-        return true;
-    }
-
 //    private boolean canPlaceShip(Ship ship, int x, int y) {
 //        int length = ship.type;
 //
@@ -150,34 +167,36 @@ public class Board extends Parent {
 //        return true;
 //    }
 
+    private boolean isHorizontalLocationValid(GroundLevelUnit unit, Position cellPosition) {
+        return true;
+    }
 
-//
-//    private Cell[] getNeighbors(int x, int y) {
-//        Point2D[] points = new Point2D[]{
-//                new Point2D(x - 1, y),
-//                new Point2D(x + 1, y),
-//                new Point2D(x, y - 1),
-//                new Point2D(x, y + 1)
-//        };
-//
-//        List<Cell> neighbors = new ArrayList<Cell>();
-//
-//        for (Point2D p : points) {
-//            if (isValidPoint(p)) {
-//                neighbors.add(getCell((int) p.getX(), (int) p.getY()));
-//            }
-//        }
-//
-//        return neighbors.toArray(new Cell[0]);
-//    }
-//
+    private boolean isValidPoint(int x, int y) {
+        return x >= 0 && x < 14 && y >= 0 && y < 22;
+    }
 
-//
-//    private boolean isValidPoint(Point2D point) {
-//        return isValidPoint(point.getX(), point.getY());
-//    }
-//
-//    private boolean isValidPoint(double x, double y) {
-//        return x >= 0 && x < 10 && y >= 0 && y < 10;
-//    }
+    private Cell[] getAdjacentCells(int x, int y) {
+        Position[] positions = new Position[]{
+                new Position(x, y - 1), //N
+                new Position(x + 1, y - 1), //NE
+                new Position(x + 1, y), //E
+                new Position(x + 1, y + 1), //SE
+                new Position(x, y + 1), //S
+                new Position(x - 1, y + 1), //SW
+                new Position(x - 1, y), //W
+                new Position(x - 1, y - 1) //NW
+        };
+
+        List<Cell> neighbors = new ArrayList<>();
+
+        for (Position position : positions) {
+            int xPosition = position.getX();
+            int yPosition = position.getY();
+            if (isValidPoint(xPosition, yPosition))
+                neighbors.add(getCell(xPosition, yPosition));
+        }
+        return neighbors.toArray(new Cell[0]);
+    }
+
+
 }

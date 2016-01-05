@@ -52,5 +52,8 @@ public class Cell extends Rectangle {
         return false;
     }
 
+    public boolean isEmpty() {
+        return this.unit == null;
+    }
 
 }
