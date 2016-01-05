@@ -12,7 +12,7 @@ public abstract class Unit {
     }
 
     public void hit() {
-        //TODO: implementation
+        this.health--;
     }
 }
 
