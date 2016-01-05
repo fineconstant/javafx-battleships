@@ -13,10 +13,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class BattleshipsController implements Initializable {
-    public VBox enemyBoardArea;
-    public VBox playerBoardArea;
-    Board enemyBoard;
-    Board playerBoard;
+    private VBox enemyBoardArea;
+    private VBox playerBoardArea;
+    private Board enemyBoard;
+    private Board playerBoard;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -24,10 +24,10 @@ public class BattleshipsController implements Initializable {
     }
 
     private void initializeBoards() {
-        enemyBoard = new Board(true, this::enemyBoardClick, this::enemyBoardHover);
+        enemyBoard = new Board(true, this::enemyBoardClick, this::enemyBoardEntered, this::enemyBoardExited);
         enemyBoardArea.getChildren().add(enemyBoard);
 
-        playerBoard = new Board(false, this::playerBoardClick, this::playerBoardHover);
+        playerBoard = new Board(false, this::playerBoardClick, this::playerBoardEntered, this::playerBoardExited);
         playerBoardArea.getChildren().addAll(playerBoard);
 
 
@@ -39,15 +39,26 @@ public class BattleshipsController implements Initializable {
             return;
     }
 
-    private void enemyBoardHover(MouseEvent event) {
-        //TODO: hover handler
+    private void enemyBoardEntered(MouseEvent event) {
+        //TODO: mouse entered handler
         return;
     }
 
-    private void playerBoardHover(MouseEvent event) {
-        //TODO: hover handler
+    private void enemyBoardExited(MouseEvent event) {
+        //TODO: mouse exited handler
+    }
+
+    private void playerBoardEntered(MouseEvent event) {
         if (BattleshipsConfig.INSTANCE.isGameRunning)
             return;
+
+        //TODO: hint gdzie bedzie jednostka i czy ok
+//        Cell cell = (Cell) event.getSource();
+
+    }
+
+    private void playerBoardExited(MouseEvent event) {
+        //TODO: mouse exited handler
     }
 
     private void playerBoardClick(MouseEvent event) {
@@ -59,6 +70,7 @@ public class BattleshipsController implements Initializable {
         if (unit == null) {
             startGame();
         }
+
         Cell cell = (Cell) event.getSource();
         Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
         boolean wasPlacementSuccessful = playerBoard.placeUnit(unit, cellPosition);

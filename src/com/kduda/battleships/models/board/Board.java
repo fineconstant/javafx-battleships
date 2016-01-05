@@ -19,14 +19,17 @@ public class Board extends Parent {
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
 
-    public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler, EventHandler<? super MouseEvent> mouseMovedHandler) {
+    public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler,
+                 EventHandler<? super MouseEvent> mouseEnteredHandler,
+                 EventHandler<? super MouseEvent> mouseExitedHandler) {
         this.isEnemyBoard = isEnemyBoard;
         for (int y = 0; y < 22; y++) {
             HBox row = new HBox();
             for (int x = 0; x < 14; x++) {
                 Cell cell = new Cell(x, y, this);
                 cell.setOnMouseClicked(mouseClickHandler);
-                cell.setOnMouseMoved(mouseMovedHandler);
+                cell.setOnMouseEntered(mouseEnteredHandler);
+                cell.setOnMouseExited(mouseExitedHandler);
                 row.getChildren().add(cell);
             }
             column.getChildren().add(row);
