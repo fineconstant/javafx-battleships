@@ -13,13 +13,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class BattleshipsController implements Initializable {
-    private VBox enemyBoardArea;
-    private VBox playerBoardArea;
+    public VBox enemyBoardArea;
+    public VBox playerBoardArea;
+
     private Board enemyBoard;
     private Board playerBoard;
+    private Unit currentUnit;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        currentUnit = UnitFactory.INSTANCE.getNextUnit();
         initializeBoards();
     }
 
@@ -29,8 +32,6 @@ public class BattleshipsController implements Initializable {
 
         playerBoard = new Board(false, this::playerBoardClick, this::playerBoardEntered, this::playerBoardExited);
         playerBoardArea.getChildren().addAll(playerBoard);
-
-
     }
 
     private void enemyBoardClick(MouseEvent event) {
@@ -46,6 +47,7 @@ public class BattleshipsController implements Initializable {
 
     private void enemyBoardExited(MouseEvent event) {
         //TODO: mouse exited handler
+        return;
     }
 
     private void playerBoardEntered(MouseEvent event) {
@@ -53,35 +55,34 @@ public class BattleshipsController implements Initializable {
             return;
 
         //TODO: hint gdzie bedzie jednostka i czy ok
-//        Cell cell = (Cell) event.getSource();
+        Cell cell = (Cell) event.getSource();
+//        playerBoard.highlightHint(unit);
 
     }
 
     private void playerBoardExited(MouseEvent event) {
         //TODO: mouse exited handler
+        return;
     }
 
     private void playerBoardClick(MouseEvent event) {
         if (BattleshipsConfig.INSTANCE.isGameRunning)
             return;
 
-        Unit unit = UnitFactory.INSTANCE.getNextUnit();
-
-        if (unit == null) {
+        if (currentUnit == null) {
             startGame();
         }
 
         Cell cell = (Cell) event.getSource();
         Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
-        boolean wasPlacementSuccessful = playerBoard.placeUnit(unit, cellPosition);
+        boolean wasPlacementSuccessful = playerBoard.placeUnit(currentUnit, cellPosition);
 
-        if (!wasPlacementSuccessful)
-            UnitFactory.INSTANCE.getPreviousUnit();
+        if (wasPlacementSuccessful)
+            this.currentUnit = UnitFactory.INSTANCE.getNextUnit();
     }
 
 
-    //HANDLERS
-
+    //HANDLERS enemy board click
 //        enemyBoard = new Board(true, event -> {
 //            if (!running)
 //                return;
