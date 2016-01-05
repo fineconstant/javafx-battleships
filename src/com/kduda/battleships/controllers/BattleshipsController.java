@@ -91,8 +91,7 @@ public class BattleshipsController implements Initializable {
 
 
     private void startGame() {
-        //TODO: implementacja
-        System.out.println("game started");
+        //TODO: place enemy ships
         BattleshipsConfig.INSTANCE.isGameRunning = true;
     }
 }

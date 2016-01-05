@@ -16,7 +16,6 @@ public class Board extends Parent {
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
 
-
     public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler, EventHandler<? super MouseEvent> mouseMovedHandler) {
         this.isEnemyBoard = isEnemyBoard;
         for (int y = 0; y < 22; y++) {
@@ -33,47 +32,66 @@ public class Board extends Parent {
     }
 
     public boolean placeUnit(Unit unit, Position cellPosition) {
-        boolean isUnitPlaced = false;
+        boolean wasUnitPlaced = false;
 
         if (unit instanceof GroundLevelUnit)
-            isUnitPlaced = placeGroundLevelUnit((GroundLevelUnit) unit, cellPosition);
+            wasUnitPlaced = placeGroundLevelUnit((GroundLevelUnit) unit, cellPosition);
         else
-            placePlane((Plane) unit, cellPosition);
+            wasUnitPlaced = placePlane((Plane) unit, cellPosition);
 
-        return isUnitPlaced;
+        return wasUnitPlaced;
     }
 
     private boolean placeGroundLevelUnit(GroundLevelUnit unit, Position cellPosition) {
-        if (isPlacementValid(unit, cellPosition)) {
-            int unitLength = unit.LENGTH;
-            int xPosition = cellPosition.getX();
-            int yPosition = cellPosition.getY();
+        if (unit.getOrientation() == Orientation.VERTICAL) {
+            if (isVerticalLocationValid(unit, cellPosition)) {
+                placeVerticalUnit(unit, cellPosition);
+            } else
+                return false;
 
-            if (unit.getOrientation() == Orientation.VERTICAL) {
-                for (int i = cellPosition.getY(); i < yPosition + unitLength; i++) {
-                    Cell cell = getCell(xPosition, i);
-                    cell.setUnit(unit);
-                    if (!this.isEnemyBoard) {
-                        cell.setFill(Color.WHITE);
-                        cell.setStroke(Color.GREEN);
-                    }
-                }
-            } else {
-                for (int i = cellPosition.getX(); i < xPosition + unitLength; i++) {
-                    Cell cell = getCell(i, yPosition);
-                    cell.setUnit(unit);
-                    if (!this.isEnemyBoard) {
-                        cell.setFill(Color.WHITE);
-                        cell.setStroke(Color.GREEN);
-                    }
-                }
-            }
-            return true;
+        } else {
+            if (isHorizontalLocationValid(unit, cellPosition)) {
+                placeHorizontalUnit(unit, cellPosition);
+            } else
+                return false;
         }
-        return false;
+        return true;
     }
 
-    private void placePlane(Plane plane, Position cellPosition) {
+    private void placeVerticalUnit(GroundLevelUnit unit, Position cellPosition) {
+        int unitLength = unit.LENGTH;
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        for (int i = cellPosition.getY(); i < yPosition + unitLength; i++) {
+            Cell cell = getCell(xPosition, i);
+            cell.setUnit(unit);
+            if (!this.isEnemyBoard) {
+                cell.setFill(Color.WHITE);
+                cell.setStroke(Color.GREEN);
+            }
+        }
+    }
+
+    private void placeHorizontalUnit(GroundLevelUnit unit, Position cellPosition) {
+        int unitLength = unit.LENGTH;
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        for (int i = cellPosition.getX(); i < xPosition + unitLength; i++) {
+            Cell cell = getCell(i, yPosition);
+            cell.setUnit(unit);
+            if (!this.isEnemyBoard) {
+                cell.setFill(Color.WHITE);
+                cell.setStroke(Color.GREEN);
+            }
+        }
+    }
+
+
+    private boolean placePlane(Plane plane, Position cellPosition) {
+        //TODO:implementation
+        return false;
     }
 
 
@@ -82,12 +100,13 @@ public class Board extends Parent {
         return (Cell) row.getChildren().get(x);
     }
 
-    public boolean isPlacementValid(GroundLevelUnit unit, Position cellPosition) {
-
-
+    private boolean isVerticalLocationValid(GroundLevelUnit unit, Position cellPosition) {
         return true;
     }
 
+    private boolean isHorizontalLocationValid(GroundLevelUnit unit, Position cellPosition) {
+        return true;
+    }
 
 //    private boolean canPlaceShip(Ship ship, int x, int y) {
 //        int length = ship.type;
