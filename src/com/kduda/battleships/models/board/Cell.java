@@ -9,8 +9,8 @@ public class Cell extends Rectangle {
     public final Position POSITION;
     public final CellType TYPE;
     private final Board BOARD;
-    public Unit unit = null;
     public boolean wasShot = false;
+    private Unit unit = null;
 
     public Cell(int x, int y, Board board) {
         super(40, 40);
@@ -29,6 +29,13 @@ public class Cell extends Rectangle {
         setStroke(Color.BLACK);
     }
 
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
 
     public boolean shootCell() {
         wasShot = true;
