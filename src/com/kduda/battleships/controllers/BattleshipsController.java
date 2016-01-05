@@ -37,6 +37,8 @@ public class BattleshipsController implements Initializable {
             if (BattleshipsConfig.INSTANCE.isGameRunning)
                 return;
 
+
+
             //TODO: rozstawianie statkow
             Unit unit = UnitFactory.INSTANCE.getNextUnit();
             if (unit == null) {

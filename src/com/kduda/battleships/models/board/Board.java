@@ -48,11 +48,12 @@ public class Board extends Parent {
     private void placeGroundLevelUnit(GroundLevelUnit unit, Position cellPosition) {
         //TODO: if can place unit
         int unitLength = unit.LENGTH;
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
 
         if (unit.getOrientation() == Orientation.VERTICAL) {
-            int xPosition = cellPosition.getX();
 
-            for (int i = cellPosition.getY(); i < unitLength; i++) {
+            for (int i = cellPosition.getY(); i < yPosition + unitLength; i++) {
                 Cell cell = getCell(xPosition, i);
                 cell.setUnit(unit);
                 if (!this.isEnemyBoard) {
@@ -61,9 +62,7 @@ public class Board extends Parent {
                 }
             }
         } else {
-            int yPosition = cellPosition.getY();
-
-            for (int i = cellPosition.getX(); i < unitLength; i++) {
+            for (int i = cellPosition.getX(); i < xPosition + unitLength; i++) {
                 Cell cell = getCell(i, yPosition);
                 cell.setUnit(unit);
                 if (!this.isEnemyBoard) {
