@@ -33,7 +33,8 @@ public class Board extends Parent {
     }
 
     public Cell getCell(Position position) {
-//        return (Cell) ((HBox) column.getChildren().get(y)).getChildren().get(x);
+        HBox row = (HBox) column.getChildren().get(position.getY());
+        return (Cell) row.getChildren().get(position.getY());
     }
 
 
