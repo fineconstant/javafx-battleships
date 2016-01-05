@@ -5,7 +5,7 @@ import javafx.geometry.Orientation;
 public enum UnitFactory {
     INSTANCE;
 
-    public Unit createGrounLevelUnit(UnitType type, int size, Orientation orientation) {
+    public Unit createGroundLevelUnit(UnitType type, int size, Orientation orientation) {
         switch (type) {
             case Ship:
                 return new Ship(size, orientation);

@@ -30,7 +30,7 @@ public class BattleshipsController implements Initializable {
                 return;
         }, event -> {
             //TODO: hover handler
-
+            return;
         });
         enemyBoardArea.getChildren().add(enemyBoard);
 
@@ -41,7 +41,7 @@ public class BattleshipsController implements Initializable {
 
             //TODO: stawianie statkow
             Cell cell = (Cell) event.getSource();
-            Unit unit = UnitFactory.INSTANCE.createGrounLevelUnit(UnitType.Ship, 3, Orientation.VERTICAL);
+            Unit unit = UnitFactory.INSTANCE.createGroundLevelUnit(UnitType.Ship, 3, Orientation.VERTICAL);
             playerBoard.placeUnit(unit, cell);
 
         }, event -> {
@@ -54,6 +54,18 @@ public class BattleshipsController implements Initializable {
 
 
         //HANDLERS
+
+//        playerBoard = new Board(false, event -> {
+//            if (running)
+//                return;
+//
+//            Cell cell = (Cell) event.getSource();
+//            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
+//                if (--shipsToPlace == 0) {
+//                    startGame();
+//                }
+//            }
+//        });
 
 //        enemyBoard = new Board(true, event -> {
 //            if (!running)
@@ -74,16 +86,6 @@ public class BattleshipsController implements Initializable {
 //                enemyMove();
 //        });
 
-//        playerBoard = new Board(false, event -> {
-//            if (running)
-//                return;
-//
-//            Cell cell = (Cell) event.getSource();
-//            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
-//                if (--shipsToPlace == 0) {
-//                    startGame();
-//                }
-//            }
-//        });
+
     }
 }
