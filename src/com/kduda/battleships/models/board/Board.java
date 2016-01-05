@@ -29,8 +29,7 @@ public class Board extends Parent {
         getChildren().add(column);
     }
 
-    public boolean placeUnit(Unit unit, Position position) {
-        Cell cell = getCell(position);
+    public boolean placeUnit(Unit unit, Cell cell) {
         cell.setUnit(unit);
         cell.setFill(Color.GREEN);
         return true;

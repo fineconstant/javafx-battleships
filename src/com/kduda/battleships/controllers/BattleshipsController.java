@@ -2,7 +2,11 @@ package com.kduda.battleships.controllers;
 
 import com.kduda.battleships.models.board.Board;
 import com.kduda.battleships.models.board.Cell;
+import com.kduda.battleships.models.units.Unit;
+import com.kduda.battleships.models.units.UnitFactory;
+import com.kduda.battleships.models.units.UnitType;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -35,11 +39,11 @@ public class BattleshipsController implements Initializable {
             if (BattleshipsConfig.INSTANCE.isGameRunning)
                 return;
 
-            Cell cell = (Cell) event.getSource();
             //TODO: stawianie statkow
-//           boolean unitPlacedSuccessfully = playerBoard.placeUnit();
-//            MouseButton button = event.getButton();
-//            System.out.println();
+            Cell cell = (Cell) event.getSource();
+            Unit unit = UnitFactory.INSTANCE.createGrounLevelUnit(UnitType.Ship, 3, Orientation.VERTICAL);
+            playerBoard.placeUnit(unit, cell);
+
         }, event -> {
             //TODO: hover handler
             if (BattleshipsConfig.INSTANCE.isGameRunning)
