@@ -3,14 +3,14 @@
   <ID>JAVA</ID>
   <OriginalElement>com.kduda.battleships.models.units.Ship</OriginalElement>
   <nodes>
-    <node x="511.0" y="549.0">com.kduda.battleships.models.units.UnitType</node>
-    <node x="0.0" y="549.0">com.kduda.battleships.models.units.Direction</node>
-    <node x="13.5" y="447.0">com.kduda.battleships.models.units.Ship</node>
+    <node x="611.0" y="549.0">com.kduda.battleships.models.units.UnitType</node>
+    <node x="374.0" y="549.0">com.kduda.battleships.models.units.Direction</node>
+    <node x="154.5" y="447.0">com.kduda.battleships.models.units.Ship</node>
     <node x="306.0" y="270.5">com.kduda.battleships.models.units.Plane</node>
-    <node x="151.5" y="447.0">com.kduda.battleships.models.units.Tank</node>
+    <node x="10.5" y="447.0">com.kduda.battleships.models.units.Tank</node>
     <node x="0.0" y="247.0">com.kduda.battleships.models.units.GroundLevelUnit</node>
     <node x="181.0" y="0.0">com.kduda.battleships.models.units.Unit</node>
-    <node x="237.0" y="549.0">com.kduda.battleships.models.units.UnitFactory</node>
+    <node x="0.0" y="549.0">com.kduda.battleships.models.units.UnitFactory</node>
   </nodes>
   <notes />
   <edges>
@@ -22,11 +22,11 @@
     </edge>
     <edge source="com.kduda.battleships.models.units.Tank" target="com.kduda.battleships.models.units.GroundLevelUnit">
       <point x="0.0" y="-28.5" />
-      <point x="71.5" y="75.0" />
+      <point x="-71.5" y="75.0" />
     </edge>
     <edge source="com.kduda.battleships.models.units.Ship" target="com.kduda.battleships.models.units.GroundLevelUnit">
       <point x="0.0" y="-28.5" />
-      <point x="-71.5" y="75.0" />
+      <point x="71.5" y="75.0" />
     </edge>
     <edge source="com.kduda.battleships.models.units.Plane" target="com.kduda.battleships.models.units.Unit">
       <point x="0.0" y="-51.5" />
@@ -35,7 +35,7 @@
       <point x="62.75" y="98.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="542.0" y="591.0" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="396.0" y="488.0" />
   <SelectedNodes>
     <node>com.kduda.battleships.models.units.Direction</node>
   </SelectedNodes>
