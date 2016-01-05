@@ -13,7 +13,7 @@ public class Cell extends Rectangle {
     private Unit unit = null;
 
     public Cell(int x, int y, Board board) {
-        super(40, 40);
+        super(30, 30);
 
         this.POSITION = new Position(x, y);
         this.BOARD = board;

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="1150.0" prefWidth="1250.0" stylesheets="@styles/battleshipsScene.css"
+            minWidth="-Infinity" prefHeight="900.0" prefWidth="950.0" stylesheets="@styles/battleshipsScene.css"
             xmlns="http://javafx.com/javafx/8.0.40"
             fx:controller="com.kduda.battleships.controllers.BattleshipsController">
 

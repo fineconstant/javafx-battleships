@@ -33,19 +33,17 @@ public class Board extends Parent {
     }
 
     public boolean placeUnit(Unit unit, Position cellPosition) {
-//        cell.setUnit(unit);
-//        cell.setFill(Color.GREEN);
+        boolean isUnitPlaced = false;
 
         if (unit instanceof GroundLevelUnit)
-            placeGroundLevelUnit((GroundLevelUnit) unit, cellPosition);
+            isUnitPlaced = placeGroundLevelUnit((GroundLevelUnit) unit, cellPosition);
         else
             placePlane((Plane) unit, cellPosition);
 
-
-        return true;
+        return isUnitPlaced;
     }
 
-    private void placeGroundLevelUnit(GroundLevelUnit unit, Position cellPosition) {
+    private boolean placeGroundLevelUnit(GroundLevelUnit unit, Position cellPosition) {
         //TODO: if can place unit
         int unitLength = unit.LENGTH;
         int xPosition = cellPosition.getX();
@@ -72,6 +70,7 @@ public class Board extends Parent {
             }
 
         }
+        return true;
     }
 
     private void placePlane(Plane plane, Position cellPosition) {
