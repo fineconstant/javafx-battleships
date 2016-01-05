@@ -2,6 +2,7 @@ package com.kduda.battleships.controllers;
 
 import com.kduda.battleships.models.board.Board;
 import com.kduda.battleships.models.board.Cell;
+import com.kduda.battleships.models.board.Position;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitFactory;
 import javafx.fxml.Initializable;
@@ -43,7 +44,8 @@ public class BattleshipsController implements Initializable {
                 startGame();
             }
             Cell cell = (Cell) event.getSource();
-            playerBoard.placeUnit(unit, cell);
+            Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
+            playerBoard.placeUnit(unit, cellPosition);
 
         }, event -> {
             //TODO: hover handler
@@ -67,7 +69,6 @@ public class BattleshipsController implements Initializable {
 //                }
 //            }
 //        });
-
 
 
 //        enemyBoard = new Board(true, event -> {

@@ -1,7 +1,10 @@
 package com.kduda.battleships.models.board;
 
+import com.kduda.battleships.models.units.GroundLevelUnit;
+import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Unit;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -29,15 +32,56 @@ public class Board extends Parent {
         getChildren().add(column);
     }
 
-    public boolean placeUnit(Unit unit, Cell cell) {
-        cell.setUnit(unit);
-        cell.setFill(Color.GREEN);
+    public boolean placeUnit(Unit unit, Position cellPosition) {
+//        cell.setUnit(unit);
+//        cell.setFill(Color.GREEN);
+
+        if (unit instanceof GroundLevelUnit)
+            placeGroundLevelUnit((GroundLevelUnit) unit, cellPosition);
+        else
+            placePlane((Plane) unit, cellPosition);
+
+
         return true;
     }
 
-    public Cell getCell(Position position) {
-        HBox row = (HBox) column.getChildren().get(position.getY());
-        return (Cell) row.getChildren().get(position.getY());
+    private void placeGroundLevelUnit(GroundLevelUnit unit, Position cellPosition) {
+        //TODO: if can place unit
+        int unitLength = unit.LENGTH;
+
+        if (unit.getOrientation() == Orientation.VERTICAL) {
+            int xPosition = cellPosition.getX();
+
+            for (int i = cellPosition.getY(); i < unitLength; i++) {
+                Cell cell = getCell(xPosition, i);
+                cell.setUnit(unit);
+                if (!this.isEnemyBoard) {
+                    cell.setFill(Color.WHITE);
+                    cell.setStroke(Color.GREEN);
+                }
+            }
+        } else {
+            int yPosition = cellPosition.getY();
+
+            for (int i = cellPosition.getX(); i < unitLength; i++) {
+                Cell cell = getCell(i, yPosition);
+                cell.setUnit(unit);
+                if (!this.isEnemyBoard) {
+                    cell.setFill(Color.WHITE);
+                    cell.setStroke(Color.GREEN);
+                }
+            }
+
+        }
+    }
+
+    private void placePlane(Plane plane, Position cellPosition) {
+    }
+
+
+    public Cell getCell(int x, int y) {
+        HBox row = (HBox) column.getChildren().get(y);
+        return (Cell) row.getChildren().get(x);
     }
 
 
