@@ -7,6 +7,10 @@ public enum UnitFactory {
     ArrayList<Unit> units;
 
     UnitFactory() {
+        initializeUnitsList();
+    }
+
+    public void initializeUnitsList() {
         units = new ArrayList<>();
         units.add(createGroundLevelUnit(UnitType.Ship, 4));
 
