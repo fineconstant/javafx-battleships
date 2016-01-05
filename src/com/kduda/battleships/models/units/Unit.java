@@ -15,23 +15,3 @@ public abstract class Unit {
         this.health--;
     }
 }
-
-
-
-/* public final int LENGTH;
-    public final Orientation ORIENTATION;
-    private int health;
-
-    public Unit(int type, Orientation orientation) {
-        this.LENGTH = type;
-        this.health = type;
-        this.ORIENTATION = orientation;
-    }
-
-    public boolean isAlive() {
-        return this.health > 0;
-    }
-
-    public void hit() {
-
-    }*/
