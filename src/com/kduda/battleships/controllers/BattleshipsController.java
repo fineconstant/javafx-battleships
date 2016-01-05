@@ -36,7 +36,7 @@ public class BattleshipsController implements Initializable {
                 return;
 
             Cell cell = (Cell) event.getSource();
-//TODO: stawianie statkow
+            //TODO: stawianie statkow
 //           boolean unitPlacedSuccessfully = playerBoard.placeUnit();
 //            MouseButton button = event.getButton();
 //            System.out.println();

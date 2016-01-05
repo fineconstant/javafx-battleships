@@ -1,5 +1,6 @@
 package com.kduda.battleships.models.board;
 
+import com.kduda.battleships.models.units.Unit;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
@@ -26,6 +27,15 @@ public class Board extends Parent {
         }
         getChildren().add(column);
     }
+
+    public boolean placeUnit(Unit unit, Position position) {
+        return true;
+    }
+
+    public Cell getCell(Position position) {
+//        return (Cell) ((HBox) column.getChildren().get(y)).getChildren().get(x);
+    }
+
 
 //    public boolean placeShip(Ship ship, int x, int y) {
 //        if (canPlaceShip(ship, x, y)) {
@@ -57,9 +67,7 @@ public class Board extends Parent {
 //        return false;
 //    }
 //
-//    public Cell getCell(int x, int y) {
-//        return (Cell) ((HBox) column.getChildren().get(y)).getChildren().get(x);
-//    }
+
 //
 //    private Cell[] getNeighbors(int x, int y) {
 //        Point2D[] points = new Point2D[]{
