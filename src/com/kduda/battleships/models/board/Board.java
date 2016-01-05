@@ -115,6 +115,10 @@ public class Board extends Parent {
                 return false;
 
             Cell cell = getCell(xPosition, i);
+
+            if (!cell.isSurfaceValid(unit))
+                return false;
+
             if (!cell.isEmpty())
                 return false;
 
