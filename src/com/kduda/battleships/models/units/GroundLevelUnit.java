@@ -14,6 +14,7 @@ public class GroundLevelUnit extends Unit {
 
     @Override
     public void rotateUnit() {
+        if (this.LENGTH == 1) return;
         if (this.orientation == Orientation.VERTICAL) {
             this.orientation = Orientation.HORIZONTAL;
         } else if (this.orientation == Orientation.HORIZONTAL) {
