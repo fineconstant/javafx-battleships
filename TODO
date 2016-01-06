@@ -1,16 +1,8 @@
-- rozstawianie statkow
+- rozstawianie samolotow
 
 
-* plansza 22x14
-* rejon morski i ladowy
-* statki 1, 2, 3, 4
-* pojazdy 2, 3, 4
-* samoloty T
-* brak mozliwosci ustawienia elementow aby sie styklay
-    - powiadomienie
-* gra z AI
+
 * zapis i odczyt planszy ze statkami do pliku (tekstowego)
-* GUI
 * kontrola liczby statkow
 * zaznaczenie trafionych i nie trafionych
 * losowe rozmieszczanie statkow
