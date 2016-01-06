@@ -11,7 +11,7 @@
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="true" text="_Game">
-                <MenuItem mnemonicParsing="true" text="_Exit"/>
+                <MenuItem mnemonicParsing="true" onAction="#exitClicked" text="_Exit"/>
             </Menu>
             <Menu mnemonicParsing="true" text="_Settings">
                 <MenuItem mnemonicParsing="true" text="_Difficulty"/>
