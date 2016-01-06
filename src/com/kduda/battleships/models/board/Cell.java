@@ -47,6 +47,7 @@ public class Cell extends Rectangle {
     }
 
     public boolean shootCell() {
+        //TODO: sprawdzic dzialanie
         wasShot = true;
         setFill(Color.GRAY);
 
@@ -69,6 +70,7 @@ public class Cell extends Rectangle {
         if (unit instanceof Ship && this.TYPE == CellType.Land)
             return false;
 
+        //noinspection RedundantIfStatement
         if (unit instanceof Tank && this.TYPE == CellType.Sea)
             return false;
 
