@@ -356,26 +356,48 @@ public class Board extends Parent {
     public void showPlacementHint(Unit unit, Cell cell) {
         Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
 
-        if (unit instanceof GroundLevelUnit) {
-            GroundLevelUnit currentUnit = (GroundLevelUnit) unit;
+        if (unit instanceof GroundLevelUnit)
+            showGroundUnitHint((GroundLevelUnit) unit, cell, cellPosition);
+        else showPlaneHint((Plane) unit, cell, cellPosition);
+    }
 
-            if (currentUnit.getOrientation() == Orientation.VERTICAL) {
-                if (isVerticalLocationValid(currentUnit, cellPosition)) {
-                    changeColorsVertical(cell, currentUnit.getLength(), Color.GREEN, Color.GREEN);
-                } else {
-                    changeColorsVertical(cell, currentUnit.getLength(), Color.RED, Color.RED);
-                }
-
+    private void showGroundUnitHint(GroundLevelUnit unit, Cell cell, Position cellPosition) {
+        if (unit.getOrientation() == Orientation.VERTICAL) {
+            if (isVerticalLocationValid(unit, cellPosition)) {
+                changeColorsVertical(cell, unit.getLength(), Color.GREEN, Color.GREEN);
             } else {
-                if (isHorizontalLocationValid(currentUnit, cellPosition)) {
-                    changeColorsHorizontal(cell, currentUnit.getLength(), Color.GREEN, Color.GREEN);
-                } else {
-                    changeColorsHorizontal(cell, currentUnit.getLength(), Color.RED, Color.RED);
-                }
+                changeColorsVertical(cell, unit.getLength(), Color.RED, Color.RED);
             }
+
         } else {
-            //TODO: hint dla samolotu
-            return;
+            if (isHorizontalLocationValid(unit, cellPosition)) {
+                changeColorsHorizontal(cell, unit.getLength(), Color.GREEN, Color.GREEN);
+            } else {
+                changeColorsHorizontal(cell, unit.getLength(), Color.RED, Color.RED);
+            }
+        }
+    }
+
+    private void showPlaneHint(Plane plane, Cell cell, Position cellPosition) {
+        //TODO: hint dla samolotu
+        switch (plane.getDirection()) {
+            case North:
+                if (isNorthLocationValid(plane, cellPosition)) {
+                    cell.setFill(Color.GREEN);
+                    return;
+                } else {
+                    return;
+                }
+//                break;
+            case East:
+
+                break;
+            case South:
+
+                break;
+            case West:
+
+                break;
         }
     }
 
@@ -403,15 +425,18 @@ public class Board extends Parent {
 
     public void removePlacementHint(Unit unit, Cell cell) {
         if (unit instanceof GroundLevelUnit) {
-            GroundLevelUnit currentUnit = (GroundLevelUnit) unit;
-            if (currentUnit.getOrientation() == Orientation.VERTICAL) {
-                restoreColorsVertical(cell, currentUnit.getLength());
-            } else {
-                restoreColorsHorizontal(cell, currentUnit.getLength());
-            }
+            removeGroundUnitHint((GroundLevelUnit) unit, cell);
         } else {
             //TODO: restore dla samolotow
             return;
+        }
+    }
+
+    private void removeGroundUnitHint(GroundLevelUnit unit, Cell cell) {
+        if (unit.getOrientation() == Orientation.VERTICAL) {
+            restoreColorsVertical(cell, unit.getLength());
+        } else {
+            restoreColorsHorizontal(cell, unit.getLength());
         }
     }
 
