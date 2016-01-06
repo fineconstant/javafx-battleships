@@ -356,27 +356,34 @@ public class Board extends Parent {
     public void showPlacementHint(Unit unit, Cell cell) {
         Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
 
-        if (unit instanceof GroundLevelUnit) {
-            GroundLevelUnit currentUnit = (GroundLevelUnit) unit;
+        if (unit instanceof GroundLevelUnit)
+            showGroundUnitHint((GroundLevelUnit) unit, cell, cellPosition);
+        else showPlaneHint((Plane) unit, cell, cellPosition);
+    }
 
-            if (currentUnit.getOrientation() == Orientation.VERTICAL) {
-                if (isVerticalLocationValid(currentUnit, cellPosition)) {
-                    changeColorsVertical(cell, currentUnit.getLength(), Color.GREEN, Color.GREEN);
-                } else {
-                    changeColorsVertical(cell, currentUnit.getLength(), Color.RED, Color.RED);
-                }
-
+    private void showGroundUnitHint(GroundLevelUnit unit, Cell cell, Position cellPosition) {
+        if (unit.getOrientation() == Orientation.VERTICAL) {
+            if (isVerticalLocationValid(unit, cellPosition)) {
+                changeColorsVertical(cell, unit.getLength(), Color.GREEN, Color.GREEN);
             } else {
-                if (isHorizontalLocationValid(currentUnit, cellPosition)) {
-                    changeColorsHorizontal(cell, currentUnit.getLength(), Color.GREEN, Color.GREEN);
-                } else {
-                    changeColorsHorizontal(cell, currentUnit.getLength(), Color.RED, Color.RED);
-                }
+                changeColorsVertical(cell, unit.getLength(), Color.RED, Color.RED);
             }
+
         } else {
-            //TODO: hint dla samolotu
-            return;
+            if (isHorizontalLocationValid(unit, cellPosition)) {
+                changeColorsHorizontal(cell, unit.getLength(), Color.GREEN, Color.GREEN);
+            } else {
+                changeColorsHorizontal(cell, unit.getLength(), Color.RED, Color.RED);
+            }
         }
+    }
+
+    private void showPlaneHint(Plane unit, Cell cell, Position cellPosition) {
+        //TODO: hint dla samolotu
+        Plane plane = (Plane) unit;
+        //pozycja
+        //sprawdzenie
+        //wyswietleni / usuniecie
     }
 
     private void changeColorsVertical(Cell cell, int length, Color fillColor, Color strokeColor) {
