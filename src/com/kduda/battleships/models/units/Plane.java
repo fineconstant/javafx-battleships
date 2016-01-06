@@ -15,4 +15,9 @@ public class Plane extends Unit {
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
+
+    @Override
+    public void rotateUnit() {
+
+    }
 }

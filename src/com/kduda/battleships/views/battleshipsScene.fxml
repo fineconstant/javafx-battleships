@@ -69,7 +69,7 @@
             <Separator orientation="VERTICAL" prefHeight="200.0"/>
             <Region HBox.hgrow="ALWAYS"/>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                <Button mnemonicParsing="false" text="Button"/>
+                <Button mnemonicParsing="false" onAction="#rotateUnitClicked" text="Rotate unit"/>
                 <Button mnemonicParsing="false" text="Button"/>
                 <Button mnemonicParsing="false" text="Button"/>
             </VBox>

@@ -14,4 +14,6 @@ public abstract class Unit {
     public void hit() {
         this.health--;
     }
+
+    public abstract void rotateUnit();
 }
