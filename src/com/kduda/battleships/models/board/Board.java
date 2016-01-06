@@ -188,22 +188,43 @@ public class Board extends Parent {
 
             if (currentUnit.getOrientation() == Orientation.VERTICAL) {
                 if (isVerticalLocationValid(currentUnit, cellPosition)) {
-
-
+                    changeColorVertical(cell, currentUnit.LENGTH, Color.GREEN, Color.GREEN);
                 } else {
+                    changeColorVertical(cell, currentUnit.LENGTH, Color.RED, Color.RED);
                 }
 
             } else {
                 if (isHorizontalLocationValid(currentUnit, cellPosition)) {
-
-
+                    changeColorHorizontal(cell, currentUnit.LENGTH, Color.GREEN, Color.GREEN);
                 } else {
+                    changeColorHorizontal(cell, currentUnit.LENGTH, Color.RED, Color.RED);
                 }
             }
         } else {
             //TODO: hint dla samolotu
+            return;
         }
+    }
 
+    private void changeColorVertical(Cell cell, int length, Color fillColor, Color strokeColor) {
+        int xPosition = cell.POSITION.getX();
+        int yPosition = cell.POSITION.getY();
 
+        for (int i = yPosition; i < yPosition + length; i++) {
+            Cell currCell = getCell(xPosition, i);
+            currCell.setFill(fillColor);
+            currCell.setStroke(strokeColor);
+        }
+    }
+
+    private void changeColorHorizontal(Cell cell, int length, Color fillColor, Color stroke) {
+        int xPosition = cell.POSITION.getX();
+        int yPosition = cell.POSITION.getY();
+
+        for (int i = xPosition; i < xPosition + length; i++) {
+            Cell currCell = getCell(i, yPosition);
+            currCell.setFill(fillColor);
+            currCell.setStroke(stroke);
+        }
     }
 }
