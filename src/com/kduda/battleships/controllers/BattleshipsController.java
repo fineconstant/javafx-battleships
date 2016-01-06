@@ -5,7 +5,6 @@ import com.kduda.battleships.models.board.Cell;
 import com.kduda.battleships.models.board.Position;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitFactory;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -117,7 +116,7 @@ public class BattleshipsController implements Initializable {
         BattleshipsConfig.INSTANCE.isGameRunning = true;
     }
 
-    public void rotateUnitClicked(ActionEvent actionEvent) {
+    public void rotateUnitClicked() {
         this.currentUnit.rotateUnit();
     }
 }
