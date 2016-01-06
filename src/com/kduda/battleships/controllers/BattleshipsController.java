@@ -7,6 +7,7 @@ import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
@@ -67,11 +68,13 @@ public class BattleshipsController implements Initializable {
     }
 
     private void playerBoardClick(MouseEvent event) {
-        if (BattleshipsConfig.INSTANCE.isGameRunning)
-            return;
+        if (BattleshipsConfig.INSTANCE.isGameRunning) return;
 
-        if (currentUnit == null) {
-            startGame();
+        if (currentUnit == null) startGame();
+
+        if (event.getButton() == MouseButton.SECONDARY) {
+            this.currentUnit.rotateUnit();
+            return;
         }
 
         Cell cell = (Cell) event.getSource();
