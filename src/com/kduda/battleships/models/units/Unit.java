@@ -16,4 +16,5 @@ public abstract class Unit {
     }
 
     public abstract void rotateUnit();
+    public abstract int getLength();
 }

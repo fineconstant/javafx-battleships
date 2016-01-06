@@ -60,6 +60,77 @@ public class Board extends Parent {
         return true;
     }
 
+    private boolean isVerticalLocationValid(Unit unit, Position cellPosition) {
+        int unitLength = unit.getLength();
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        for (int i = yPosition; i < yPosition + unitLength; i++) {
+            if (!isValidPoint(xPosition, i)) return false;
+
+            Cell cell = getCell(xPosition, i);
+
+            if (!cell.isSurfaceValid(unit)) return false;
+
+            if (!cell.isEmpty()) return false;
+
+            for (Cell neighbor : getAdjacentCells(xPosition, i))
+                if (!neighbor.isEmpty()) return false;
+        }
+        return true;
+    }
+
+    private boolean isHorizontalLocationValid(Unit unit, Position cellPosition) {
+        int unitLength = unit.getLength();
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        for (int i = xPosition; i < xPosition + unitLength; i++) {
+            if (!isValidPoint(i, yPosition)) return false;
+
+            Cell cell = getCell(i, yPosition);
+
+            if (!cell.isSurfaceValid(unit)) return false;
+
+            if (!cell.isEmpty()) return false;
+
+            for (Cell neighbor : getAdjacentCells(i, yPosition))
+                if (!neighbor.isEmpty()) return false;
+        }
+        return true;
+    }
+
+    private void placeVerticalUnit(GroundLevelUnit unit, Position cellPosition) {
+        int unitLength = unit.getLength();
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        for (int i = yPosition; i < yPosition + unitLength; i++) {
+            Cell cell = getCell(xPosition, i);
+            cell.setUnit(unit);
+            if (!this.isEnemyBoard) {
+                cell.setColors(Color.WHITE, Color.GREEN);
+                cell.saveCurrentColors();
+            }
+        }
+    }
+
+    private void placeHorizontalUnit(GroundLevelUnit unit, Position cellPosition) {
+        int unitLength = unit.getLength();
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        for (int i = xPosition; i < xPosition + unitLength; i++) {
+            Cell cell = getCell(i, yPosition);
+            cell.setUnit(unit);
+            cell.saveCurrentColors();
+            if (!this.isEnemyBoard) {
+                cell.setColors(Color.WHITE, Color.GREEN);
+                cell.saveCurrentColors();
+            }
+        }
+    }
+
     private boolean placePlane(Plane plane, Position cellPosition) {
         switch (plane.getDirection()) {
             case North:
@@ -86,7 +157,7 @@ public class Board extends Parent {
     private boolean isNorthLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
-        int length = plane.LENGTH;
+        int length = plane.getLength();
 
         if (!isVerticalLocationPlaneValid(xPosition, yPosition, length)) return false;
         //noinspection RedundantIfStatement
@@ -96,8 +167,15 @@ public class Board extends Parent {
     }
 
     private boolean isEastLocationValid(Plane plane, Position cellPosition) {
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        if (!isHorizontalLocationValid(plane, cellPosition)) return false;
+
+        //noinspection RedundantIfStatement
+        if (!areVerticalNeighborsValid(xPosition, yPosition)) return false;
+
         return true;
-        //TODO: implement
     }
 
     private boolean isSouthLocationValid(Plane plane, Position cellPosition) {
@@ -132,6 +210,14 @@ public class Board extends Parent {
         return true;
     }
 
+    private boolean areVerticalNeighborsValid(int xPosition, int yPosition) {
+        if (!isValidPlacementCell(xPosition, yPosition - 1)) return false;
+        //noinspection RedundantIfStatement
+        if (!isValidPlacementCell(xPosition, yPosition + 1)) return false;
+
+        return true;
+    }
+
     private boolean isValidPlacementCell(int xPosition, int yPosition) {
         if (!isValidPoint(xPosition, yPosition)) return false;
 
@@ -160,78 +246,6 @@ public class Board extends Parent {
 
     private void placePlaneWest(Plane plane, Position cellPosition) {
         //TODO: implement
-    }
-
-    private void placeVerticalUnit(GroundLevelUnit unit, Position cellPosition) {
-        int unitLength = unit.LENGTH;
-        int xPosition = cellPosition.getX();
-        int yPosition = cellPosition.getY();
-
-        for (int i = yPosition; i < yPosition + unitLength; i++) {
-            Cell cell = getCell(xPosition, i);
-            cell.setUnit(unit);
-            if (!this.isEnemyBoard) {
-                cell.setColors(Color.WHITE, Color.GREEN);
-                cell.saveCurrentColors();
-            }
-        }
-    }
-
-    private void placeHorizontalUnit(GroundLevelUnit unit, Position cellPosition) {
-        int unitLength = unit.LENGTH;
-        int xPosition = cellPosition.getX();
-        int yPosition = cellPosition.getY();
-
-        for (int i = xPosition; i < xPosition + unitLength; i++) {
-            Cell cell = getCell(i, yPosition);
-            cell.setUnit(unit);
-            cell.saveCurrentColors();
-            if (!this.isEnemyBoard) {
-                cell.setColors(Color.WHITE, Color.GREEN);
-                cell.saveCurrentColors();
-            }
-        }
-    }
-
-
-    private boolean isVerticalLocationValid(GroundLevelUnit unit, Position cellPosition) {
-        int unitLength = unit.LENGTH;
-        int xPosition = cellPosition.getX();
-        int yPosition = cellPosition.getY();
-
-        for (int i = yPosition; i < yPosition + unitLength; i++) {
-            if (!isValidPoint(xPosition, i)) return false;
-
-            Cell cell = getCell(xPosition, i);
-
-            if (!cell.isSurfaceValid(unit)) return false;
-
-            if (!cell.isEmpty()) return false;
-
-            for (Cell neighbor : getAdjacentCells(xPosition, i))
-                if (!neighbor.isEmpty()) return false;
-        }
-        return true;
-    }
-
-    private boolean isHorizontalLocationValid(GroundLevelUnit unit, Position cellPosition) {
-        int unitLength = unit.LENGTH;
-        int xPosition = cellPosition.getX();
-        int yPosition = cellPosition.getY();
-
-        for (int i = xPosition; i < xPosition + unitLength; i++) {
-            if (!isValidPoint(i, yPosition)) return false;
-
-            Cell cell = getCell(i, yPosition);
-
-            if (!cell.isSurfaceValid(unit)) return false;
-
-            if (!cell.isEmpty()) return false;
-
-            for (Cell neighbor : getAdjacentCells(i, yPosition))
-                if (!neighbor.isEmpty()) return false;
-        }
-        return true;
     }
 
 
@@ -276,16 +290,16 @@ public class Board extends Parent {
 
             if (currentUnit.getOrientation() == Orientation.VERTICAL) {
                 if (isVerticalLocationValid(currentUnit, cellPosition)) {
-                    changeColorsVertical(cell, currentUnit.LENGTH, Color.GREEN, Color.GREEN);
+                    changeColorsVertical(cell, currentUnit.getLength(), Color.GREEN, Color.GREEN);
                 } else {
-                    changeColorsVertical(cell, currentUnit.LENGTH, Color.RED, Color.RED);
+                    changeColorsVertical(cell, currentUnit.getLength(), Color.RED, Color.RED);
                 }
 
             } else {
                 if (isHorizontalLocationValid(currentUnit, cellPosition)) {
-                    changeColorsHorizontal(cell, currentUnit.LENGTH, Color.GREEN, Color.GREEN);
+                    changeColorsHorizontal(cell, currentUnit.getLength(), Color.GREEN, Color.GREEN);
                 } else {
-                    changeColorsHorizontal(cell, currentUnit.LENGTH, Color.RED, Color.RED);
+                    changeColorsHorizontal(cell, currentUnit.getLength(), Color.RED, Color.RED);
                 }
             }
         } else {
@@ -320,9 +334,9 @@ public class Board extends Parent {
         if (unit instanceof GroundLevelUnit) {
             GroundLevelUnit currentUnit = (GroundLevelUnit) unit;
             if (currentUnit.getOrientation() == Orientation.VERTICAL) {
-                restoreColorsVertical(cell, currentUnit.LENGTH);
+                restoreColorsVertical(cell, currentUnit.getLength());
             } else {
-                restoreColorsHorizontal(cell, currentUnit.LENGTH);
+                restoreColorsHorizontal(cell, currentUnit.getLength());
             }
         } else {
             //TODO: restore dla samolotow

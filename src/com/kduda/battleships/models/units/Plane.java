@@ -3,12 +3,12 @@ package com.kduda.battleships.models.units;
 import static com.kduda.battleships.models.units.Direction.*;
 
 public class Plane extends Unit {
-    public final int LENGTH;
+    private final int LENGTH;
     private Direction direction;
 
     public Plane() {
         super(5);
-        this.direction = North;
+        this.direction = East;
         this.LENGTH = 3;
     }
 
@@ -32,5 +32,10 @@ public class Plane extends Unit {
                 this.direction = North;
                 break;
         }
+    }
+
+    @Override
+    public int getLength() {
+        return this.LENGTH;
     }
 }

@@ -3,7 +3,7 @@ package com.kduda.battleships.models.units;
 import javafx.geometry.Orientation;
 
 public class GroundLevelUnit extends Unit {
-    public final int LENGTH;
+    private final int LENGTH;
     private Orientation orientation;
 
     public GroundLevelUnit(int size) {
@@ -20,6 +20,11 @@ public class GroundLevelUnit extends Unit {
             this.orientation = Orientation.HORIZONTAL;
         else
             this.orientation = Orientation.VERTICAL;
+    }
+
+    @Override
+    public int getLength() {
+        return this.LENGTH;
     }
 
     public Orientation getOrientation() {
