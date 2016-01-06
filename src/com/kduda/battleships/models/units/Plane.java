@@ -8,7 +8,7 @@ public class Plane extends Unit {
 
     public Plane() {
         super(5);
-        this.direction = South;
+        this.direction = North;
         this.LENGTH = 3;
     }
 

@@ -183,9 +183,9 @@ public class Board extends Parent {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
-        if (!isVerticalLocationValid(plane, cellPosition)) {System.out.println("vertical zle");return false;}
+        if (!isVerticalLocationValid(plane, cellPosition)) return false;
         //noinspection RedundantIfStatement
-        if (!areHorizontalNeighborsValid(xPosition, yPosition)) {System.out.println("sasiedzi ");return false;}
+        if (!areHorizontalNeighborsValid(xPosition, yPosition)) return false;
 
         return true;
     }
@@ -193,8 +193,13 @@ public class Board extends Parent {
     private boolean isWestLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
+        int length = plane.getLength();
+
+        if (!isHorizontalLocationPlaneValid(xPosition, yPosition, length)) return false;
+        //noinspection RedundantIfStatement
+        if (!areVerticalNeighborsValid(xPosition, yPosition)) return false;
+
         return true;
-        //TODO: implement
     }
 
     private boolean isVerticalLocationPlaneValid(int xPosition, int yPosition, int length) {
@@ -206,6 +211,20 @@ public class Board extends Parent {
             if (!cell.isEmpty()) return false;
 
             for (Cell neighbor : getAdjacentCells(xPosition, i))
+                if (!neighbor.isEmpty()) return false;
+        }
+        return true;
+    }
+
+    private boolean isHorizontalLocationPlaneValid(int xPosition, int yPosition, int length) {
+        for (int i = xPosition; i > xPosition - length; i--) {
+            if (!isValidPoint(i, yPosition)) return false;
+
+            Cell cell = getCell(i, yPosition);
+
+            if (!cell.isEmpty()) return false;
+
+            for (Cell neighbor : getAdjacentCells(i, yPosition))
                 if (!neighbor.isEmpty()) return false;
         }
         return true;
