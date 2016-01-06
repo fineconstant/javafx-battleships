@@ -56,15 +56,17 @@ public class BattleshipsController implements Initializable {
         if (BattleshipsConfig.INSTANCE.isGameRunning)
             return;
 
-        //TODO: hint gdzie bedzie jednostka i czy ok
         Cell cell = (Cell) event.getSource();
         playerBoard.showPlacementHint(currentUnit, cell);
 
     }
 
     private void playerBoardExited(MouseEvent event) {
-        //TODO: mouse exited handler
-        return;
+        if (BattleshipsConfig.INSTANCE.isGameRunning)
+            return;
+
+        Cell cell = (Cell) event.getSource();
+        playerBoard.removePlacementHint(currentUnit, cell);
     }
 
     private void playerBoardClick(MouseEvent event) {
@@ -72,12 +74,15 @@ public class BattleshipsController implements Initializable {
 
         if (currentUnit == null) startGame();
 
+        Cell cell = (Cell) event.getSource();
+
         if (event.getButton() == MouseButton.SECONDARY) {
+            playerBoard.removePlacementHint(currentUnit, cell);
             this.currentUnit.rotateUnit();
+            playerBoard.showPlacementHint(currentUnit, cell);
             return;
         }
 
-        Cell cell = (Cell) event.getSource();
         Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
         boolean wasPlacementSuccessful = playerBoard.placeUnit(currentUnit, cellPosition);
 

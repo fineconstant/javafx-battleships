@@ -74,8 +74,8 @@ public class Board extends Parent {
             Cell cell = getCell(xPosition, i);
             cell.setUnit(unit);
             if (!this.isEnemyBoard) {
-                cell.setFill(Color.WHITE);
-                cell.setStroke(Color.GREEN);
+                cell.setColors(Color.WHITE, Color.GREEN);
+                cell.saveCurrentColors();
             }
         }
     }
@@ -89,9 +89,10 @@ public class Board extends Parent {
         for (int i = xPosition; i < xPosition + unitLength; i++) {
             Cell cell = getCell(i, yPosition);
             cell.setUnit(unit);
+            cell.saveCurrentColors();
             if (!this.isEnemyBoard) {
-                cell.setFill(Color.WHITE);
-                cell.setStroke(Color.GREEN);
+                cell.setColors(Color.WHITE, Color.GREEN);
+                cell.saveCurrentColors();
             }
         }
     }
@@ -179,8 +180,6 @@ public class Board extends Parent {
     }
 
     public void showPlacementHint(Unit unit, Cell cell) {
-        cell.saveCurrentColors();
-
         Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
 
         if (unit instanceof GroundLevelUnit) {
@@ -188,16 +187,16 @@ public class Board extends Parent {
 
             if (currentUnit.getOrientation() == Orientation.VERTICAL) {
                 if (isVerticalLocationValid(currentUnit, cellPosition)) {
-                    changeColorVertical(cell, currentUnit.LENGTH, Color.GREEN, Color.GREEN);
+                    changeColorsVertical(cell, currentUnit.LENGTH, Color.GREEN, Color.GREEN);
                 } else {
-                    changeColorVertical(cell, currentUnit.LENGTH, Color.RED, Color.RED);
+                    changeColorsVertical(cell, currentUnit.LENGTH, Color.RED, Color.RED);
                 }
 
             } else {
                 if (isHorizontalLocationValid(currentUnit, cellPosition)) {
-                    changeColorHorizontal(cell, currentUnit.LENGTH, Color.GREEN, Color.GREEN);
+                    changeColorsHorizontal(cell, currentUnit.LENGTH, Color.GREEN, Color.GREEN);
                 } else {
-                    changeColorHorizontal(cell, currentUnit.LENGTH, Color.RED, Color.RED);
+                    changeColorsHorizontal(cell, currentUnit.LENGTH, Color.RED, Color.RED);
                 }
             }
         } else {
@@ -206,25 +205,59 @@ public class Board extends Parent {
         }
     }
 
-    private void changeColorVertical(Cell cell, int length, Color fillColor, Color strokeColor) {
+    private void changeColorsVertical(Cell cell, int length, Color fillColor, Color strokeColor) {
         int xPosition = cell.POSITION.getX();
         int yPosition = cell.POSITION.getY();
 
         for (int i = yPosition; i < yPosition + length; i++) {
             Cell currCell = getCell(xPosition, i);
-            currCell.setFill(fillColor);
-            currCell.setStroke(strokeColor);
+            currCell.saveCurrentColors();
+            currCell.setColors(fillColor, strokeColor);
         }
     }
 
-    private void changeColorHorizontal(Cell cell, int length, Color fillColor, Color stroke) {
+    private void changeColorsHorizontal(Cell cell, int length, Color fillColor, Color strokeColor) {
         int xPosition = cell.POSITION.getX();
         int yPosition = cell.POSITION.getY();
 
         for (int i = xPosition; i < xPosition + length; i++) {
             Cell currCell = getCell(i, yPosition);
-            currCell.setFill(fillColor);
-            currCell.setStroke(stroke);
+            currCell.saveCurrentColors();
+            currCell.setColors(fillColor, strokeColor);
+        }
+    }
+
+    public void removePlacementHint(Unit unit, Cell cell) {
+        if (unit instanceof GroundLevelUnit) {
+            GroundLevelUnit currentUnit = (GroundLevelUnit) unit;
+            if (currentUnit.getOrientation() == Orientation.VERTICAL) {
+                restoreColorsVertical(cell, currentUnit.LENGTH);
+            } else {
+                restoreColorsHorizontal(cell, currentUnit.LENGTH);
+            }
+        } else {
+            //TODO: restore dla samolotow
+            return;
+        }
+    }
+
+    private void restoreColorsVertical(Cell cell, int length) {
+        int xPosition = cell.POSITION.getX();
+        int yPosition = cell.POSITION.getY();
+
+        for (int i = yPosition; i < yPosition + length; i++) {
+            Cell currCell = getCell(xPosition, i);
+            currCell.loadSavedColors();
+        }
+    }
+
+    private void restoreColorsHorizontal(Cell cell, int length) {
+        int xPosition = cell.POSITION.getX();
+        int yPosition = cell.POSITION.getY();
+
+        for (int i = xPosition; i < xPosition + length; i++) {
+            Cell currCell = getCell(i, yPosition);
+            currCell.loadSavedColors();
         }
     }
 }

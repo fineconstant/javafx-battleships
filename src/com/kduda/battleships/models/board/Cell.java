@@ -79,4 +79,14 @@ public class Cell extends Rectangle {
         this.currentFill = this.getFill();
         this.currentStroke = this.getStroke();
     }
+
+    public void loadSavedColors() {
+        this.setFill(this.currentFill);
+        this.setStroke(this.currentStroke);
+    }
+
+    public void setColors(Color fillColor, Color strokeColor) {
+        this.setFill(fillColor);
+        this.setStroke(strokeColor);
+    }
 }
