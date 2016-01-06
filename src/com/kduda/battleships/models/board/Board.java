@@ -67,16 +67,16 @@ public class Board extends Parent {
                 else return false;
                 break;
             case East:
-//                if (isEastLocationValid(plane, cellPosition)) placePlaneEast(plane, cellPosition);
-//                else return false;
+                if (isEastLocationValid(plane, cellPosition)) placePlaneEast(plane, cellPosition);
+                else return false;
                 break;
             case South:
-//                if (isSouthLocationValid(plane, cellPosition)) placePlaneSouth(plane, cellPosition);
-//                else return false;
+                if (isSouthLocationValid(plane, cellPosition)) placePlaneSouth(plane, cellPosition);
+                else return false;
                 break;
             case West:
-//                if (isWestLocationValid(plane, cellPosition)) placePlaneWest(plane, cellPosition);
-//                else return false;
+                if (isWestLocationValid(plane, cellPosition)) placePlaneWest(plane, cellPosition);
+                else return false;
                 break;
         }
         return true;
@@ -94,6 +94,22 @@ public class Board extends Parent {
 
         return true;
     }
+
+    private boolean isEastLocationValid(Plane plane, Position cellPosition) {
+        return true;
+        //TODO: implement
+    }
+
+    private boolean isSouthLocationValid(Plane plane, Position cellPosition) {
+        return true;
+        //TODO: implement
+    }
+
+    private boolean isWestLocationValid(Plane plane, Position cellPosition) {
+        return true;
+        //TODO: implement
+    }
+
     private boolean isVerticalLocationPlaneValid(int xPosition, int yPosition, int length) {
         for (int i = yPosition; i > yPosition - length; i--) {
             if (!isValidPoint(xPosition, i)) return false;
@@ -131,6 +147,19 @@ public class Board extends Parent {
 
 
     private void placePlaneNorth(Plane plane, Position cellPosition) {
+        //TODO: implement
+    }
+
+    private void placePlaneEast(Plane plane, Position cellPosition) {
+        //TODO: implement
+    }
+
+    private void placePlaneSouth(Plane plane, Position cellPosition) {
+        //TODO: implement
+    }
+
+    private void placePlaneWest(Plane plane, Position cellPosition) {
+        //TODO: implement
     }
 
     private void placeVerticalUnit(GroundLevelUnit unit, Position cellPosition) {
@@ -138,7 +167,6 @@ public class Board extends Parent {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
-        //TODO: remove duplication
         for (int i = yPosition; i < yPosition + unitLength; i++) {
             Cell cell = getCell(xPosition, i);
             cell.setUnit(unit);
@@ -154,7 +182,6 @@ public class Board extends Parent {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
-        //TODO: remove duplication
         for (int i = xPosition; i < xPosition + unitLength; i++) {
             Cell cell = getCell(i, yPosition);
             cell.setUnit(unit);
@@ -167,7 +194,6 @@ public class Board extends Parent {
     }
 
 
-    //TODO: remove duplication
     private boolean isVerticalLocationValid(GroundLevelUnit unit, Position cellPosition) {
         int unitLength = unit.LENGTH;
         int xPosition = cellPosition.getX();
@@ -188,7 +214,6 @@ public class Board extends Parent {
         return true;
     }
 
-    //TODO: remove duplication
     private boolean isHorizontalLocationValid(GroundLevelUnit unit, Position cellPosition) {
         int unitLength = unit.LENGTH;
         int xPosition = cellPosition.getX();
