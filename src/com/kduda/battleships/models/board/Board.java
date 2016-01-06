@@ -179,11 +179,20 @@ public class Board extends Parent {
     }
 
     private boolean isSouthLocationValid(Plane plane, Position cellPosition) {
-        return true;
         //TODO: implement
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        if (!isVerticalLocationValid(plane, cellPosition)) {System.out.println("vertical zle");return false;}
+        //noinspection RedundantIfStatement
+        if (!areHorizontalNeighborsValid(xPosition, yPosition)) {System.out.println("sasiedzi ");return false;}
+
+        return true;
     }
 
     private boolean isWestLocationValid(Plane plane, Position cellPosition) {
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
         return true;
         //TODO: implement
     }
