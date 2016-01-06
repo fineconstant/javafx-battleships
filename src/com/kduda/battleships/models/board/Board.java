@@ -107,7 +107,7 @@ public class Board extends Parent {
 
         for (int i = yPosition; i < yPosition + unitLength; i++) {
             Cell cell = getCell(xPosition, i);
-            placeUnitInCell(unit,cell);
+            placeUnitInCell(unit, cell);
         }
     }
 
@@ -118,7 +118,7 @@ public class Board extends Parent {
 
         for (int i = xPosition; i < xPosition + unitLength; i++) {
             Cell cell = getCell(i, yPosition);
-            placeUnitInCell(unit,cell);
+            placeUnitInCell(unit, cell);
         }
     }
 
@@ -248,7 +248,6 @@ public class Board extends Parent {
         return true;
     }
 
-
     private void placePlaneNorth(Plane plane, Position cellPosition) {
         int unitLength = plane.getLength();
         int xPosition = cellPosition.getX();
@@ -258,6 +257,32 @@ public class Board extends Parent {
         placeHorizontalPlaneWings(plane, xPosition, yPosition);
     }
 
+    private void placePlaneEast(Plane plane, Position cellPosition) {
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        placeHorizontalUnit(plane, cellPosition);
+        placeVerticalPlaneWings(plane, xPosition, yPosition);
+    }
+
+    private void placePlaneSouth(Plane plane, Position cellPosition) {
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        placeVerticalUnit(plane, cellPosition);
+        placeHorizontalPlaneWings(plane, xPosition, yPosition);
+    }
+
+    private void placePlaneWest(Plane plane, Position cellPosition) {
+        int unitLength = plane.getLength();
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        placeHorizontalPlaneBody(plane, unitLength, xPosition, yPosition);
+        placeVerticalPlaneWings(plane, xPosition, yPosition);
+
+    }
+
     private void placeVerticalPlaneBody(Plane plane, int unitLength, int xPosition, int yPosition) {
         for (int i = yPosition; i > yPosition - unitLength; i--) {
             Cell cell = getCell(xPosition, i);
@@ -265,22 +290,11 @@ public class Board extends Parent {
         }
     }
 
-    private void placePlaneEast(Plane plane, Position cellPosition) {
-        //TODO: implement
-        throw new UnsupportedOperationException();
-
-    }
-
-    private void placePlaneSouth(Plane plane, Position cellPosition) {
-        //TODO: implement
-        throw new UnsupportedOperationException();
-
-    }
-
-    private void placePlaneWest(Plane plane, Position cellPosition) {
-        //TODO: implement
-        throw new UnsupportedOperationException();
-
+    private void placeHorizontalPlaneBody(Plane plane, int unitLength, int xPosition, int yPosition) {
+        for (int i = xPosition; i > xPosition - unitLength; i--) {
+            Cell cell = getCell(i, yPosition);
+            placeUnitInCell(plane, cell);
+        }
     }
 
     private void placeHorizontalPlaneWings(Plane plane, int xPosition, int yPosition) {
@@ -288,7 +302,13 @@ public class Board extends Parent {
         placeUnitInCell(plane, cell);
         cell = getCell(xPosition + 1, yPosition);
         placeUnitInCell(plane, cell);
+    }
 
+    private void placeVerticalPlaneWings(Plane plane, int xPosition, int yPosition) {
+        Cell cell = getCell(xPosition, yPosition - 1);
+        placeUnitInCell(plane, cell);
+        cell = getCell(xPosition, yPosition + 1);
+        placeUnitInCell(plane, cell);
     }
 
     private void placeUnitInCell(Unit unit, Cell cell) {
@@ -299,7 +319,6 @@ public class Board extends Parent {
             cell.saveCurrentColors();
         }
     }
-
 
     private boolean isValidPoint(int x, int y) {
         return x >= 0 && x < 14 && y >= 0 && y < 22;
