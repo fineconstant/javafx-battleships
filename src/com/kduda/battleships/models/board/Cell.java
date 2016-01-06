@@ -1,9 +1,6 @@
 package com.kduda.battleships.models.board;
 
-import com.kduda.battleships.models.units.GroundLevelUnit;
-import com.kduda.battleships.models.units.Ship;
-import com.kduda.battleships.models.units.Tank;
-import com.kduda.battleships.models.units.Unit;
+import com.kduda.battleships.models.units.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -74,6 +71,10 @@ public class Cell extends Rectangle {
         if (unit instanceof Tank && this.TYPE == CellType.Sea)
             return false;
 
+        return true;
+    }
+
+    public boolean isSurfaceValid(Plane plane) {
         return true;
     }
 

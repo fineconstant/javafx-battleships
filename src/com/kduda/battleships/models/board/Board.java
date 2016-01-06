@@ -38,7 +38,7 @@ public class Board extends Parent {
     }
 
     public boolean placeUnit(Unit unit, Position cellPosition) {
-        boolean wasUnitPlaced = false;
+        boolean wasUnitPlaced;
 
         if (unit instanceof GroundLevelUnit)
             wasUnitPlaced = placeGroundLevelUnit((GroundLevelUnit) unit, cellPosition);
@@ -50,18 +50,87 @@ public class Board extends Parent {
 
     private boolean placeGroundLevelUnit(GroundLevelUnit unit, Position cellPosition) {
         if (unit.getOrientation() == Orientation.VERTICAL) {
-            if (isVerticalLocationValid(unit, cellPosition)) {
-                placeVerticalUnit(unit, cellPosition);
-            } else
-                return false;
+            if (isVerticalLocationValid(unit, cellPosition)) placeVerticalUnit(unit, cellPosition);
+            else return false;
 
         } else {
-            if (isHorizontalLocationValid(unit, cellPosition)) {
-                placeHorizontalUnit(unit, cellPosition);
-            } else
-                return false;
+            if (isHorizontalLocationValid(unit, cellPosition)) placeHorizontalUnit(unit, cellPosition);
+            else return false;
         }
         return true;
+    }
+
+    private boolean placePlane(Plane plane, Position cellPosition) {
+        switch (plane.getDirection()) {
+            case North:
+                if (isNorthLocationValid(plane, cellPosition)) placePlaneNorth(plane, cellPosition);
+                else return false;
+                break;
+            case East:
+//                if (isEastLocationValid(plane, cellPosition)) placePlaneEast(plane, cellPosition);
+//                else return false;
+                break;
+            case South:
+//                if (isSouthLocationValid(plane, cellPosition)) placePlaneSouth(plane, cellPosition);
+//                else return false;
+                break;
+            case West:
+//                if (isWestLocationValid(plane, cellPosition)) placePlaneWest(plane, cellPosition);
+//                else return false;
+                break;
+        }
+        return true;
+    }
+
+
+    private boolean isNorthLocationValid(Plane plane, Position cellPosition) {
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+        int length = plane.LENGTH;
+
+        if (!isVerticalLocationPlaneValid(xPosition, yPosition, length)) return false;
+        //noinspection RedundantIfStatement
+        if (!areHorizontalNeighborsValid(xPosition, yPosition)) return false;
+
+        return true;
+    }
+    private boolean isVerticalLocationPlaneValid(int xPosition, int yPosition, int length) {
+        for (int i = yPosition; i > yPosition - length; i--) {
+            if (!isValidPoint(xPosition, i)) return false;
+
+            Cell cell = getCell(xPosition, i);
+
+            if (!cell.isEmpty()) return false;
+
+            for (Cell neighbor : getAdjacentCells(xPosition, i))
+                if (!neighbor.isEmpty()) return false;
+        }
+        return true;
+    }
+
+    private boolean areHorizontalNeighborsValid(int xPosition, int yPosition) {
+        if (!isValidPlacementCell(xPosition - 1, yPosition)) return false;
+        //noinspection RedundantIfStatement
+        if (!isValidPlacementCell(xPosition + 1, yPosition)) return false;
+
+        return true;
+    }
+
+    private boolean isValidPlacementCell(int xPosition, int yPosition) {
+        if (!isValidPoint(xPosition, yPosition)) return false;
+
+        Cell cell = getCell(xPosition, yPosition);
+
+        if (!cell.isEmpty()) return false;
+
+        for (Cell neighbor : getAdjacentCells(xPosition, yPosition))
+            if (!neighbor.isEmpty()) return false;
+
+        return true;
+    }
+
+
+    private void placePlaneNorth(Plane plane, Position cellPosition) {
     }
 
     private void placeVerticalUnit(GroundLevelUnit unit, Position cellPosition) {
@@ -97,11 +166,6 @@ public class Board extends Parent {
         }
     }
 
-
-    private boolean placePlane(Plane plane, Position cellPosition) {
-        //TODO:implementation
-        return false;
-    }
 
     //TODO: remove duplication
     private boolean isVerticalLocationValid(GroundLevelUnit unit, Position cellPosition) {
