@@ -100,34 +100,25 @@ public class Board extends Parent {
         return true;
     }
 
-    private void placeVerticalUnit(GroundLevelUnit unit, Position cellPosition) {
+    private void placeVerticalUnit(Unit unit, Position cellPosition) {
         int unitLength = unit.getLength();
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
         for (int i = yPosition; i < yPosition + unitLength; i++) {
             Cell cell = getCell(xPosition, i);
-            cell.setUnit(unit);
-            if (!this.isEnemyBoard) {
-                cell.setColors(Color.WHITE, Color.GREEN);
-                cell.saveCurrentColors();
-            }
+            placeUnitInCell(unit,cell);
         }
     }
 
-    private void placeHorizontalUnit(GroundLevelUnit unit, Position cellPosition) {
+    private void placeHorizontalUnit(Unit unit, Position cellPosition) {
         int unitLength = unit.getLength();
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
         for (int i = xPosition; i < xPosition + unitLength; i++) {
             Cell cell = getCell(i, yPosition);
-            cell.setUnit(unit);
-            cell.saveCurrentColors();
-            if (!this.isEnemyBoard) {
-                cell.setColors(Color.WHITE, Color.GREEN);
-                cell.saveCurrentColors();
-            }
+            placeUnitInCell(unit,cell);
         }
     }
 
@@ -152,7 +143,6 @@ public class Board extends Parent {
         }
         return true;
     }
-
 
     private boolean isNorthLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
@@ -179,7 +169,6 @@ public class Board extends Parent {
     }
 
     private boolean isSouthLocationValid(Plane plane, Position cellPosition) {
-        //TODO: implement
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
@@ -261,19 +250,54 @@ public class Board extends Parent {
 
 
     private void placePlaneNorth(Plane plane, Position cellPosition) {
-        //TODO: implement
+        int unitLength = plane.getLength();
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
+        placeVerticalPlaneBody(plane, unitLength, xPosition, yPosition);
+        placeHorizontalPlaneWings(plane, xPosition, yPosition);
+    }
+
+    private void placeVerticalPlaneBody(Plane plane, int unitLength, int xPosition, int yPosition) {
+        for (int i = yPosition; i > yPosition - unitLength; i--) {
+            Cell cell = getCell(xPosition, i);
+            placeUnitInCell(plane, cell);
+        }
     }
 
     private void placePlaneEast(Plane plane, Position cellPosition) {
         //TODO: implement
+        throw new UnsupportedOperationException();
+
     }
 
     private void placePlaneSouth(Plane plane, Position cellPosition) {
         //TODO: implement
+        throw new UnsupportedOperationException();
+
     }
 
     private void placePlaneWest(Plane plane, Position cellPosition) {
         //TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    private void placeHorizontalPlaneWings(Plane plane, int xPosition, int yPosition) {
+        Cell cell = getCell(xPosition - 1, yPosition);
+        placeUnitInCell(plane, cell);
+        cell = getCell(xPosition + 1, yPosition);
+        placeUnitInCell(plane, cell);
+
+    }
+
+    private void placeUnitInCell(Unit unit, Cell cell) {
+        cell.setUnit(unit);
+        if (!this.isEnemyBoard) {
+            //TODO: rozne kolory dla roznych jednostek
+            cell.setColors(Color.WHITE, Color.GREEN);
+            cell.saveCurrentColors();
+        }
     }
 
 
