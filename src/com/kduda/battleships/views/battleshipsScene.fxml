@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="900.0" prefWidth="950.0" stylesheets="@styles/battleshipsScene.css"
+            minWidth="-Infinity" prefHeight="850.0" prefWidth="950.0" stylesheets="@styles/battleshipsScene.css"
             xmlns="http://javafx.com/javafx/8.0.40"
             fx:controller="com.kduda.battleships.controllers.BattleshipsController">
 
@@ -45,25 +45,15 @@
             </BorderPane.margin>
             <VBox>
                 <Label text="Enemy units left: "/>
-                <Label text="One - masted ships: "/>
-                <Label text="Two - masted ships: "/>
-                <Label text="Three - masted ships"/>
-                <Label text="Four - masted ships"/>
-                <Label text="Light tanks: "/>
-                <Label text="Medium tanks: "/>
-                <Label text="Heavy tanks: "/>
+                <Label text="Ships: "/>
+                <Label text="Tanks: "/>
                 <Label text="Planes: "/>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0"/>
             <VBox>
                 <Label text="Your units left:"/>
-                <Label text="One - masted ships: "/>
-                <Label text="Two - masted ships: "/>
-                <Label text="Three - masted ships"/>
-                <Label text="Four - masted ships"/>
-                <Label text="Light tanks: "/>
-                <Label text="Medium tanks: "/>
-                <Label text="Heavy tanks: "/>
+                <Label text="Ships: "/>
+                <Label text="Tanks: "/>
                 <Label text="Planes: "/>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0"/>
