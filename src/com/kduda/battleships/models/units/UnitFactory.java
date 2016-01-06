@@ -40,6 +40,9 @@ public enum UnitFactory {
         units.add(createPlane());
         units.add(createPlane());
         units.add(createPlane());
+        units.add(createPlane());
+        units.add(createPlane());
+        units.add(createPlane());
 
         unitsIterator = units.listIterator();
     }
