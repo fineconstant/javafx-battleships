@@ -42,6 +42,8 @@ public class BattleshipsController implements Initializable {
         //TODO: click handler
         if (!BattleshipsConfig.INSTANCE.isGameRunning)
             return;
+
+
     }
 
     private void enemyBoardEntered(MouseEvent event) {
