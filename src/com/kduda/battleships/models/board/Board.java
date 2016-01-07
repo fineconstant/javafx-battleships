@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class Board extends Parent {
-    //TODO: podzial na podklasy playerboard enemyboard
     public int units = 19;
     protected ArrayList<Cell> currentUnitCells;
     protected boolean isCurrentUnitLocationValid = false;
@@ -53,47 +52,29 @@ public abstract class Board extends Parent {
     }
 
     public void placeUnitRandomly(Unit unit) {
-        //TODO: implement
         boolean wasUnitPlaced = false;
-
+        Position cellPosition;
         do {
             int xPosition = this.random.nextInt(14);
             int yPosition = this.random.nextInt(22);
+            cellPosition = new Position(xPosition, yPosition);
+
             int rotation = this.random.nextInt(4);
             for (int i = 0; i < rotation; i++) {
                 unit.rotateUnit();
             }
 
-            Position cellPosition = new Position(xPosition, yPosition);
             currentUnitCells.clear();
 
             if (unit instanceof GroundLevelUnit) {
-                if (((GroundLevelUnit) unit).getOrientation() == Orientation.VERTICAL)
-                    isCurrentUnitLocationValid = isVerticalLocationDownwardsValid(unit, cellPosition);
-                else
-                    isCurrentUnitLocationValid = isHorizontalLocationForwardValid(unit, cellPosition);
+                validateGroundUnit(unit, cellPosition);
             } else {
-                Plane plane = (Plane) unit;
-                switch (plane.getDirection()) {
-                    case North:
-                        isCurrentUnitLocationValid = isNorthLocationValid(plane, cellPosition);
-                        break;
-                    case East:
-                        isCurrentUnitLocationValid = isEastLocationValid(plane, cellPosition);
-                        break;
-                    case South:
-                        isCurrentUnitLocationValid = isSouthLocationValid(plane, cellPosition);
-                        break;
-                    case West:
-                        isCurrentUnitLocationValid = isWestLocationValid(plane, cellPosition);
-                        break;
-                }
+                validatePlane((Plane) unit, cellPosition);
             }
             wasUnitPlaced = placeUnitOnBoard(unit);
         }
 
         while (!wasUnitPlaced);
-        //dodac punkt do hash
     }
 
     private boolean placeUnitOnBoard(Unit unit) {
@@ -111,6 +92,13 @@ public abstract class Board extends Parent {
     //endregion
 
     //region universal location checks
+    private void validateGroundUnit(Unit unit, Position cellPosition) {
+        if (((GroundLevelUnit) unit).getOrientation() == Orientation.VERTICAL)
+            isCurrentUnitLocationValid = isVerticalLocationDownwardsValid(unit, cellPosition);
+        else
+            isCurrentUnitLocationValid = isHorizontalLocationForwardValid(unit, cellPosition);
+    }
+
     protected boolean isVerticalLocationDownwardsValid(Unit unit, Position cellPosition) {
         int unitLength = unit.getLength();
         int xPosition = cellPosition.getX();
@@ -204,6 +192,23 @@ public abstract class Board extends Parent {
     //endregion
 
     //region planes specific location checks
+    private void validatePlane(Plane plane, Position cellPosition) {
+        switch (plane.getDirection()) {
+            case North:
+                isCurrentUnitLocationValid = isNorthLocationValid(plane, cellPosition);
+                break;
+            case East:
+                isCurrentUnitLocationValid = isEastLocationValid(plane, cellPosition);
+                break;
+            case South:
+                isCurrentUnitLocationValid = isSouthLocationValid(plane, cellPosition);
+                break;
+            case West:
+                isCurrentUnitLocationValid = isWestLocationValid(plane, cellPosition);
+                break;
+        }
+    }
+
     protected boolean isNorthLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
@@ -346,3 +351,6 @@ public abstract class Board extends Parent {
     }
     //endregion
 }
+
+
+
