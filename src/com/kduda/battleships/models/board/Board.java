@@ -19,11 +19,11 @@ public abstract class Board extends Parent {
     public int units = 19;
     protected ArrayList<Cell> currentUnitCells;
     protected boolean isCurrentUnitLocationValid = false;
+    protected Cell targetCell = null;
+    protected boolean isTargetCellValid = false;
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
     private Random random = new Random();
-    private Cell targetCell = null;
-    private boolean isTargetCellValid = false;
 
     public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler,
                  EventHandler<? super MouseEvent> mouseEnteredHandler,
@@ -299,11 +299,15 @@ public abstract class Board extends Parent {
     //endregion
 
     //region shooting
+    public abstract void showShootingHint();
+
+    public abstract void removeShootingHint();
+
     public void validateCell(Cell cell) {
         if (cell.wasShot()) this.isTargetCellValid = false;
         else {
             this.isTargetCellValid = true;
-            targetCell = cell;
+            this.targetCell = cell;
         }
     }
     //endregion

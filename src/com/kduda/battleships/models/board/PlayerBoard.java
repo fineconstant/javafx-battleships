@@ -16,6 +16,18 @@ public class PlayerBoard extends Board {
         super(isEnemyBoard, mouseClickHandler, mouseEnteredHandler, mouseExitedHandler);
     }
 
+    //region not used
+    @Override
+    public void showShootingHint() {
+
+    }
+
+    @Override
+    public void removeShootingHint() {
+
+    }
+    //endregion
+
     //region showing and removing hints
     public void showPlacementHint(Unit unit, Cell cell) {
         Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());

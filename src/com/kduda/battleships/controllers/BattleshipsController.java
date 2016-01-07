@@ -50,12 +50,15 @@ public class BattleshipsController implements Initializable {
 
         Cell cell = (Cell) event.getSource();
         enemyBoard.validateCell(cell);
+        enemyBoard.showShootingHint();
     }
 
     private void enemyBoardExited(MouseEvent event) {
         //TODO: mouse exited handler
         if (!BattleshipsConfig.INSTANCE.isGameRunning)
             return;
+
+        enemyBoard.removeShootingHint();
     }
 
     private void playerBoardEntered(MouseEvent event) {

@@ -3,6 +3,7 @@ package com.kduda.battleships.models.board;
 import com.kduda.battleships.models.units.Unit;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 public class EnemyBoard extends Board {
     public EnemyBoard(boolean isEnemyBoard,
@@ -20,10 +21,20 @@ public class EnemyBoard extends Board {
     @Override
     public void removePlacementHint() {
     }
+    //endregion
 
     @Override
-    public void validateCell(Cell cell) {
+    public void showShootingHint() {
+        targetCell.saveCurrentColors();
 
+        if (isTargetCellValid)
+            targetCell.setColors(Color.GREEN, Color.GREEN);
+        else
+            targetCell.setColors(Color.RED, Color.RED);
     }
-    //endregion
+
+    @Override
+    public void removeShootingHint() {
+        targetCell.loadSavedColors();
+    }
 }
