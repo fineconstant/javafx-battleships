@@ -90,18 +90,23 @@ public class Board extends Parent {
     }
 
     private boolean isVerticalLocationUpwardsValid(int xPosition, int yPosition, int length) {
+        boolean result = true;
         for (int i = yPosition; i > yPosition - length; i--) {
-            if (!isValidPoint(xPosition, i)) return false;
 
-            Cell cell = getCell(xPosition, i);
-            if (cell != null) this.currentUnitCells.add(cell);
+            Cell cell = null;
+            if (isValidPoint(xPosition, i)) {
+                cell = getCell(xPosition, i);
+                if (cell != null) this.currentUnitCells.add(cell);
+            } else result = false;
 
-            if (!cell.isEmpty()) return false;
+            if (result) {
+                if (!cell.isEmpty()) result = false;
 
-            for (Cell neighbor : getAdjacentCells(xPosition, i))
-                if (!neighbor.isEmpty()) return false;
+                for (Cell neighbor : getAdjacentCells(xPosition, i))
+                    if (!neighbor.isEmpty()) result = false;
+            }
         }
-        return true;
+        return result;
     }
 
     private boolean isHorizontalLocationForwardValid(Unit unit, Position cellPosition) {
@@ -130,18 +135,24 @@ public class Board extends Parent {
     }
 
     private boolean isHorizontalLocationBackwardsValid(int xPosition, int yPosition, int length) {
+        boolean result = true;
         for (int i = xPosition; i > xPosition - length; i--) {
-            if (!isValidPoint(i, yPosition)) return false;
+            if (!isValidPoint(i, yPosition)) result = false;
 
-            Cell cell = getCell(i, yPosition);
-            if (cell != null) this.currentUnitCells.add(cell);
+            Cell cell = null;
+            if (isValidPoint(i, yPosition)) {
+                cell = getCell(i, yPosition);
+                if (cell != null) this.currentUnitCells.add(cell);
+            }
 
-            if (!cell.isEmpty()) return false;
+            if (result) {
+                if (!cell.isEmpty()) result = false;
 
-            for (Cell neighbor : getAdjacentCells(i, yPosition))
-                if (!neighbor.isEmpty()) return false;
+                for (Cell neighbor : getAdjacentCells(i, yPosition))
+                    if (!neighbor.isEmpty()) result = false;
+            }
         }
-        return true;
+        return result;
     }
     //endregion
 
@@ -151,34 +162,36 @@ public class Board extends Parent {
         int yPosition = cellPosition.getY();
         int length = plane.getLength();
 
-        if (!isVerticalLocationUpwardsValid(xPosition, yPosition, length)) return false;
+        boolean result = true;
+        if (!isVerticalLocationUpwardsValid(xPosition, yPosition, length)) result = false;
         //noinspection RedundantIfStatement
-        if (!areHorizontalNeighborsValid(xPosition, yPosition)) return false;
+        if (!areHorizontalNeighborsValid(xPosition, yPosition)) result = false;
 
-        return true;
+        return result;
     }
 
     private boolean isEastLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
-        if (!isHorizontalLocationForwardValid(plane, cellPosition)) return false;
-
+        boolean result = true;
+        if (!isHorizontalLocationForwardValid(plane, cellPosition)) result = false;
         //noinspection RedundantIfStatement
-        if (!areVerticalNeighborsValid(xPosition, yPosition)) return false;
+        if (!areVerticalNeighborsValid(xPosition, yPosition)) result = false;
 
-        return true;
+        return result;
     }
 
     private boolean isSouthLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
-        if (!isVerticalLocationDownwardsValid(plane, cellPosition)) return false;
+        boolean result = true;
+        if (!isVerticalLocationDownwardsValid(plane, cellPosition)) result = false;
         //noinspection RedundantIfStatement
-        if (!areHorizontalNeighborsValid(xPosition, yPosition)) return false;
+        if (!areHorizontalNeighborsValid(xPosition, yPosition)) result = false;
 
-        return true;
+        return result;
     }
 
     private boolean isWestLocationValid(Plane plane, Position cellPosition) {
@@ -186,27 +199,28 @@ public class Board extends Parent {
         int yPosition = cellPosition.getY();
         int length = plane.getLength();
 
-        if (!isHorizontalLocationBackwardsValid(xPosition, yPosition, length)) return false;
+        boolean result = true;
+        if (!isHorizontalLocationBackwardsValid(xPosition, yPosition, length)) result = false;
         //noinspection RedundantIfStatement
-        if (!areVerticalNeighborsValid(xPosition, yPosition)) return false;
+        if (!areVerticalNeighborsValid(xPosition, yPosition)) result = false;
 
-        return true;
+        return result;
     }
 
     private boolean areHorizontalNeighborsValid(int xPosition, int yPosition) {
-        if (!isValidPlacementCell(xPosition - 1, yPosition)) return false;
+        boolean result = true;
+        if (!isValidPlacementCell(xPosition - 1, yPosition)) result = false;
         //noinspection RedundantIfStatement
-        if (!isValidPlacementCell(xPosition + 1, yPosition)) return false;
-
-        return true;
+        if (!isValidPlacementCell(xPosition + 1, yPosition)) result = false;
+        return result;
     }
 
     private boolean areVerticalNeighborsValid(int xPosition, int yPosition) {
-        if (!isValidPlacementCell(xPosition, yPosition - 1)) return false;
+        boolean result = true;
+        if (!isValidPlacementCell(xPosition, yPosition - 1)) result = false;
         //noinspection RedundantIfStatement
-        if (!isValidPlacementCell(xPosition, yPosition + 1)) return false;
-
-        return true;
+        if (!isValidPlacementCell(xPosition, yPosition + 1)) result = false;
+        return result;
     }
 
     private boolean isValidPlacementCell(int xPosition, int yPosition) {

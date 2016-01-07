@@ -17,26 +17,26 @@ public enum UnitFactory {
         units = new ArrayList<>();
 
         units.add(createGroundLevelUnit(UnitType.Ship, 4));
-
-        units.add(createGroundLevelUnit(UnitType.Ship, 3));
-        units.add(createGroundLevelUnit(UnitType.Ship, 3));
-
-        units.add(createGroundLevelUnit(UnitType.Ship, 2));
-        units.add(createGroundLevelUnit(UnitType.Ship, 2));
-        units.add(createGroundLevelUnit(UnitType.Ship, 2));
-
-        units.add(createGroundLevelUnit(UnitType.Ship, 1));
-        units.add(createGroundLevelUnit(UnitType.Ship, 1));
-        units.add(createGroundLevelUnit(UnitType.Ship, 1));
-
-        units.add(createGroundLevelUnit(UnitType.Tank, 4));
-
-        units.add(createGroundLevelUnit(UnitType.Tank, 3));
-        units.add(createGroundLevelUnit(UnitType.Tank, 3));
-
-        units.add(createGroundLevelUnit(UnitType.Tank, 2));
-        units.add(createGroundLevelUnit(UnitType.Tank, 2));
-        units.add(createGroundLevelUnit(UnitType.Tank, 2));
+//
+//        units.add(createGroundLevelUnit(UnitType.Ship, 3));
+//        units.add(createGroundLevelUnit(UnitType.Ship, 3));
+//
+//        units.add(createGroundLevelUnit(UnitType.Ship, 2));
+//        units.add(createGroundLevelUnit(UnitType.Ship, 2));
+//        units.add(createGroundLevelUnit(UnitType.Ship, 2));
+//
+//        units.add(createGroundLevelUnit(UnitType.Ship, 1));
+//        units.add(createGroundLevelUnit(UnitType.Ship, 1));
+//        units.add(createGroundLevelUnit(UnitType.Ship, 1));
+//
+//        units.add(createGroundLevelUnit(UnitType.Tank, 4));
+//
+//        units.add(createGroundLevelUnit(UnitType.Tank, 3));
+//        units.add(createGroundLevelUnit(UnitType.Tank, 3));
+//
+//        units.add(createGroundLevelUnit(UnitType.Tank, 2));
+//        units.add(createGroundLevelUnit(UnitType.Tank, 2));
+//        units.add(createGroundLevelUnit(UnitType.Tank, 2));
 
         units.add(createPlane());
         units.add(createPlane());
