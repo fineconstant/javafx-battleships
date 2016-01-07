@@ -45,22 +45,16 @@ public class Board extends Parent {
         boolean wasUnitPlaced;
 
         if (unit instanceof GroundLevelUnit)
-            wasUnitPlaced = placeGroundLevelUnit((GroundLevelUnit) unit, cellPosition);
+            wasUnitPlaced = placeGroundLevelUnit((GroundLevelUnit) unit);
         else
             wasUnitPlaced = placePlane((Plane) unit, cellPosition);
 
         return wasUnitPlaced;
     }
 
-    private boolean placeGroundLevelUnit(GroundLevelUnit unit, Position cellPosition) {
-        if (unit.getOrientation() == Orientation.VERTICAL) {
+    private boolean placeGroundLevelUnit(GroundLevelUnit unit) {
             if (this.isCurrentUnitLocationValid) placeCurrentUnitInCells(unit);
             else return false;
-
-        } else {
-            if (this.isCurrentUnitLocationValid) placeCurrentUnitInCells(unit);
-            else return false;
-        }
         return true;
     }
 
