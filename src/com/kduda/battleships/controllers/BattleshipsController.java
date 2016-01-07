@@ -65,8 +65,7 @@ public class BattleshipsController implements Initializable {
         if (BattleshipsConfig.INSTANCE.isGameRunning)
             return;
 
-        Cell cell = (Cell) event.getSource();
-        playerBoard.removePlacementHint(currentUnit, cell);
+        playerBoard.removePlacementHint();
     }
 
     private void playerBoardClick(MouseEvent event) {
@@ -77,7 +76,7 @@ public class BattleshipsController implements Initializable {
         Cell cell = (Cell) event.getSource();
 
         if (event.getButton() == MouseButton.SECONDARY) {
-            playerBoard.removePlacementHint(currentUnit, cell);
+            playerBoard.removePlacementHint();
             this.currentUnit.rotateUnit();
             playerBoard.showPlacementHint(currentUnit, cell);
             return;
