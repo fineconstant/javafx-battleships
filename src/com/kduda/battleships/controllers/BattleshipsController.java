@@ -68,8 +68,6 @@ public class BattleshipsController implements Initializable {
     private void playerBoardClick(MouseEvent event) {
         if (BattleshipsConfig.INSTANCE.isGameRunning) return;
 
-        if (currentUnit == null) startGame();
-
         Cell cell = (Cell) event.getSource();
 
         if (event.getButton() == MouseButton.SECONDARY) {
@@ -84,6 +82,8 @@ public class BattleshipsController implements Initializable {
 
         if (wasPlacementSuccessful)
             this.currentUnit = UnitFactory.INSTANCE.getNextUnit();
+
+        if (currentUnit == null) startGame();
     }
 
 
@@ -110,6 +110,7 @@ public class BattleshipsController implements Initializable {
 
     private void startGame() {
         //TODO: place enemy ships
+        //TODO: ui changes
         BattleshipsConfig.INSTANCE.isGameRunning = true;
     }
 

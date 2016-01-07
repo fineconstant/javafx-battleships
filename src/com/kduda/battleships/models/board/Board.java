@@ -20,11 +20,13 @@ public class Board extends Parent {
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
     private ArrayList<Cell> currentUnitCell;
+    private boolean isCurrentUnitLocatonValid = false;
 
     public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler,
                  EventHandler<? super MouseEvent> mouseEnteredHandler,
                  EventHandler<? super MouseEvent> mouseExitedHandler) {
         this.isEnemyBoard = isEnemyBoard;
+        this.isCurrentUnitLocatonValid = false;
         for (int y = 0; y < 22; y++) {
             HBox row = new HBox();
             for (int x = 0; x < 14; x++) {
@@ -52,17 +54,17 @@ public class Board extends Parent {
 
     private boolean placeGroundLevelUnit(GroundLevelUnit unit, Position cellPosition) {
         if (unit.getOrientation() == Orientation.VERTICAL) {
-            if (isVerticalLocationValid(unit, cellPosition)) placeVerticalUnit(unit, cellPosition);
+            if (isVerticalLocationDownwardsValid(unit, cellPosition)) placeVerticalUnit(unit, cellPosition);
             else return false;
 
         } else {
-            if (isHorizontalLocationValid(unit, cellPosition)) placeHorizontalUnit(unit, cellPosition);
+            if (isHorizontalLocationForwardValid(unit, cellPosition)) placeHorizontalUnit(unit, cellPosition);
             else return false;
         }
         return true;
     }
 
-    private boolean isVerticalLocationValid(Unit unit, Position cellPosition) {
+    private boolean isVerticalLocationDownwardsValid(Unit unit, Position cellPosition) {
         int unitLength = unit.getLength();
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
@@ -71,6 +73,7 @@ public class Board extends Parent {
             if (!isValidPoint(xPosition, i)) return false;
 
             Cell cell = getCell(xPosition, i);
+            if (cell != null) this.currentUnitCell.add(cell);
 
             if (!cell.isSurfaceValid(unit)) return false;
 
@@ -82,7 +85,7 @@ public class Board extends Parent {
         return true;
     }
 
-    private boolean isHorizontalLocationValid(Unit unit, Position cellPosition) {
+    private boolean isHorizontalLocationForwardValid(Unit unit, Position cellPosition) {
         int unitLength = unit.getLength();
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
@@ -91,6 +94,7 @@ public class Board extends Parent {
             if (!isValidPoint(i, yPosition)) return false;
 
             Cell cell = getCell(i, yPosition);
+            if (cell != null) this.currentUnitCell.add(cell);
 
             if (!cell.isSurfaceValid(unit)) return false;
 
@@ -162,7 +166,7 @@ public class Board extends Parent {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
-        if (!isHorizontalLocationValid(plane, cellPosition)) return false;
+        if (!isHorizontalLocationForwardValid(plane, cellPosition)) return false;
 
         //noinspection RedundantIfStatement
         if (!areVerticalNeighborsValid(xPosition, yPosition)) return false;
@@ -174,7 +178,7 @@ public class Board extends Parent {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
-        if (!isVerticalLocationValid(plane, cellPosition)) return false;
+        if (!isVerticalLocationDownwardsValid(plane, cellPosition)) return false;
         //noinspection RedundantIfStatement
         if (!areHorizontalNeighborsValid(xPosition, yPosition)) return false;
 
@@ -360,23 +364,27 @@ public class Board extends Parent {
         this.currentUnitCell = new ArrayList<>();
 
         if (unit instanceof GroundLevelUnit)
-            showGroundUnitHint((GroundLevelUnit) unit, cell, cellPosition);
+            showGroundUnitHint((GroundLevelUnit) unit, cellPosition);
         else showPlaneHint((Plane) unit, cellPosition);
     }
 
-    private void showGroundUnitHint(GroundLevelUnit unit, Cell cell, Position cellPosition) {
+    private void showGroundUnitHint(GroundLevelUnit unit, Position cellPosition) {
         if (unit.getOrientation() == Orientation.VERTICAL) {
-            if (isVerticalLocationValid(unit, cellPosition)) {
-                changeColorsVertical(cell, unit.getLength(), Color.GREEN, Color.GREEN);
+            if (isVerticalLocationDownwardsValid(unit, cellPosition)) {
+                this.isCurrentUnitLocatonValid = true;
+                changeCurrentUnitColors(Color.GREEN, Color.GREEN);
             } else {
-                changeColorsVertical(cell, unit.getLength(), Color.RED, Color.RED);
+                this.isCurrentUnitLocatonValid = false;
+                changeCurrentUnitColors(Color.RED, Color.RED);
             }
 
         } else {
-            if (isHorizontalLocationValid(unit, cellPosition)) {
-                changeColorsHorizontal(cell, unit.getLength(), Color.GREEN, Color.GREEN);
+            if (isHorizontalLocationForwardValid(unit, cellPosition)) {
+                this.isCurrentUnitLocatonValid = true;
+                changeCurrentUnitColors(Color.GREEN, Color.GREEN);
             } else {
-                changeColorsHorizontal(cell, unit.getLength(), Color.RED, Color.RED);
+                this.isCurrentUnitLocatonValid = false;
+                changeCurrentUnitColors(Color.RED, Color.RED);
             }
         }
     }
@@ -425,7 +433,6 @@ public class Board extends Parent {
             currCell = getCell(xPosition, i);
             currCell.saveCurrentColors();
             currCell.setColors(fillColor, strokeColor);
-            this.currentUnitCell.add(currCell);
         }
         showHorizontalWingsHint(xPosition, yPosition, fillColor, strokeColor);
     }
@@ -433,7 +440,7 @@ public class Board extends Parent {
     private void showPlaneEastHint(int unitLength, int xPosition, int yPosition, Color fillColor, Color strokeColor) {
         Cell currCell = getCell(xPosition, yPosition);
 
-        changeColorsHorizontal(currCell, unitLength, fillColor, strokeColor);
+        changeCurrentUnitColors(fillColor, strokeColor);
 
         showVerticalWingsHint(xPosition, yPosition, fillColor, strokeColor);
     }
@@ -441,7 +448,7 @@ public class Board extends Parent {
     private void showPlaneSouthHint(int unitLength, int xPosition, int yPosition, Color fillColor, Color strokeColor) {
         Cell currCell = getCell(xPosition, yPosition);
 
-        changeColorsVertical(currCell, unitLength, fillColor, strokeColor);
+        changeCurrentUnitColors(fillColor, strokeColor);
         showHorizontalWingsHint(xPosition, yPosition, fillColor, strokeColor);
     }
 
@@ -452,7 +459,6 @@ public class Board extends Parent {
             currCell = getCell(i, yPosition);
             currCell.saveCurrentColors();
             currCell.setColors(fillColor, strokeColor);
-            this.currentUnitCell.add(currCell);
         }
         showVerticalWingsHint(xPosition, yPosition, fillColor, strokeColor);
     }
@@ -462,12 +468,10 @@ public class Board extends Parent {
         currCell = getCell(xPosition - 1, yPosition);
         currCell.saveCurrentColors();
         currCell.setColors(fillColor, strokeColor);
-        this.currentUnitCell.add(currCell);
 
         currCell = getCell(xPosition + 1, yPosition);
         currCell.saveCurrentColors();
         currCell.setColors(fillColor, strokeColor);
-        this.currentUnitCell.add(currCell);
 
     }
 
@@ -476,37 +480,17 @@ public class Board extends Parent {
         currCell = getCell(xPosition, yPosition - 1);
         currCell.saveCurrentColors();
         currCell.setColors(fillColor, strokeColor);
-        this.currentUnitCell.add(currCell);
-
 
         currCell = getCell(xPosition, yPosition + 1);
         currCell.saveCurrentColors();
         currCell.setColors(fillColor, strokeColor);
-        this.currentUnitCell.add(currCell);
 
     }
 
-    private void changeColorsVertical(Cell cell, int length, Color fillColor, Color strokeColor) {
-        int xPosition = cell.POSITION.getX();
-        int yPosition = cell.POSITION.getY();
-
-        for (int i = yPosition; i < yPosition + length; i++) {
-            Cell currCell = getCell(xPosition, i);
+    private void changeCurrentUnitColors(Color fillColor, Color strokeColor) {
+        for (Cell currCell : this.currentUnitCell) {
             currCell.saveCurrentColors();
             currCell.setColors(fillColor, strokeColor);
-            this.currentUnitCell.add(currCell);
-        }
-    }
-
-    private void changeColorsHorizontal(Cell cell, int length, Color fillColor, Color strokeColor) {
-        int xPosition = cell.POSITION.getX();
-        int yPosition = cell.POSITION.getY();
-
-        for (int i = xPosition; i < xPosition + length; i++) {
-            Cell currCell = getCell(i, yPosition);
-            currCell.saveCurrentColors();
-            currCell.setColors(fillColor, strokeColor);
-            this.currentUnitCell.add(currCell);
         }
     }
 
