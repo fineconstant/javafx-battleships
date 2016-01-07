@@ -53,17 +53,14 @@ public class BattleshipsController implements Initializable {
     }
 
     private void playerBoardEntered(MouseEvent event) {
-        if (BattleshipsConfig.INSTANCE.isGameRunning)
-            return;
+        if (BattleshipsConfig.INSTANCE.isGameRunning) return;
 
         Cell cell = (Cell) event.getSource();
         playerBoard.showPlacementHint(currentUnit, cell);
-
     }
 
     private void playerBoardExited(MouseEvent event) {
-        if (BattleshipsConfig.INSTANCE.isGameRunning)
-            return;
+        if (BattleshipsConfig.INSTANCE.isGameRunning) return;
 
         playerBoard.removePlacementHint();
     }
