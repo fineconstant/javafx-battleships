@@ -20,5 +20,10 @@ public class EnemyBoard extends Board {
     @Override
     public void removePlacementHint() {
     }
+
+    @Override
+    public void validateCell(Cell cell) {
+
+    }
     //endregion
 }

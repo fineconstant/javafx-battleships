@@ -45,9 +45,11 @@ public class BattleshipsController implements Initializable {
     }
 
     private void enemyBoardEntered(MouseEvent event) {
-        //TODO: mouse entered handler
         if (!BattleshipsConfig.INSTANCE.isGameRunning)
             return;
+
+        Cell cell = (Cell) event.getSource();
+        enemyBoard.validateCell(cell);
     }
 
     private void enemyBoardExited(MouseEvent event) {

@@ -100,4 +100,8 @@ public class Cell extends Rectangle {
     public String toString() {
         return "x = " + this.POSITION.getX() + ", y = " + this.POSITION.getY();
     }
+
+    public boolean wasShot() {
+        return this.wasShot;
+    }
 }

@@ -22,6 +22,8 @@ public abstract class Board extends Parent {
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
     private Random random = new Random();
+    private Cell targetCell = null;
+    private boolean isTargetCellValid = false;
 
     public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler,
                  EventHandler<? super MouseEvent> mouseEnteredHandler,
@@ -294,6 +296,16 @@ public abstract class Board extends Parent {
     public abstract void showPlacementHint(Unit unit, Cell cell);
 
     public abstract void removePlacementHint();
+    //endregion
+
+    //region shooting
+    public void validateCell(Cell cell) {
+        if (cell.wasShot()) this.isTargetCellValid = false;
+        else {
+            this.isTargetCellValid = true;
+            targetCell = cell;
+        }
+    }
     //endregion
 
     //region helper methods
