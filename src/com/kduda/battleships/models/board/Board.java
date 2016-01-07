@@ -427,10 +427,10 @@ public class Board extends Parent {
         if (unit instanceof GroundLevelUnit) {
             removeGroundUnitHint((GroundLevelUnit) unit, cell);
         } else {
-            //TODO: restore dla samolotow
-            return;
+            removePlaneHint((Plane) unit, cell);
         }
     }
+
 
     private void removeGroundUnitHint(GroundLevelUnit unit, Cell cell) {
         if (unit.getOrientation() == Orientation.VERTICAL) {
@@ -458,5 +458,20 @@ public class Board extends Parent {
             Cell currCell = getCell(i, yPosition);
             currCell.loadSavedColors();
         }
+    }
+
+    private void removePlaneHint(Plane plane, Cell cell) {
+        //TODO: implement
+        switch (plane.getDirection()) {
+            case North:
+                break;
+            case East:
+                break;
+            case South:
+                break;
+            case West:
+                break;
+        }
+
     }
 }
