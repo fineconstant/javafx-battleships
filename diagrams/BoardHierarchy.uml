@@ -3,14 +3,14 @@
   <ID>JAVA</ID>
   <OriginalElement>com.kduda.battleships.models.board.Board</OriginalElement>
   <nodes>
-    <node x="0.0" y="1805.0">com.kduda.battleships.models.board.Position</node>
-    <node x="957.0" y="0.0">com.kduda.battleships.models.board.Cell</node>
+    <node x="0.0" y="1391.0">com.kduda.battleships.models.board.Position</node>
+    <node x="777.0" y="0.0">com.kduda.battleships.models.board.Cell</node>
     <node x="0.0" y="0.0">com.kduda.battleships.models.board.Board</node>
-    <node x="1593.0" y="0.0">com.kduda.battleships.models.board.CellType</node>
+    <node x="1413.0" y="0.0">com.kduda.battleships.models.board.CellType</node>
   </nodes>
   <notes />
   <edges />
-  <settings layout="Hierarchic Group" zoom="0.8378926038500507" x="884.0" y="976.9999999999999" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="794.0" y="770.0" />
   <SelectedNodes>
     <node>com.kduda.battleships.models.board.Board</node>
   </SelectedNodes>

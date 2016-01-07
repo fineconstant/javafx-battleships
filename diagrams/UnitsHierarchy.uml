@@ -27,8 +27,8 @@
       <point x="-85.75" y="98.0" />
     </edge>
     <edge source="com.kduda.battleships.models.units.Ship" target="com.kduda.battleships.models.units.GroundLevelUnit">
-      <point x="0.0" y="-28.5" />
-      <point x="241.99999999999997" y="560.0" />
+      <point x="2.8421709430404007E-14" y="-28.5" />
+      <point x="242.0" y="560.0" />
       <point x="257.25" y="560.0" />
       <point x="85.75" y="98.0" />
     </edge>

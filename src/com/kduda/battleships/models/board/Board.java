@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board extends Parent {
-    //TODO: nadklasa board, klasy playerboard i enemyboard
     public int units = 19;
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
@@ -59,6 +58,7 @@ public class Board extends Parent {
         this.isCurrentUnitLocationValid = false;
     }
 
+    //region universal location checks
     private boolean isVerticalLocationDownwardsValid(Unit unit, Position cellPosition) {
         int unitLength = unit.getLength();
         int xPosition = cellPosition.getX();
@@ -130,8 +130,9 @@ public class Board extends Parent {
         }
         return true;
     }
+    //endregion
 
-
+    //region planes specific location checks
     private boolean isNorthLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
@@ -179,7 +180,6 @@ public class Board extends Parent {
         return true;
     }
 
-
     private boolean areHorizontalNeighborsValid(int xPosition, int yPosition) {
         if (!isValidPlacementCell(xPosition - 1, yPosition)) return false;
         //noinspection RedundantIfStatement
@@ -209,112 +209,10 @@ public class Board extends Parent {
 
         return true;
     }
+    //endregion
 
-    private void placePlaneNorth(Plane plane, Position cellPosition) {
-        int unitLength = plane.getLength();
-        int xPosition = cellPosition.getX();
-        int yPosition = cellPosition.getY();
 
-        placeVerticalPlaneBody(plane, unitLength, xPosition, yPosition);
-        placeHorizontalPlaneWings(plane, xPosition, yPosition);
-    }
-
-    private void placePlaneEast(Plane plane, Position cellPosition) {
-        int xPosition = cellPosition.getX();
-        int yPosition = cellPosition.getY();
-
-        placeCurrentUnitInCells(plane);
-        placeVerticalPlaneWings(plane, xPosition, yPosition);
-    }
-
-    private void placePlaneSouth(Plane plane, Position cellPosition) {
-        int xPosition = cellPosition.getX();
-        int yPosition = cellPosition.getY();
-
-        placeCurrentUnitInCells(plane);
-        placeHorizontalPlaneWings(plane, xPosition, yPosition);
-    }
-
-    private void placePlaneWest(Plane plane, Position cellPosition) {
-        int unitLength = plane.getLength();
-        int xPosition = cellPosition.getX();
-        int yPosition = cellPosition.getY();
-
-        placeHorizontalPlaneBody(plane, unitLength, xPosition, yPosition);
-        placeVerticalPlaneWings(plane, xPosition, yPosition);
-
-    }
-
-    private void placeVerticalPlaneBody(Plane plane, int unitLength, int xPosition, int yPosition) {
-        for (int i = yPosition; i > yPosition - unitLength; i--) {
-            Cell cell = getCell(xPosition, i);
-            placeUnitInCell(plane, cell);
-        }
-    }
-
-    private void placeHorizontalPlaneBody(Plane plane, int unitLength, int xPosition, int yPosition) {
-        for (int i = xPosition; i > xPosition - unitLength; i--) {
-            Cell cell = getCell(i, yPosition);
-            placeUnitInCell(plane, cell);
-        }
-    }
-
-    private void placeHorizontalPlaneWings(Plane plane, int xPosition, int yPosition) {
-        Cell cell = getCell(xPosition - 1, yPosition);
-        placeUnitInCell(plane, cell);
-        cell = getCell(xPosition + 1, yPosition);
-        placeUnitInCell(plane, cell);
-    }
-
-    private void placeVerticalPlaneWings(Plane plane, int xPosition, int yPosition) {
-        Cell cell = getCell(xPosition, yPosition - 1);
-        placeUnitInCell(plane, cell);
-        cell = getCell(xPosition, yPosition + 1);
-        placeUnitInCell(plane, cell);
-    }
-
-    private void placeUnitInCell(Unit unit, Cell cell) {
-        cell.setUnit(unit);
-        if (!this.isEnemyBoard) {
-            //TODO: rozne kolory dla roznych jednostek
-            cell.setColors(Color.WHITE, Color.GREEN);
-            cell.saveCurrentColors();
-        }
-    }
-
-    private boolean isValidPoint(int x, int y) {
-        return x >= 0 && x < 14 && y >= 0 && y < 22;
-    }
-
-    public Cell getCell(int x, int y) {
-        HBox row = (HBox) column.getChildren().get(y);
-        return (Cell) row.getChildren().get(x);
-    }
-
-    private Cell[] getAdjacentCells(int x, int y) {
-        Position[] positions = new Position[]{
-                new Position(x, y - 1), //N
-                new Position(x + 1, y - 1), //NE
-                new Position(x + 1, y), //E
-                new Position(x + 1, y + 1), //SE
-                new Position(x, y + 1), //S
-                new Position(x - 1, y + 1), //SW
-                new Position(x - 1, y), //W
-                new Position(x - 1, y - 1) //NW
-        };
-
-        List<Cell> neighbors = new ArrayList<>();
-
-        for (Position position : positions) {
-            int xPosition = position.getX();
-            int yPosition = position.getY();
-            if (isValidPoint(xPosition, yPosition))
-                neighbors.add(getCell(xPosition, yPosition));
-        }
-        //noinspection ToArrayCallWithZeroLengthArrayArgument
-        return neighbors.toArray(new Cell[0]);
-    }
-
+    //region showing and removing hints
     public void showPlacementHint(Unit unit, Cell cell) {
         Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
         this.currentUnitCells = new ArrayList<>();
@@ -388,6 +286,12 @@ public class Board extends Parent {
         }
     }
 
+    public void removePlacementHint() {
+        this.currentUnitCells.forEach(Cell::loadSavedColors);
+    }
+    //endregion
+
+    //region helper methods
     private void changeCurrentUnitColors(Color fillColor, Color strokeColor) {
         for (Cell currCell : this.currentUnitCells) {
             currCell.saveCurrentColors();
@@ -395,7 +299,46 @@ public class Board extends Parent {
         }
     }
 
-    public void removePlacementHint() {
-        this.currentUnitCells.forEach(Cell::loadSavedColors);
+    private void placeUnitInCell(Unit unit, Cell cell) {
+        cell.setUnit(unit);
+        if (!this.isEnemyBoard) {
+            //TODO: rozne kolory dla roznych jednostek
+            cell.setColors(Color.WHITE, Color.GREEN);
+            cell.saveCurrentColors();
+        }
     }
+
+    private boolean isValidPoint(int x, int y) {
+        return x >= 0 && x < 14 && y >= 0 && y < 22;
+    }
+
+    public Cell getCell(int x, int y) {
+        HBox row = (HBox) column.getChildren().get(y);
+        return (Cell) row.getChildren().get(x);
+    }
+
+    private Cell[] getAdjacentCells(int x, int y) {
+        Position[] positions = new Position[]{
+                new Position(x, y - 1), //N
+                new Position(x + 1, y - 1), //NE
+                new Position(x + 1, y), //E
+                new Position(x + 1, y + 1), //SE
+                new Position(x, y + 1), //S
+                new Position(x - 1, y + 1), //SW
+                new Position(x - 1, y), //W
+                new Position(x - 1, y - 1) //NW
+        };
+
+        List<Cell> neighbors = new ArrayList<>();
+
+        for (Position position : positions) {
+            int xPosition = position.getX();
+            int yPosition = position.getY();
+            if (isValidPoint(xPosition, yPosition))
+                neighbors.add(getCell(xPosition, yPosition));
+        }
+        //noinspection ToArrayCallWithZeroLengthArrayArgument
+        return neighbors.toArray(new Cell[0]);
+    }
+    //endregion
 }
