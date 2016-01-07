@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board extends Parent {
+    //TODO: podzial na podklasy playerboard enemyboard
     public int units = 19;
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
@@ -26,6 +27,8 @@ public class Board extends Parent {
                  EventHandler<? super MouseEvent> mouseExitedHandler) {
         this.isEnemyBoard = isEnemyBoard;
         this.isCurrentUnitLocationValid = false;
+        this.currentUnitCells = new ArrayList<>();
+
         for (int y = 0; y < 22; y++) {
             HBox row = new HBox();
             for (int x = 0; x < 14; x++) {
@@ -40,6 +43,7 @@ public class Board extends Parent {
         getChildren().add(column);
     }
 
+    //region unit placement
     public boolean placeUnit(Unit unit) {
         boolean wasUnitPlaced = placeUnitOnBoard(unit);
         return wasUnitPlaced;
@@ -57,6 +61,7 @@ public class Board extends Parent {
         }
         this.isCurrentUnitLocationValid = false;
     }
+    //endregion
 
     //region universal location checks
     private boolean isVerticalLocationDownwardsValid(Unit unit, Position cellPosition) {
@@ -64,20 +69,24 @@ public class Board extends Parent {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
+        boolean result = true;
         for (int i = yPosition; i < yPosition + unitLength; i++) {
-            if (!isValidPoint(xPosition, i)) return false;
+            Cell cell = null;
+            if (isValidPoint(xPosition, i)) {
+                cell = getCell(xPosition, i);
+                if (cell != null) this.currentUnitCells.add(cell);
+            } else result = false;
 
-            Cell cell = getCell(xPosition, i);
-            if (cell != null) this.currentUnitCells.add(cell);
+            if (result) {
+                if (!cell.isSurfaceValid(unit)) result = false;
 
-            if (!cell.isSurfaceValid(unit)) return false;
+                if (!cell.isEmpty()) result = false;
 
-            if (!cell.isEmpty()) return false;
-
-            for (Cell neighbor : getAdjacentCells(xPosition, i))
-                if (!neighbor.isEmpty()) return false;
+                for (Cell neighbor : getAdjacentCells(xPosition, i))
+                    if (!neighbor.isEmpty()) result = false;
+            }
         }
-        return true;
+        return result;
     }
 
     private boolean isVerticalLocationUpwardsValid(int xPosition, int yPosition, int length) {
@@ -100,20 +109,24 @@ public class Board extends Parent {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
+        boolean result = true;
         for (int i = xPosition; i < xPosition + unitLength; i++) {
-            if (!isValidPoint(i, yPosition)) return false;
+            Cell cell = null;
+            if (isValidPoint(i, yPosition)) {
+                cell = getCell(i, yPosition);
+                if (cell != null) this.currentUnitCells.add(cell);
+            } else result = false;
 
-            Cell cell = getCell(i, yPosition);
-            if (cell != null) this.currentUnitCells.add(cell);
+            if (result) {
+                if (!cell.isSurfaceValid(unit)) result = false;
 
-            if (!cell.isSurfaceValid(unit)) return false;
+                if (!cell.isEmpty()) result = false;
 
-            if (!cell.isEmpty()) return false;
-
-            for (Cell neighbor : getAdjacentCells(i, yPosition))
-                if (!neighbor.isEmpty()) return false;
+                for (Cell neighbor : getAdjacentCells(i, yPosition))
+                    if (!neighbor.isEmpty()) result = false;
+            }
         }
-        return true;
+        return result;
     }
 
     private boolean isHorizontalLocationBackwardsValid(int xPosition, int yPosition, int length) {
@@ -215,7 +228,7 @@ public class Board extends Parent {
     //region showing and removing hints
     public void showPlacementHint(Unit unit, Cell cell) {
         Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
-        this.currentUnitCells = new ArrayList<>();
+        this.currentUnitCells.clear();
 
         if (unit instanceof GroundLevelUnit)
             showGroundUnitHint((GroundLevelUnit) unit, cellPosition);

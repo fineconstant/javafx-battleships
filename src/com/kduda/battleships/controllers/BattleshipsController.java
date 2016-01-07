@@ -2,7 +2,6 @@ package com.kduda.battleships.controllers;
 
 import com.kduda.battleships.models.board.Board;
 import com.kduda.battleships.models.board.Cell;
-import com.kduda.battleships.models.board.Position;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitFactory;
 import javafx.application.Platform;
@@ -77,8 +76,7 @@ public class BattleshipsController implements Initializable {
             return;
         }
 
-        Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
-        boolean wasPlacementSuccessful = playerBoard.placeUnit(currentUnit, cellPosition);
+        boolean wasPlacementSuccessful = playerBoard.placeUnit(currentUnit);
 
         if (wasPlacementSuccessful)
             this.currentUnit = UnitFactory.INSTANCE.getNextUnit();
