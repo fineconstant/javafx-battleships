@@ -1,7 +1,6 @@
-- rozstawianie przeciwnika
 - klikanie w plansze przeciwnika
 - hover na planszy przeciwnika
-
+- zaznaczanie obszaru dookola zniszczonego
 
 
 * zapis i odczyt planszy ze statkami do pliku (tekstowego)
