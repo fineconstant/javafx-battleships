@@ -2,6 +2,7 @@ package com.kduda.battleships.controllers;
 
 import com.kduda.battleships.models.board.Board;
 import com.kduda.battleships.models.board.Cell;
+import com.kduda.battleships.models.board.PlayerBoard;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitFactory;
 import javafx.application.Platform;
@@ -28,10 +29,10 @@ public class BattleshipsController implements Initializable {
     }
 
     private void initializeBoards() {
-        enemyBoard = new Board(true, this::enemyBoardClick, this::enemyBoardEntered, this::enemyBoardExited);
+        enemyBoard = new PlayerBoard(true, this::enemyBoardClick, this::enemyBoardEntered, this::enemyBoardExited);
         enemyBoardArea.getChildren().add(enemyBoard);
 
-        playerBoard = new Board(false, this::playerBoardClick, this::playerBoardEntered, this::playerBoardExited);
+        playerBoard = new PlayerBoard(false, this::playerBoardClick, this::playerBoardEntered, this::playerBoardExited);
         playerBoardArea.getChildren().addAll(playerBoard);
     }
 
@@ -43,12 +44,14 @@ public class BattleshipsController implements Initializable {
 
     private void enemyBoardEntered(MouseEvent event) {
         //TODO: mouse entered handler
-        return;
+        if (!BattleshipsConfig.INSTANCE.isGameRunning)
+            return;
     }
 
     private void enemyBoardExited(MouseEvent event) {
         //TODO: mouse exited handler
-        return;
+        if (!BattleshipsConfig.INSTANCE.isGameRunning)
+            return;
     }
 
     private void playerBoardEntered(MouseEvent event) {
@@ -107,8 +110,9 @@ public class BattleshipsController implements Initializable {
 
 
     private void startGame() {
-        //TODO: place enemy ships
+        //TODO: zapisanie do pliku
         //TODO: ui changes
+
         BattleshipsConfig.INSTANCE.isGameRunning = true;
     }
 

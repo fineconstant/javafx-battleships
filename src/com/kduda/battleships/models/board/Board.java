@@ -1,10 +1,8 @@
 package com.kduda.battleships.models.board;
 
-import com.kduda.battleships.models.units.GroundLevelUnit;
 import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Unit;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -14,13 +12,13 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board extends Parent {
+public abstract class Board extends Parent {
     //TODO: podzial na podklasy playerboard enemyboard
     public int units = 19;
+    protected ArrayList<Cell> currentUnitCells;
+    protected boolean isCurrentUnitLocationValid = false;
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
-    private ArrayList<Cell> currentUnitCells;
-    private boolean isCurrentUnitLocationValid = false;
 
     public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler,
                  EventHandler<? super MouseEvent> mouseEnteredHandler,
@@ -64,7 +62,7 @@ public class Board extends Parent {
     //endregion
 
     //region universal location checks
-    private boolean isVerticalLocationDownwardsValid(Unit unit, Position cellPosition) {
+    protected boolean isVerticalLocationDownwardsValid(Unit unit, Position cellPosition) {
         int unitLength = unit.getLength();
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
@@ -109,7 +107,7 @@ public class Board extends Parent {
         return result;
     }
 
-    private boolean isHorizontalLocationForwardValid(Unit unit, Position cellPosition) {
+    protected boolean isHorizontalLocationForwardValid(Unit unit, Position cellPosition) {
         int unitLength = unit.getLength();
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
@@ -157,7 +155,7 @@ public class Board extends Parent {
     //endregion
 
     //region planes specific location checks
-    private boolean isNorthLocationValid(Plane plane, Position cellPosition) {
+    protected boolean isNorthLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
         int length = plane.getLength();
@@ -170,7 +168,7 @@ public class Board extends Parent {
         return result;
     }
 
-    private boolean isEastLocationValid(Plane plane, Position cellPosition) {
+    protected boolean isEastLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
@@ -182,7 +180,7 @@ public class Board extends Parent {
         return result;
     }
 
-    private boolean isSouthLocationValid(Plane plane, Position cellPosition) {
+    protected boolean isSouthLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
@@ -194,7 +192,7 @@ public class Board extends Parent {
         return result;
     }
 
-    private boolean isWestLocationValid(Plane plane, Position cellPosition) {
+    protected boolean isWestLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
         int length = plane.getLength();
@@ -238,88 +236,14 @@ public class Board extends Parent {
     }
     //endregion
 
+    //region showing and removing hints - PlayerBoard
+    public abstract void showPlacementHint(Unit unit, Cell cell);
 
-    //region showing and removing hints
-    public void showPlacementHint(Unit unit, Cell cell) {
-        Position cellPosition = new Position(cell.POSITION.getX(), cell.POSITION.getY());
-        this.currentUnitCells.clear();
-
-        if (unit instanceof GroundLevelUnit)
-            showGroundUnitHint((GroundLevelUnit) unit, cellPosition);
-        else showPlaneHint((Plane) unit, cellPosition);
-    }
-
-    private void showGroundUnitHint(GroundLevelUnit unit, Position cellPosition) {
-        if (unit.getOrientation() == Orientation.VERTICAL) {
-            if (isVerticalLocationDownwardsValid(unit, cellPosition)) {
-                this.isCurrentUnitLocationValid = true;
-                changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-            } else {
-                this.isCurrentUnitLocationValid = false;
-                changeCurrentUnitColors(Color.RED, Color.RED);
-            }
-
-        } else {
-            if (isHorizontalLocationForwardValid(unit, cellPosition)) {
-                this.isCurrentUnitLocationValid = true;
-                changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-            } else {
-                this.isCurrentUnitLocationValid = false;
-                changeCurrentUnitColors(Color.RED, Color.RED);
-            }
-        }
-    }
-
-    private void showPlaneHint(Plane plane, Position cellPosition) {
-        switch (plane.getDirection()) {
-            case North:
-                if (isNorthLocationValid(plane, cellPosition)) {
-                    this.isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-                    return;
-                } else {
-                    this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED, Color.RED);
-                    return;
-                }
-            case East:
-                if (isEastLocationValid(plane, cellPosition)) {
-                    this.isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-                    return;
-                } else {
-                    this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED, Color.RED);
-                    return;
-                }
-            case South:
-                if (isSouthLocationValid(plane, cellPosition)) {
-                    this.isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-                    return;
-                } else {
-                    this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED, Color.RED);
-                    return;
-                }
-            case West:
-                if (isWestLocationValid(plane, cellPosition)) {
-                    this.isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-                } else {
-                    this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED, Color.RED);
-                }
-        }
-    }
-
-    public void removePlacementHint() {
-        this.currentUnitCells.forEach(Cell::loadSavedColors);
-    }
+    public abstract void removePlacementHint();
     //endregion
 
     //region helper methods
-    private void changeCurrentUnitColors(Color fillColor, Color strokeColor) {
+    protected void changeCurrentUnitColors(Color fillColor, Color strokeColor) {
         for (Cell currCell : this.currentUnitCells) {
             currCell.saveCurrentColors();
             currCell.setColors(fillColor, strokeColor);
@@ -328,11 +252,15 @@ public class Board extends Parent {
 
     private void placeUnitInCell(Unit unit, Cell cell) {
         cell.setUnit(unit);
-        if (!this.isEnemyBoard) {
-            //TODO: rozne kolory dla roznych jednostek
-            cell.setColors(Color.WHITE, Color.GREEN);
-            cell.saveCurrentColors();
-        }
+//        if (!this.isEnemyBoard) {
+//            //TODO: rozne kolory dla roznych jednostek
+//            cell.setColors(Color.WHITE, Color.GREEN);
+//            cell.saveCurrentColors();
+//        }
+        //FIXME: enemy debug
+        cell.setColors(Color.WHITE, Color.GREEN);
+        cell.saveCurrentColors();
+
     }
 
     private boolean isValidPoint(int x, int y) {
