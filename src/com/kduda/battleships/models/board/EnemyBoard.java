@@ -12,6 +12,7 @@ public class EnemyBoard extends Board {
         super(isEnemyBoard, mouseClickHandler, mouseEnteredHandler, mouseExitedHandler);
     }
 
+    //region not used
     @Override
     public void showPlacementHint(Unit unit, Cell cell) {
     }
@@ -19,4 +20,5 @@ public class EnemyBoard extends Board {
     @Override
     public void removePlacementHint() {
     }
+    //endregion
 }

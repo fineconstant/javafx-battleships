@@ -28,12 +28,15 @@ public enum UnitFactory {
         units.add(createGroundLevelUnit(UnitType.Ship, 1));
         units.add(createGroundLevelUnit(UnitType.Ship, 1));
         units.add(createGroundLevelUnit(UnitType.Ship, 1));
+        units.add(createGroundLevelUnit(UnitType.Ship, 1));
 
         units.add(createGroundLevelUnit(UnitType.Tank, 4));
 
         units.add(createGroundLevelUnit(UnitType.Tank, 3));
         units.add(createGroundLevelUnit(UnitType.Tank, 3));
+        units.add(createGroundLevelUnit(UnitType.Tank, 3));
 
+        units.add(createGroundLevelUnit(UnitType.Tank, 2));
         units.add(createGroundLevelUnit(UnitType.Tank, 2));
         units.add(createGroundLevelUnit(UnitType.Tank, 2));
         units.add(createGroundLevelUnit(UnitType.Tank, 2));
@@ -63,13 +66,6 @@ public enum UnitFactory {
     public Unit getNextUnit() {
         if (unitsIterator.hasNext())
             return unitsIterator.next();
-        else
-            return null;
-    }
-
-    public Unit getPreviousUnit() {
-        if (unitsIterator.hasPrevious())
-            return unitsIterator.previous();
         else
             return null;
     }

@@ -1,8 +1,10 @@
 package com.kduda.battleships.models.board;
 
+import com.kduda.battleships.models.units.GroundLevelUnit;
 import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Unit;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -11,6 +13,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Board extends Parent {
     //TODO: podzial na podklasy playerboard enemyboard
@@ -19,6 +22,7 @@ public abstract class Board extends Parent {
     protected boolean isCurrentUnitLocationValid = false;
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
+    private Random random = new Random();
 
     public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler,
                  EventHandler<? super MouseEvent> mouseEnteredHandler,
@@ -26,6 +30,7 @@ public abstract class Board extends Parent {
         this.isEnemyBoard = isEnemyBoard;
         this.isCurrentUnitLocationValid = false;
         this.currentUnitCells = new ArrayList<>();
+        this.random = new Random();
 
         for (int y = 0; y < 22; y++) {
             HBox row = new HBox();
@@ -45,6 +50,50 @@ public abstract class Board extends Parent {
     public boolean placeUnit(Unit unit) {
         boolean wasUnitPlaced = placeUnitOnBoard(unit);
         return wasUnitPlaced;
+    }
+
+    public void placeUnitRandomly(Unit unit) {
+        //TODO: implement
+        boolean wasUnitPlaced = false;
+
+        do {
+            int xPosition = this.random.nextInt(14);
+            int yPosition = this.random.nextInt(22);
+            int rotation = this.random.nextInt(4);
+            for (int i = 0; i < rotation; i++) {
+                unit.rotateUnit();
+            }
+
+            Position cellPosition = new Position(xPosition, yPosition);
+            currentUnitCells.clear();
+
+            if (unit instanceof GroundLevelUnit) {
+                if (((GroundLevelUnit) unit).getOrientation() == Orientation.VERTICAL)
+                    isCurrentUnitLocationValid = isVerticalLocationDownwardsValid(unit, cellPosition);
+                else
+                    isCurrentUnitLocationValid = isHorizontalLocationForwardValid(unit, cellPosition);
+            } else {
+                Plane plane = (Plane) unit;
+                switch (plane.getDirection()) {
+                    case North:
+                        isCurrentUnitLocationValid = isNorthLocationValid(plane, cellPosition);
+                        break;
+                    case East:
+                        isCurrentUnitLocationValid = isEastLocationValid(plane, cellPosition);
+                        break;
+                    case South:
+                        isCurrentUnitLocationValid = isSouthLocationValid(plane, cellPosition);
+                        break;
+                    case West:
+                        isCurrentUnitLocationValid = isWestLocationValid(plane, cellPosition);
+                        break;
+                }
+            }
+            wasUnitPlaced = placeUnitOnBoard(unit);
+        }
+
+        while (!wasUnitPlaced);
+        //dodac punkt do hash
     }
 
     private boolean placeUnitOnBoard(Unit unit) {
@@ -234,10 +283,6 @@ public abstract class Board extends Parent {
 
         return true;
     }
-    //endregion
-
-    //region random units placement
-
     //endregion
 
     //region showing and removing hints - PlayerBoard

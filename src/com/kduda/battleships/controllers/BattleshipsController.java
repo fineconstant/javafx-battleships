@@ -7,6 +7,7 @@ import com.kduda.battleships.models.board.PlayerBoard;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitFactory;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -111,14 +112,34 @@ public class BattleshipsController implements Initializable {
 
 
     private void startGame() {
-        //TODO: zapisanie do pliku
         //TODO: ui changes
-
+        //TODO: zapisanie do pliku
+//        placeUnitsOnEnemyBoard();
         BattleshipsConfig.INSTANCE.isGameRunning = true;
+    }
+
+    private void placeUnitsOnEnemyBoard() {
+        UnitFactory.INSTANCE.initializeUnitsFactory();
+        currentUnit = UnitFactory.INSTANCE.getNextUnit();
+        placeUnitsRandomly(enemyBoard);
+    }
+
+    private void placeUnitsRandomly(Board board) {
+        while (currentUnit != null) {
+            board.placeUnitRandomly(currentUnit);
+            currentUnit = UnitFactory.INSTANCE.getNextUnit();
+        }
+
+        if (!BattleshipsConfig.INSTANCE.isGameRunning)
+            startGame();
     }
 
     public void rotateUnitClicked() {
         this.currentUnit.rotateUnit();
+    }
+
+    public void randomPlacementClicked(ActionEvent actionEvent) {
+        placeUnitsRandomly(playerBoard);
     }
 
     public void exitClicked() {
