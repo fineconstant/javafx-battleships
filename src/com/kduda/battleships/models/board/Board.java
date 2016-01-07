@@ -20,13 +20,13 @@ public class Board extends Parent {
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
     private ArrayList<Cell> currentUnitCell;
-    private boolean isCurrentUnitLocatonValid = false;
+    private boolean isCurrentUnitLocationValid = false;
 
     public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler,
                  EventHandler<? super MouseEvent> mouseEnteredHandler,
                  EventHandler<? super MouseEvent> mouseExitedHandler) {
         this.isEnemyBoard = isEnemyBoard;
-        this.isCurrentUnitLocatonValid = false;
+        this.isCurrentUnitLocationValid = false;
         for (int y = 0; y < 22; y++) {
             HBox row = new HBox();
             for (int x = 0; x < 14; x++) {
@@ -54,11 +54,11 @@ public class Board extends Parent {
 
     private boolean placeGroundLevelUnit(GroundLevelUnit unit, Position cellPosition) {
         if (unit.getOrientation() == Orientation.VERTICAL) {
-            if (isVerticalLocationDownwardsValid(unit, cellPosition)) placeVerticalUnit(unit, cellPosition);
+            if (this.isCurrentUnitLocationValid) placeVerticalUnit(unit, cellPosition);
             else return false;
 
         } else {
-            if (isHorizontalLocationForwardValid(unit, cellPosition)) placeHorizontalUnit(unit, cellPosition);
+            if (this.isCurrentUnitLocationValid) placeHorizontalUnit(unit, cellPosition);
             else return false;
         }
         return true;
@@ -371,19 +371,19 @@ public class Board extends Parent {
     private void showGroundUnitHint(GroundLevelUnit unit, Position cellPosition) {
         if (unit.getOrientation() == Orientation.VERTICAL) {
             if (isVerticalLocationDownwardsValid(unit, cellPosition)) {
-                this.isCurrentUnitLocatonValid = true;
+                this.isCurrentUnitLocationValid = true;
                 changeCurrentUnitColors(Color.GREEN, Color.GREEN);
             } else {
-                this.isCurrentUnitLocatonValid = false;
+                this.isCurrentUnitLocationValid = false;
                 changeCurrentUnitColors(Color.RED, Color.RED);
             }
 
         } else {
             if (isHorizontalLocationForwardValid(unit, cellPosition)) {
-                this.isCurrentUnitLocatonValid = true;
+                this.isCurrentUnitLocationValid = true;
                 changeCurrentUnitColors(Color.GREEN, Color.GREEN);
             } else {
-                this.isCurrentUnitLocatonValid = false;
+                this.isCurrentUnitLocationValid = false;
                 changeCurrentUnitColors(Color.RED, Color.RED);
             }
         }
