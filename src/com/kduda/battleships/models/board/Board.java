@@ -41,18 +41,12 @@ public class Board extends Parent {
         getChildren().add(column);
     }
 
-    public boolean placeUnit(Unit unit, Position cellPosition) {
-        boolean wasUnitPlaced;
-
-        if (unit instanceof GroundLevelUnit)
-            wasUnitPlaced = placeGroundLevelUnit((GroundLevelUnit) unit);
-        else
-            wasUnitPlaced = placePlane((Plane) unit, cellPosition);
-
+    public boolean placeUnit(Unit unit) {
+        boolean wasUnitPlaced = placeUnitOnBoard(unit);
         return wasUnitPlaced;
     }
 
-    private boolean placeGroundLevelUnit(GroundLevelUnit unit) {
+    private boolean placeUnitOnBoard(Unit unit) {
         if (this.isCurrentUnitLocationValid) placeCurrentUnitInCells(unit);
         else return false;
         return true;
@@ -137,27 +131,6 @@ public class Board extends Parent {
         return true;
     }
 
-    private boolean placePlane(Plane plane, Position cellPosition) {
-        switch (plane.getDirection()) {
-            case North:
-                if (isNorthLocationValid(plane, cellPosition)) placePlaneNorth(plane, cellPosition);
-                else return false;
-                break;
-            case East:
-                if (isEastLocationValid(plane, cellPosition)) placePlaneEast(plane, cellPosition);
-                else return false;
-                break;
-            case South:
-                if (isSouthLocationValid(plane, cellPosition)) placePlaneSouth(plane, cellPosition);
-                else return false;
-                break;
-            case West:
-                if (isWestLocationValid(plane, cellPosition)) placePlaneWest(plane, cellPosition);
-                else return false;
-                break;
-        }
-        return true;
-    }
 
     private boolean isNorthLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
@@ -377,40 +350,40 @@ public class Board extends Parent {
             case North:
                 if (isNorthLocationValid(plane, cellPosition)) {
                     this.isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN,Color.GREEN);
+                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
                     return;
                 } else {
                     this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED,Color.RED);
+                    changeCurrentUnitColors(Color.RED, Color.RED);
                     return;
                 }
             case East:
                 if (isEastLocationValid(plane, cellPosition)) {
                     this.isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN,Color.GREEN);
+                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
                     return;
                 } else {
                     this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED,Color.RED);
+                    changeCurrentUnitColors(Color.RED, Color.RED);
                     return;
                 }
             case South:
                 if (isSouthLocationValid(plane, cellPosition)) {
                     this.isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN,Color.GREEN);
+                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
                     return;
                 } else {
                     this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED,Color.RED);
+                    changeCurrentUnitColors(Color.RED, Color.RED);
                     return;
                 }
             case West:
                 if (isWestLocationValid(plane, cellPosition)) {
                     this.isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN,Color.GREEN);
+                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
                 } else {
                     this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED,Color.RED);
+                    changeCurrentUnitColors(Color.RED, Color.RED);
                 }
         }
     }
