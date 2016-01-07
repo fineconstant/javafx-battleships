@@ -53,9 +53,16 @@ public class Board extends Parent {
     }
 
     private boolean placeGroundLevelUnit(GroundLevelUnit unit) {
-            if (this.isCurrentUnitLocationValid) placeCurrentUnitInCells(unit);
-            else return false;
+        if (this.isCurrentUnitLocationValid) placeCurrentUnitInCells(unit);
+        else return false;
         return true;
+    }
+
+    private void placeCurrentUnitInCells(Unit unit) {
+        for (Cell currentUnitCell : this.currentUnitCells) {
+            placeUnitInCell(unit, currentUnitCell);
+        }
+        this.isCurrentUnitLocationValid = false;
     }
 
     private boolean isVerticalLocationDownwardsValid(Unit unit, Position cellPosition) {
@@ -70,6 +77,21 @@ public class Board extends Parent {
             if (cell != null) this.currentUnitCells.add(cell);
 
             if (!cell.isSurfaceValid(unit)) return false;
+
+            if (!cell.isEmpty()) return false;
+
+            for (Cell neighbor : getAdjacentCells(xPosition, i))
+                if (!neighbor.isEmpty()) return false;
+        }
+        return true;
+    }
+
+    private boolean isVerticalLocationUpwardsValid(int xPosition, int yPosition, int length) {
+        for (int i = yPosition; i > yPosition - length; i--) {
+            if (!isValidPoint(xPosition, i)) return false;
+
+            Cell cell = getCell(xPosition, i);
+            if (cell != null) this.currentUnitCells.add(cell);
 
             if (!cell.isEmpty()) return false;
 
@@ -100,11 +122,19 @@ public class Board extends Parent {
         return true;
     }
 
-    private void placeCurrentUnitInCells(Unit unit) {
-        for (Cell currentUnitCell : this.currentUnitCells) {
-            placeUnitInCell(unit, currentUnitCell);
+    private boolean isHorizontalLocationBackwardsValid(int xPosition, int yPosition, int length) {
+        for (int i = xPosition; i > xPosition - length; i--) {
+            if (!isValidPoint(i, yPosition)) return false;
+
+            Cell cell = getCell(i, yPosition);
+            if (cell != null) this.currentUnitCells.add(cell);
+
+            if (!cell.isEmpty()) return false;
+
+            for (Cell neighbor : getAdjacentCells(i, yPosition))
+                if (!neighbor.isEmpty()) return false;
         }
-        this.isCurrentUnitLocationValid = false;
+        return true;
     }
 
     private boolean placePlane(Plane plane, Position cellPosition) {
@@ -134,7 +164,7 @@ public class Board extends Parent {
         int yPosition = cellPosition.getY();
         int length = plane.getLength();
 
-        if (!isVerticalLocationPlaneValid(xPosition, yPosition, length)) return false;
+        if (!isVerticalLocationUpwardsValid(xPosition, yPosition, length)) return false;
         //noinspection RedundantIfStatement
         if (!areHorizontalNeighborsValid(xPosition, yPosition)) return false;
 
@@ -169,40 +199,13 @@ public class Board extends Parent {
         int yPosition = cellPosition.getY();
         int length = plane.getLength();
 
-        if (!isHorizontalLocationPlaneValid(xPosition, yPosition, length)) return false;
+        if (!isHorizontalLocationBackwardsValid(xPosition, yPosition, length)) return false;
         //noinspection RedundantIfStatement
         if (!areVerticalNeighborsValid(xPosition, yPosition)) return false;
 
         return true;
     }
 
-    private boolean isVerticalLocationPlaneValid(int xPosition, int yPosition, int length) {
-        for (int i = yPosition; i > yPosition - length; i--) {
-            if (!isValidPoint(xPosition, i)) return false;
-
-            Cell cell = getCell(xPosition, i);
-
-            if (!cell.isEmpty()) return false;
-
-            for (Cell neighbor : getAdjacentCells(xPosition, i))
-                if (!neighbor.isEmpty()) return false;
-        }
-        return true;
-    }
-
-    private boolean isHorizontalLocationPlaneValid(int xPosition, int yPosition, int length) {
-        for (int i = xPosition; i > xPosition - length; i--) {
-            if (!isValidPoint(i, yPosition)) return false;
-
-            Cell cell = getCell(i, yPosition);
-
-            if (!cell.isEmpty()) return false;
-
-            for (Cell neighbor : getAdjacentCells(i, yPosition))
-                if (!neighbor.isEmpty()) return false;
-        }
-        return true;
-    }
 
     private boolean areHorizontalNeighborsValid(int xPosition, int yPosition) {
         if (!isValidPlacementCell(xPosition - 1, yPosition)) return false;
@@ -224,6 +227,7 @@ public class Board extends Parent {
         if (!isValidPoint(xPosition, yPosition)) return false;
 
         Cell cell = getCell(xPosition, yPosition);
+        if (cell != null) this.currentUnitCells.add(cell);
 
         if (!cell.isEmpty()) return false;
 
@@ -369,101 +373,46 @@ public class Board extends Parent {
     }
 
     private void showPlaneHint(Plane plane, Position cellPosition) {
-        int unitLength = plane.getLength();
-        int xPosition = cellPosition.getX();
-        int yPosition = cellPosition.getY();
-
         switch (plane.getDirection()) {
             case North:
                 if (isNorthLocationValid(plane, cellPosition)) {
-                    showPlaneNorthHint(unitLength, xPosition, yPosition, Color.GREEN, Color.GREEN);
+                    this.isCurrentUnitLocationValid = true;
+                    changeCurrentUnitColors(Color.GREEN,Color.GREEN);
                     return;
                 } else {
-                    showPlaneNorthHint(unitLength, xPosition, yPosition, Color.RED, Color.RED);
+                    this.isCurrentUnitLocationValid = false;
+                    changeCurrentUnitColors(Color.RED,Color.RED);
                     return;
                 }
             case East:
                 if (isEastLocationValid(plane, cellPosition)) {
-                    showPlaneEastHint(unitLength, xPosition, yPosition, Color.GREEN, Color.GREEN);
+                    this.isCurrentUnitLocationValid = true;
+                    changeCurrentUnitColors(Color.GREEN,Color.GREEN);
                     return;
                 } else {
-                    showPlaneEastHint(unitLength, xPosition, yPosition, Color.RED, Color.RED);
+                    this.isCurrentUnitLocationValid = false;
+                    changeCurrentUnitColors(Color.RED,Color.RED);
                     return;
                 }
             case South:
                 if (isSouthLocationValid(plane, cellPosition)) {
-                    showPlaneSouthHint(unitLength, xPosition, yPosition, Color.GREEN, Color.GREEN);
+                    this.isCurrentUnitLocationValid = true;
+                    changeCurrentUnitColors(Color.GREEN,Color.GREEN);
                     return;
                 } else {
-                    showPlaneSouthHint(unitLength, xPosition, yPosition, Color.RED, Color.RED);
+                    this.isCurrentUnitLocationValid = false;
+                    changeCurrentUnitColors(Color.RED,Color.RED);
                     return;
                 }
             case West:
-                if (isWestLocationValid(plane, cellPosition))
-                    showPlaneWestHint(unitLength, xPosition, yPosition, Color.GREEN, Color.GREEN);
-                else
-                    showPlaneWestHint(unitLength, xPosition, yPosition, Color.RED, Color.RED);
+                if (isWestLocationValid(plane, cellPosition)) {
+                    this.isCurrentUnitLocationValid = true;
+                    changeCurrentUnitColors(Color.GREEN,Color.GREEN);
+                } else {
+                    this.isCurrentUnitLocationValid = false;
+                    changeCurrentUnitColors(Color.RED,Color.RED);
+                }
         }
-    }
-
-    private void showPlaneNorthHint(int unitLength, int xPosition, int yPosition, Color fillColor, Color strokeColor) {
-        Cell currCell;
-        for (int i = yPosition; i > yPosition - unitLength; i--) {
-            currCell = getCell(xPosition, i);
-            currCell.saveCurrentColors();
-            currCell.setColors(fillColor, strokeColor);
-        }
-        showHorizontalWingsHint(xPosition, yPosition, fillColor, strokeColor);
-    }
-
-    private void showPlaneEastHint(int unitLength, int xPosition, int yPosition, Color fillColor, Color strokeColor) {
-        Cell currCell = getCell(xPosition, yPosition);
-
-        changeCurrentUnitColors(fillColor, strokeColor);
-
-        showVerticalWingsHint(xPosition, yPosition, fillColor, strokeColor);
-    }
-
-    private void showPlaneSouthHint(int unitLength, int xPosition, int yPosition, Color fillColor, Color strokeColor) {
-        Cell currCell = getCell(xPosition, yPosition);
-
-        changeCurrentUnitColors(fillColor, strokeColor);
-        showHorizontalWingsHint(xPosition, yPosition, fillColor, strokeColor);
-    }
-
-    private void showPlaneWestHint(int unitLength, int xPosition, int yPosition, Color fillColor, Color strokeColor) {
-        Cell currCell;
-
-        for (int i = xPosition; i > xPosition - unitLength; i--) {
-            currCell = getCell(i, yPosition);
-            currCell.saveCurrentColors();
-            currCell.setColors(fillColor, strokeColor);
-        }
-        showVerticalWingsHint(xPosition, yPosition, fillColor, strokeColor);
-    }
-
-    private void showHorizontalWingsHint(int xPosition, int yPosition, Color fillColor, Color strokeColor) {
-        Cell currCell;
-        currCell = getCell(xPosition - 1, yPosition);
-        currCell.saveCurrentColors();
-        currCell.setColors(fillColor, strokeColor);
-
-        currCell = getCell(xPosition + 1, yPosition);
-        currCell.saveCurrentColors();
-        currCell.setColors(fillColor, strokeColor);
-
-    }
-
-    private void showVerticalWingsHint(int xPosition, int yPosition, Color fillColor, Color strokeColor) {
-        Cell currCell;
-        currCell = getCell(xPosition, yPosition - 1);
-        currCell.saveCurrentColors();
-        currCell.setColors(fillColor, strokeColor);
-
-        currCell = getCell(xPosition, yPosition + 1);
-        currCell.saveCurrentColors();
-        currCell.setColors(fillColor, strokeColor);
-
     }
 
     private void changeCurrentUnitColors(Color fillColor, Color strokeColor) {
