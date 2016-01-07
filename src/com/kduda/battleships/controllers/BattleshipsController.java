@@ -114,8 +114,8 @@ public class BattleshipsController implements Initializable {
     private void startGame() {
         //TODO: ui changes
         //TODO: zapisanie do pliku
-//        placeUnitsOnEnemyBoard();
         BattleshipsConfig.INSTANCE.isGameRunning = true;
+        placeUnitsOnEnemyBoard();
     }
 
     private void placeUnitsOnEnemyBoard() {

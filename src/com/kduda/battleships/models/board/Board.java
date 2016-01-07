@@ -53,11 +53,11 @@ public abstract class Board extends Parent {
 
     public void placeUnitRandomly(Unit unit) {
         boolean wasUnitPlaced = false;
-        Position cellPosition;
+
         do {
             int xPosition = this.random.nextInt(14);
             int yPosition = this.random.nextInt(22);
-            cellPosition = new Position(xPosition, yPosition);
+            Position cellPosition = new Position(xPosition, yPosition);
 
             int rotation = this.random.nextInt(4);
             for (int i = 0; i < rotation; i++) {
@@ -314,7 +314,6 @@ public abstract class Board extends Parent {
         //FIXME: enemy debug
         cell.setColors(Color.WHITE, Color.GREEN);
         cell.saveCurrentColors();
-
     }
 
     private boolean isValidPoint(int x, int y) {

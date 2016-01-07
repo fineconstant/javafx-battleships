@@ -95,4 +95,9 @@ public class Cell extends Rectangle {
         this.setFill(fillColor);
         this.setStroke(strokeColor);
     }
+
+    @Override
+    public String toString() {
+        return "x = " + this.POSITION.getX() + ", y = " + this.POSITION.getY();
+    }
 }
