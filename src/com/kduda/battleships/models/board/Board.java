@@ -236,6 +236,10 @@ public abstract class Board extends Parent {
     }
     //endregion
 
+    //region random units placement
+
+    //endregion
+
     //region showing and removing hints - PlayerBoard
     public abstract void showPlacementHint(Unit unit, Cell cell);
 

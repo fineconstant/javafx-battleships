@@ -2,6 +2,7 @@ package com.kduda.battleships.controllers;
 
 import com.kduda.battleships.models.board.Board;
 import com.kduda.battleships.models.board.Cell;
+import com.kduda.battleships.models.board.EnemyBoard;
 import com.kduda.battleships.models.board.PlayerBoard;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitFactory;
@@ -29,7 +30,7 @@ public class BattleshipsController implements Initializable {
     }
 
     private void initializeBoards() {
-        enemyBoard = new PlayerBoard(true, this::enemyBoardClick, this::enemyBoardEntered, this::enemyBoardExited);
+        enemyBoard = new EnemyBoard(true, this::enemyBoardClick, this::enemyBoardEntered, this::enemyBoardExited);
         enemyBoardArea.getChildren().add(enemyBoard);
 
         playerBoard = new PlayerBoard(false, this::playerBoardClick, this::playerBoardEntered, this::playerBoardExited);
