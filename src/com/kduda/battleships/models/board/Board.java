@@ -358,7 +358,7 @@ public class Board extends Parent {
 
         if (unit instanceof GroundLevelUnit)
             showGroundUnitHint((GroundLevelUnit) unit, cell, cellPosition);
-        else showPlaneHint((Plane) unit, cell, cellPosition);
+        else showPlaneHint((Plane) unit, cellPosition);
     }
 
     private void showGroundUnitHint(GroundLevelUnit unit, Cell cell, Position cellPosition) {
@@ -378,27 +378,102 @@ public class Board extends Parent {
         }
     }
 
-    private void showPlaneHint(Plane plane, Cell cell, Position cellPosition) {
+    private void showPlaneHint(Plane plane, Position cellPosition) {
         //TODO: hint dla samolotu
+        int unitLength = plane.getLength();
+        int xPosition = cellPosition.getX();
+        int yPosition = cellPosition.getY();
+
         switch (plane.getDirection()) {
             case North:
                 if (isNorthLocationValid(plane, cellPosition)) {
-                    cell.setFill(Color.GREEN);
+                    showPlaneNorthHint(unitLength, xPosition, yPosition, Color.GREEN, Color.GREEN);
                     return;
                 } else {
+                    showPlaneNorthHint(unitLength, xPosition, yPosition, Color.RED, Color.RED);
                     return;
                 }
-//                break;
             case East:
-
-                break;
+                if (isEastLocationValid(plane, cellPosition)) {
+                    showPlaneEastHint(unitLength, xPosition, yPosition, Color.GREEN, Color.GREEN);
+                    return;
+                } else {
+                    showPlaneEastHint(unitLength, xPosition, yPosition, Color.RED, Color.RED);
+                    return;
+                }
             case South:
-
-                break;
+                if (isSouthLocationValid(plane, cellPosition)) {
+                    showPlaneSouthHint(unitLength, xPosition, yPosition, Color.GREEN, Color.GREEN);
+                    return;
+                } else {
+                    showPlaneSouthHint(unitLength, xPosition, yPosition, Color.RED, Color.RED);
+                    return;
+                }
             case West:
-
-                break;
+                if (isWestLocationValid(plane, cellPosition))
+                    showPlaneWestHint(unitLength, xPosition, yPosition, Color.GREEN, Color.GREEN);
+                else
+                    showPlaneWestHint(unitLength, xPosition, yPosition, Color.RED, Color.RED);
         }
+    }
+
+    private void showPlaneNorthHint(int unitLength, int xPosition, int yPosition, Color fillColor, Color strokeColor) {
+        Cell currCell;
+        for (int i = yPosition; i > yPosition - unitLength; i--) {
+            currCell = getCell(xPosition, i);
+            currCell.saveCurrentColors();
+            currCell.setColors(fillColor, strokeColor);
+        }
+        showHorizontalWingsHint(xPosition, yPosition, fillColor, strokeColor);
+    }
+
+
+    private void showPlaneEastHint(int unitLength, int xPosition, int yPosition, Color fillColor, Color strokeColor) {
+        Cell currCell = getCell(xPosition, yPosition);
+
+        changeColorsHorizontal(currCell, unitLength, fillColor, strokeColor);
+
+        showVerticalWingsHint(xPosition, yPosition, fillColor, strokeColor);
+    }
+
+    private void showPlaneSouthHint(int unitLength, int xPosition, int yPosition, Color fillColor, Color strokeColor) {
+        Cell currCell = getCell(xPosition, yPosition);
+
+        changeColorsVertical(currCell, unitLength, fillColor, strokeColor);
+        showHorizontalWingsHint(xPosition, yPosition, fillColor, strokeColor);
+    }
+
+    private void showPlaneWestHint(int unitLength, int xPosition, int yPosition, Color fillColor, Color strokeColor) {
+        Cell currCell;
+
+        for (int i = xPosition; i > xPosition - unitLength; i--) {
+            currCell = getCell(i, yPosition);
+            currCell.saveCurrentColors();
+            currCell.setColors(fillColor, strokeColor);
+        }
+        showVerticalWingsHint(xPosition, yPosition, fillColor, strokeColor);
+    }
+
+    private void showHorizontalWingsHint(int xPosition, int yPosition, Color fillColor, Color strokeColor) {
+        Cell currCell;
+        currCell = getCell(xPosition - 1, yPosition);
+        currCell.saveCurrentColors();
+        currCell.setColors(fillColor, strokeColor);
+
+        currCell = getCell(xPosition + 1, yPosition);
+        currCell.saveCurrentColors();
+        currCell.setColors(fillColor, strokeColor);
+    }
+
+    private void showVerticalWingsHint(int xPosition, int yPosition, Color fillColor, Color strokeColor) {
+        Cell currCell;
+        currCell = getCell(xPosition, yPosition - 1);
+        currCell.saveCurrentColors();
+        currCell.setColors(fillColor, strokeColor);
+
+        currCell = getCell(xPosition, yPosition + 1);
+        currCell.saveCurrentColors();
+        currCell.setColors(fillColor, strokeColor);
     }
 
     private void changeColorsVertical(Cell cell, int length, Color fillColor, Color strokeColor) {
@@ -430,7 +505,6 @@ public class Board extends Parent {
             removePlaneHint((Plane) unit, cell);
         }
     }
-
 
     private void removeGroundUnitHint(GroundLevelUnit unit, Cell cell) {
         if (unit.getOrientation() == Orientation.VERTICAL) {
