@@ -92,10 +92,10 @@ public abstract class Board extends Parent {
     }
 
     private void placeCurrentUnitInCells(Unit unit) {
-        for (Cell currentUnitCell : this.currentUnitCells) {
-            placeUnitInCell(unit, currentUnitCell);
+        for (Cell cell : this.currentUnitCells) {
+            placeUnitInCell(unit, cell);
+            unit.registerCell(cell);
         }
-        unit.setCells(currentUnitCells);
         this.isCurrentUnitLocationValid = false;
     }
     //endregion
@@ -340,16 +340,12 @@ public abstract class Board extends Parent {
 
     private void placeUnitInCell(Unit unit, Cell cell) {
         cell.setUnit(unit);
-//        if (!this.isEnemyBoard) {
-//            //TODO: rozne kolory dla roznych jednostek if(!isEnemyBoard) unit.setColor(cell)
-//            cell.setColors(Color.WHITE, Color.GREEN);
-//            cell.saveCurrentColors();
-//        }
-        //FIXME: for enemy debug
-        cell.setColorsAndSave(Color.WHITE, Color.GRAY);
 
-        //set colors(Colors) //zmiana koloru dla podpowiedzi
-        //set colorsandsave(colors)
+        //TODO: rozne kolory dla roznych jednostek if(!isEnemyBoard) unit.setColor(cell)
+
+        //FIXME: for enemy debug
+//        if (!this.isEnemyBoard)
+        cell.setColorsAndSave(Color.WHITE, Color.GRAY);
     }
 
     private boolean isValidPoint(int x, int y) {

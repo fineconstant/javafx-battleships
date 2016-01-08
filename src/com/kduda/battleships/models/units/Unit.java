@@ -5,7 +5,7 @@ import com.kduda.battleships.models.board.Cell;
 import java.util.ArrayList;
 
 public abstract class Unit {
-    protected ArrayList<Cell> cells;
+    private ArrayList<Cell> cells;
     private int health;
 
     public Unit(int size) {
@@ -28,7 +28,9 @@ public abstract class Unit {
         return cells;
     }
 
-    public void setCells(ArrayList<Cell> cells) {
-        this.cells = cells;
+    public void registerCell(Cell cell) {
+        if (this.cells == null)
+            this.cells = new ArrayList<>();
+        this.cells.add(cell);
     }
 }
