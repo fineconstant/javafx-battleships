@@ -95,6 +95,7 @@ public abstract class Board extends Parent {
         for (Cell currentUnitCell : this.currentUnitCells) {
             placeUnitInCell(unit, currentUnitCell);
         }
+        unit.setCells(currentUnitCells);
         this.isCurrentUnitLocationValid = false;
     }
     //endregion
@@ -202,16 +203,16 @@ public abstract class Board extends Parent {
     //region planes specific location checks
     private void validatePlane(Plane plane, Position cellPosition) {
         switch (plane.getDirection()) {
-            case North:
+            case NORTH:
                 isCurrentUnitLocationValid = isNorthLocationValid(plane, cellPosition);
                 break;
-            case East:
+            case EAST:
                 isCurrentUnitLocationValid = isEastLocationValid(plane, cellPosition);
                 break;
-            case South:
+            case SOUTH:
                 isCurrentUnitLocationValid = isSouthLocationValid(plane, cellPosition);
                 break;
-            case West:
+            case WEST:
                 isCurrentUnitLocationValid = isWestLocationValid(plane, cellPosition);
                 break;
         }
@@ -318,8 +319,14 @@ public abstract class Board extends Parent {
         return cell.shootCell();
     }
 
-    public void destroyUnit() {
+    public void destroyUnit(Unit unit) {
+        //FIXME: dziwny bug
         this.unitsLeft--;
+        ArrayList<Cell> cells = unit.getCells();
+        for (Cell cell : cells) {
+            for (Cell neighbor : getAdjacentCells(cell.POSITION.getX(), cell.POSITION.getY()))
+                if (neighbor.isEmpty()) neighbor.shootCell();
+        }
     }
     //endregion
 
@@ -338,7 +345,7 @@ public abstract class Board extends Parent {
 //            cell.setColors(Color.WHITE, Color.GREEN);
 //            cell.saveCurrentColors();
 //        }
-        //FIXME: enemy debug
+        //FIXME: for enemy debug
         cell.setColorsAndSave(Color.WHITE, Color.GRAY);
 
         //set colors(Colors) //zmiana koloru dla podpowiedzi

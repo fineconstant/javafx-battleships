@@ -18,30 +18,30 @@ public enum UnitFactory {
     public void initializeUnitsFactory() {
         units = new ArrayList<>();
 
-        units.add(createGroundLevelUnit(UnitType.Ship, 4));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 4));
 
-        units.add(createGroundLevelUnit(UnitType.Ship, 3));
-        units.add(createGroundLevelUnit(UnitType.Ship, 3));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 3));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 3));
 
-        units.add(createGroundLevelUnit(UnitType.Ship, 2));
-        units.add(createGroundLevelUnit(UnitType.Ship, 2));
-        units.add(createGroundLevelUnit(UnitType.Ship, 2));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 2));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 2));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 2));
 
-        units.add(createGroundLevelUnit(UnitType.Ship, 1));
-        units.add(createGroundLevelUnit(UnitType.Ship, 1));
-        units.add(createGroundLevelUnit(UnitType.Ship, 1));
-        units.add(createGroundLevelUnit(UnitType.Ship, 1));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
 
-        units.add(createGroundLevelUnit(UnitType.Tank, 4));
+        units.add(createGroundLevelUnit(UnitType.TANK, 4));
 
-        units.add(createGroundLevelUnit(UnitType.Tank, 3));
-        units.add(createGroundLevelUnit(UnitType.Tank, 3));
-        units.add(createGroundLevelUnit(UnitType.Tank, 3));
+        units.add(createGroundLevelUnit(UnitType.TANK, 3));
+        units.add(createGroundLevelUnit(UnitType.TANK, 3));
+        units.add(createGroundLevelUnit(UnitType.TANK, 3));
 
-        units.add(createGroundLevelUnit(UnitType.Tank, 2));
-        units.add(createGroundLevelUnit(UnitType.Tank, 2));
-        units.add(createGroundLevelUnit(UnitType.Tank, 2));
-        units.add(createGroundLevelUnit(UnitType.Tank, 2));
+        units.add(createGroundLevelUnit(UnitType.TANK, 2));
+        units.add(createGroundLevelUnit(UnitType.TANK, 2));
+        units.add(createGroundLevelUnit(UnitType.TANK, 2));
+        units.add(createGroundLevelUnit(UnitType.TANK, 2));
 
         units.add(createPlane());
         units.add(createPlane());
@@ -53,9 +53,9 @@ public enum UnitFactory {
 
     Unit createGroundLevelUnit(UnitType type, int size) {
         switch (type) {
-            case Ship:
+            case SHIP:
                 return new Ship(size);
-            case Tank:
+            case TANK:
                 return new Tank(size);
         }
         return null;

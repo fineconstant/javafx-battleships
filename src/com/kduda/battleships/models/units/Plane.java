@@ -8,7 +8,7 @@ public class Plane extends Unit {
 
     public Plane() {
         super(5);
-        this.direction = North;
+        this.direction = NORTH;
         this.LENGTH = 3;
     }
 
@@ -19,17 +19,17 @@ public class Plane extends Unit {
     @Override
     public void rotateUnit() {
         switch (this.direction) {
-            case North:
-                this.direction = East;
+            case NORTH:
+                this.direction = EAST;
                 break;
-            case East:
-                this.direction = South;
+            case EAST:
+                this.direction = SOUTH;
                 break;
-            case South:
-                this.direction = West;
+            case SOUTH:
+                this.direction = WEST;
                 break;
-            case West:
-                this.direction = North;
+            case WEST:
+                this.direction = NORTH;
                 break;
         }
     }

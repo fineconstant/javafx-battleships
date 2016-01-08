@@ -55,7 +55,8 @@ public class Cell extends Rectangle {
 
             if (!unit.isAlive()) {
                 //FIXME: pozmieniac to
-                BOARD.destroyUnit();
+                Unit unit = this.getUnit();
+                BOARD.destroyUnit(unit);
             }
             return true;
         }

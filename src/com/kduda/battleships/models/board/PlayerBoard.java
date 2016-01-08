@@ -61,7 +61,7 @@ public class PlayerBoard extends Board {
 
     private void showPlaneHint(Plane plane, Position cellPosition) {
         switch (plane.getDirection()) {
-            case North:
+            case NORTH:
                 if (isNorthLocationValid(plane, cellPosition)) {
                     isCurrentUnitLocationValid = true;
                     changeCurrentUnitColors(Color.GREEN, Color.GREEN);
@@ -71,7 +71,7 @@ public class PlayerBoard extends Board {
                     changeCurrentUnitColors(Color.RED, Color.RED);
                     return;
                 }
-            case East:
+            case EAST:
                 if (isEastLocationValid(plane, cellPosition)) {
                     isCurrentUnitLocationValid = true;
                     changeCurrentUnitColors(Color.GREEN, Color.GREEN);
@@ -81,7 +81,7 @@ public class PlayerBoard extends Board {
                     changeCurrentUnitColors(Color.RED, Color.RED);
                     return;
                 }
-            case South:
+            case SOUTH:
                 if (isSouthLocationValid(plane, cellPosition)) {
                     isCurrentUnitLocationValid = true;
                     changeCurrentUnitColors(Color.GREEN, Color.GREEN);
@@ -91,7 +91,7 @@ public class PlayerBoard extends Board {
                     changeCurrentUnitColors(Color.RED, Color.RED);
                     return;
                 }
-            case West:
+            case WEST:
                 if (isWestLocationValid(plane, cellPosition)) {
                     isCurrentUnitLocationValid = true;
                     changeCurrentUnitColors(Color.GREEN, Color.GREEN);
