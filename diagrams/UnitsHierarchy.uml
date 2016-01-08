@@ -3,6 +3,7 @@
   <ID>JAVA</ID>
   <OriginalElement>com.kduda.battleships.models.units.Ship</OriginalElement>
   <nodes>
+    <node x="463.0" y="687.0">javafx.geometry.Orientation</node>
     <node x="237.0" y="687.0">com.kduda.battleships.models.units.UnitType</node>
     <node x="0.0" y="687.0">com.kduda.battleships.models.units.Direction</node>
     <node x="182.99999999999997" y="585.0">com.kduda.battleships.models.units.Ship</node>
@@ -39,10 +40,8 @@
       <point x="72.75" y="144.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="540.0" y="464.0" />
-  <SelectedNodes>
-    <node>com.kduda.battleships.models.units.Direction</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Group" zoom="1.0" x="530.0" y="464.0" />
+  <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
     <Category>Properties</Category>
