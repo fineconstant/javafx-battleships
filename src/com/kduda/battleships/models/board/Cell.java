@@ -14,7 +14,7 @@ public class Cell extends Rectangle {
     public final CellType TYPE;
 
     private final Board BOARD;
-    public boolean wasShot = false;
+    private boolean wasShot = false;
     private Unit unit = null;
     private Paint currentFill;
     private Paint currentStroke;
@@ -47,18 +47,19 @@ public class Cell extends Rectangle {
     }
 
     public boolean shootCell() {
-        //TODO: sprawdzic dzialanie
-        wasShot = true;
-        setFill(Color.GRAY);
+        this.wasShot = true;
 
         if (unit != null) {
             unit.hit();
-            setFill(Color.RED);
+            setColorsAndSave(Color.ORANGE,Color.ORANGE);
+
             if (!unit.isAlive()) {
+                //FIXME: pozmieniac to
                 BOARD.units--;
             }
             return true;
         }
+        setColorsAndSave(Color.GRAY,Color.GRAY);
         return false;
     }
 
@@ -77,13 +78,13 @@ public class Cell extends Rectangle {
         return true;
     }
 
-    public boolean isSurfaceValid(Plane plane) {
-        return true;
-    }
-
     public void saveCurrentColors() {
         this.currentFill = this.getFill();
         this.currentStroke = this.getStroke();
+    }
+
+    public boolean isSurfaceValid(Plane plane) {
+        return true;
     }
 
     public void loadSavedColors() {
@@ -94,6 +95,11 @@ public class Cell extends Rectangle {
     public void setColors(Color fillColor, Color strokeColor) {
         this.setFill(fillColor);
         this.setStroke(strokeColor);
+    }
+
+    public void setColorsAndSave(Color fillColor, Color strokeColor) {
+        setColors(fillColor, strokeColor);
+        saveCurrentColors();
     }
 
     @Override

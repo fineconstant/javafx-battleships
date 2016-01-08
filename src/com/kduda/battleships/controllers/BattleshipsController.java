@@ -40,11 +40,34 @@ public class BattleshipsController implements Initializable {
 
     private void enemyBoardClick(MouseEvent event) {
         //TODO: click handler
-        if (!BattleshipsConfig.INSTANCE.isGameRunning)
-            return;
+        if (!BattleshipsConfig.INSTANCE.isGameRunning) return;
 
+        Cell cell = (Cell) event.getSource();
+        if (cell.wasShot()) return;
+
+        enemyBoard.shoot();
 
     }
+
+    //HANDLERS enemy board click
+//        enemyBoard = new Board(true, event -> {
+//            if (!running)
+//                return;
+//
+//            Cell cell = (Cell) event.getSource();
+//            if (cell.wasShot)
+//                return;
+//
+//            enemyTurn = !cell.shootCell();
+//
+//            if (enemyBoard.ships == 0) {
+//                System.out.println("YOU WIN");
+//                System.exit(0);
+//            }
+//
+//            if (enemyTurn)
+//                enemyMove();
+//        });
 
     private void enemyBoardEntered(MouseEvent event) {
         if (!BattleshipsConfig.INSTANCE.isGameRunning)
@@ -56,9 +79,7 @@ public class BattleshipsController implements Initializable {
     }
 
     private void enemyBoardExited(MouseEvent event) {
-        //TODO: mouse exited handler
-        if (!BattleshipsConfig.INSTANCE.isGameRunning)
-            return;
+        if (!BattleshipsConfig.INSTANCE.isGameRunning) return;
 
         enemyBoard.removeShootingHint();
     }
@@ -95,28 +116,6 @@ public class BattleshipsController implements Initializable {
 
         if (currentUnit == null) startGame();
     }
-
-
-    //HANDLERS enemy board click
-//        enemyBoard = new Board(true, event -> {
-//            if (!running)
-//                return;
-//
-//            Cell cell = (Cell) event.getSource();
-//            if (cell.wasShot)
-//                return;
-//
-//            enemyTurn = !cell.shootCell();
-//
-//            if (enemyBoard.ships == 0) {
-//                System.out.println("YOU WIN");
-//                System.exit(0);
-//            }
-//
-//            if (enemyTurn)
-//                enemyMove();
-//        });
-
 
     private void startGame() {
         //TODO: ui changes

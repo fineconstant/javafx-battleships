@@ -304,11 +304,12 @@ public abstract class Board extends Parent {
     public abstract void removeShootingHint();
 
     public void validateCell(Cell cell) {
-        if (cell.wasShot()) this.isTargetCellValid = false;
-        else {
-            this.isTargetCellValid = true;
-            this.targetCell = cell;
-        }
+        this.isTargetCellValid = !cell.wasShot();
+        this.targetCell = cell;
+    }
+
+    public boolean shoot() {
+        return this.targetCell.shootCell();
     }
     //endregion
 
@@ -328,9 +329,7 @@ public abstract class Board extends Parent {
 //            cell.saveCurrentColors();
 //        }
         //FIXME: enemy debug
-        cell.setColors(Color.WHITE, Color.GRAY);
-        cell.saveCurrentColors();
-
+        cell.setColorsAndSave(Color.WHITE, Color.GRAY);
 
         //set colors(Colors) //zmiana koloru dla podpowiedzi
         //set colorsandsave(colors)
@@ -370,6 +369,3 @@ public abstract class Board extends Parent {
     }
     //endregion
 }
-
-
-
