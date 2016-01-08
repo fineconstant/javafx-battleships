@@ -61,7 +61,7 @@
             <VBox spacing="5.0">
                 <Button mnemonicParsing="false" onAction="#rotateUnitClicked" text="Rotate unit (RMB)"/>
                 <Button mnemonicParsing="false" onAction="#randomPlacementClicked" text="Random placement"/>
-                <Button mnemonicParsing="false" text="Button"/>
+                <Button mnemonicParsing="false" text="debug"/>
             </VBox>
         </HBox>
     </bottom>

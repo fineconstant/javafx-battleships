@@ -6,11 +6,13 @@ import java.util.ListIterator;
 
 public enum UnitFactory {
     INSTANCE;
+    final int UNITSNUMBER;
     List<Unit> units;
     ListIterator<Unit> unitsIterator;
 
     UnitFactory() {
         initializeUnitsFactory();
+        this.UNITSNUMBER = units.size();
     }
 
     public void initializeUnitsFactory() {
@@ -68,5 +70,9 @@ public enum UnitFactory {
             return unitsIterator.next();
         else
             return null;
+    }
+
+    public int getUnitsNumber() {
+        return this.UNITSNUMBER;
     }
 }

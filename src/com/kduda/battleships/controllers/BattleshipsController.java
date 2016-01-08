@@ -7,13 +7,13 @@ import com.kduda.battleships.models.board.PlayerBoard;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitFactory;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class BattleshipsController implements Initializable {
@@ -23,6 +23,7 @@ public class BattleshipsController implements Initializable {
     private Board enemyBoard;
     private Board playerBoard;
     private Unit currentUnit;
+    private Random random = new Random();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -45,29 +46,34 @@ public class BattleshipsController implements Initializable {
         Cell cell = (Cell) event.getSource();
         if (cell.wasShot()) return;
 
-        enemyBoard.shoot();
+        boolean wasHit = enemyBoard.shoot(cell);
+        BattleshipsConfig.INSTANCE.isEnemyTurn = !wasHit;
 
+        if (enemyBoard.getUnitsLeft() == 0) {
+            System.out.println("YOU WIN");
+            //zmiana ui
+        }
+
+        if (BattleshipsConfig.INSTANCE.isEnemyTurn) enemyTurn();
     }
 
-    //HANDLERS enemy board click
-//        enemyBoard = new Board(true, event -> {
-//            if (!running)
-//                return;
-//
-//            Cell cell = (Cell) event.getSource();
-//            if (cell.wasShot)
-//                return;
-//
-//            enemyTurn = !cell.shootCell();
-//
-//            if (enemyBoard.ships == 0) {
-//                System.out.println("YOU WIN");
-//                System.exit(0);
-//            }
-//
-//            if (enemyTurn)
-//                enemyMove();
-//        });
+    private void enemyTurn() {
+        //todo:implement
+        while (BattleshipsConfig.INSTANCE.isEnemyTurn) {
+            int xPosition = this.random.nextInt(14);
+            int yPosition = this.random.nextInt(22);
+
+            Cell cell = playerBoard.getCell(xPosition, yPosition);
+            if (cell.wasShot()) continue;
+
+            boolean wasHit = playerBoard.shoot(cell);
+            BattleshipsConfig.INSTANCE.isEnemyTurn = wasHit;
+
+            if (playerBoard.getUnitsLeft() == 0) {
+                System.out.println("YOU LOSE");
+            }
+        }
+    }
 
     private void enemyBoardEntered(MouseEvent event) {
         if (!BattleshipsConfig.INSTANCE.isGameRunning)
@@ -144,7 +150,7 @@ public class BattleshipsController implements Initializable {
         this.currentUnit.rotateUnit();
     }
 
-    public void randomPlacementClicked(ActionEvent actionEvent) {
+    public void randomPlacementClicked() {
         placeUnitsRandomly(playerBoard);
     }
 

@@ -3,6 +3,7 @@ package com.kduda.battleships.models.board;
 import com.kduda.battleships.models.units.GroundLevelUnit;
 import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Unit;
+import com.kduda.battleships.models.units.UnitFactory;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
@@ -16,7 +17,6 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class Board extends Parent {
-    public int units = 19;
     protected ArrayList<Cell> currentUnitCells;
     protected boolean isCurrentUnitLocationValid = false;
     protected Cell targetCell = null;
@@ -24,6 +24,7 @@ public abstract class Board extends Parent {
     private VBox column = new VBox();
     private boolean isEnemyBoard = false;
     private Random random = new Random();
+    private int unitsLeft;
 
     public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler,
                  EventHandler<? super MouseEvent> mouseEnteredHandler,
@@ -32,6 +33,7 @@ public abstract class Board extends Parent {
         this.isCurrentUnitLocationValid = false;
         this.currentUnitCells = new ArrayList<>();
         this.random = new Random();
+        this.unitsLeft = UnitFactory.INSTANCE.getUnitsNumber();
 
         for (int y = 0; y < 22; y++) {
             HBox row = new HBox();
@@ -45,6 +47,10 @@ public abstract class Board extends Parent {
             column.getChildren().add(row);
         }
         getChildren().add(column);
+    }
+
+    public int getUnitsLeft() {
+        return unitsLeft;
     }
 
     //region unit placement
@@ -308,8 +314,12 @@ public abstract class Board extends Parent {
         this.targetCell = cell;
     }
 
-    public boolean shoot() {
-        return this.targetCell.shootCell();
+    public boolean shoot(Cell cell) {
+        return cell.shootCell();
+    }
+
+    public void destroyUnit() {
+        this.unitsLeft--;
     }
     //endregion
 
