@@ -323,13 +323,17 @@ public abstract class Board extends Parent {
     private void placeUnitInCell(Unit unit, Cell cell) {
         cell.setUnit(unit);
 //        if (!this.isEnemyBoard) {
-//            //TODO: rozne kolory dla roznych jednostek
+//            //TODO: rozne kolory dla roznych jednostek if(!isEnemyBoard) unit.setColor(cell)
 //            cell.setColors(Color.WHITE, Color.GREEN);
 //            cell.saveCurrentColors();
 //        }
         //FIXME: enemy debug
-        cell.setColors(Color.WHITE, Color.GREEN);
+        cell.setColors(Color.WHITE, Color.GRAY);
         cell.saveCurrentColors();
+
+
+        //set colors(Colors) //zmiana koloru dla podpowiedzi
+        //set colorsandsave(colors)
     }
 
     private boolean isValidPoint(int x, int y) {
