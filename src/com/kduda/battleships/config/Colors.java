@@ -11,8 +11,11 @@ public enum Colors {
     HINTVALIDSTROKE(0, 45, 3),
     HINTINVALIDFILL(207, 60, 60),
     HINTINVALIDSTROKE(98, 18, 32),
-    MISS(150, 150, 150),
-    HIT(204, 110, 50);
+    MISS(40, 40, 40),
+    HIT(204, 110, 50),
+    SHIP(178,194,207),
+    TANK(95,125,10),
+    PLANE(80,80,80);
 
     private final int r;
     private final int g;

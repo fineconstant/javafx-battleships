@@ -1,9 +1,7 @@
 package com.kduda.battleships.models.board;
 
-import com.kduda.battleships.models.units.GroundLevelUnit;
-import com.kduda.battleships.models.units.Plane;
-import com.kduda.battleships.models.units.Unit;
-import com.kduda.battleships.models.units.UnitsFactory;
+import com.kduda.battleships.config.Colors;
+import com.kduda.battleships.models.units.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
@@ -60,7 +58,7 @@ public abstract class Board extends Parent {
     }
 
     public void placeUnitRandomly(Unit unit) {
-        boolean wasUnitPlaced = false;
+        boolean wasUnitPlaced;
 
         do {
             int xPosition = this.random.nextInt(14);
@@ -320,7 +318,6 @@ public abstract class Board extends Parent {
     }
 
     public void destroyUnit(Unit unit) {
-        //FIXME: dziwny bug
         this.unitsLeft--;
         ArrayList<Cell> cells = unit.getCells();
         for (Cell cell : cells) {
@@ -340,12 +337,12 @@ public abstract class Board extends Parent {
 
     private void placeUnitInCell(Unit unit, Cell cell) {
         cell.setUnit(unit);
-
-        //TODO: rozne kolory dla roznych jednostek if(!isEnemyBoard) unit.setColor(cell)
-
         //FIXME: for enemy debug
-//        if (!this.isEnemyBoard)
-        cell.setColorsAndSave(Color.WHITE, Color.GRAY);
+//        if (!this.isEnemyBoard) {
+            if (unit instanceof Ship) cell.setColorsAndSave(Colors.SHIP.getColor(), Colors.SHIP.getColor());
+            else if (unit instanceof Tank) cell.setColorsAndSave(Colors.TANK.getColor(), Colors.TANK.getColor());
+            else cell.setColorsAndSave(Colors.PLANE.getColor(), Colors.PLANE.getColor());
+//        }
     }
 
     private boolean isValidPoint(int x, int y) {

@@ -18,35 +18,35 @@ public enum UnitsFactory {
     public void initializeUnitsFactory() {
         units = new ArrayList<>();
 
-//        units.add(createGroundLevelUnit(UnitType.SHIP, 4));
-//
-//        units.add(createGroundLevelUnit(UnitType.SHIP, 3));
-//        units.add(createGroundLevelUnit(UnitType.SHIP, 3));
-//
-//        units.add(createGroundLevelUnit(UnitType.SHIP, 2));
-//        units.add(createGroundLevelUnit(UnitType.SHIP, 2));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 4));
+
+        units.add(createGroundLevelUnit(UnitType.SHIP, 3));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 3));
+
         units.add(createGroundLevelUnit(UnitType.SHIP, 2));
-//
-//        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
-//        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
-//        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
-//        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
-//
-//        units.add(createGroundLevelUnit(UnitType.TANK, 4));
-//
-//        units.add(createGroundLevelUnit(UnitType.TANK, 3));
-//        units.add(createGroundLevelUnit(UnitType.TANK, 3));
-//        units.add(createGroundLevelUnit(UnitType.TANK, 3));
-//
-//        units.add(createGroundLevelUnit(UnitType.TANK, 2));
-//        units.add(createGroundLevelUnit(UnitType.TANK, 2));
-//        units.add(createGroundLevelUnit(UnitType.TANK, 2));
-//        units.add(createGroundLevelUnit(UnitType.TANK, 2));
-//
-//        units.add(createPlane());
+        units.add(createGroundLevelUnit(UnitType.SHIP, 2));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 2));
+
+        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
+        units.add(createGroundLevelUnit(UnitType.SHIP, 1));
+
+        units.add(createGroundLevelUnit(UnitType.TANK, 4));
+
+        units.add(createGroundLevelUnit(UnitType.TANK, 3));
+        units.add(createGroundLevelUnit(UnitType.TANK, 3));
+        units.add(createGroundLevelUnit(UnitType.TANK, 3));
+
+        units.add(createGroundLevelUnit(UnitType.TANK, 2));
+        units.add(createGroundLevelUnit(UnitType.TANK, 2));
+        units.add(createGroundLevelUnit(UnitType.TANK, 2));
+        units.add(createGroundLevelUnit(UnitType.TANK, 2));
+
         units.add(createPlane());
         units.add(createPlane());
-//        units.add(createPlane());
+        units.add(createPlane());
+        units.add(createPlane());
 
         unitsIterator = units.listIterator();
     }
