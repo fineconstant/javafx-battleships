@@ -1,4 +1,4 @@
-package com.kduda.battleships.config;
+package com.kduda.battleships.assets;
 
 import javafx.scene.paint.Color;
 

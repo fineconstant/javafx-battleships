@@ -1,6 +1,6 @@
 package com.kduda.battleships.models.board;
 
-import com.kduda.battleships.config.Colors;
+import com.kduda.battleships.assets.Colors;
 import com.kduda.battleships.controllers.SoundPlayer;
 import com.kduda.battleships.models.units.*;
 import javafx.beans.property.IntegerProperty;

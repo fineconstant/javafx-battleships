@@ -1,6 +1,6 @@
 package com.kduda.battleships.models.board;
 
-import com.kduda.battleships.config.Colors;
+import com.kduda.battleships.assets.Colors;
 import com.kduda.battleships.models.units.GroundLevelUnit;
 import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Unit;

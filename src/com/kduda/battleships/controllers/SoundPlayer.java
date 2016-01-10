@@ -1,83 +1,99 @@
 package com.kduda.battleships.controllers;
 
+import com.kduda.battleships.BattleshipsMain;
 import com.kduda.battleships.models.board.CellType;
 import javafx.scene.media.AudioClip;
 
-import java.io.File;
+import java.net.URISyntaxException;
 
 public enum SoundPlayer {
     INSTANCE;
+    private final AudioClip SHIP_PLACED;
+    private final AudioClip TANK_PLACED;
+    private final AudioClip PLANE_PLACED;
+    private final AudioClip HIT;
+    private final AudioClip DESTROYED;
+    private final AudioClip WATER_MISS;
+    private final AudioClip LAND_MISS;
+    private final AudioClip GAME_WON;
+    private final AudioClip GAME_LOST;
+    private final AudioClip INTRO;
+    private final AudioClip ERROR;
+
     boolean isSoundEnabled = true;
+
+    SoundPlayer() {
+        this.SHIP_PLACED = getAudioClip("com/kduda/battleships/assets/audio/ship_placed.wav");
+        this.TANK_PLACED = getAudioClip("com/kduda/battleships/assets/audio/tank_placed.wav");
+        this.PLANE_PLACED = getAudioClip("com/kduda/battleships/assets/audio/plane_placed.wav");
+        this.HIT = getAudioClip("com/kduda/battleships/assets/audio/hit.wav");
+        this.DESTROYED = getAudioClip("com/kduda/battleships/assets/audio/destroyed.wav");
+        this.WATER_MISS = getAudioClip("com/kduda/battleships/assets/audio/water_miss.wav");
+        this.LAND_MISS = getAudioClip("com/kduda/battleships/assets/audio/land_miss.mp3");
+        this.GAME_WON = getAudioClip("com/kduda/battleships/assets/audio/game_won.wav");
+        this.GAME_LOST = getAudioClip("com/kduda/battleships/assets/audio/lost_trumpet.wav");
+        this.INTRO = getAudioClip("com/kduda/battleships/assets/audio/intro.wav");
+        this.ERROR = getAudioClip("com/kduda/battleships/assets/audio/error.wav");
+    }
 
     public void shipPlaced() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/ship_placed.wav").toURI().toString());
-        clip.play();
+        SHIP_PLACED.play();
     }
 
     public void tankPlaced() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/tank_placed.wav").toURI().toString());
-        clip.play();
+        TANK_PLACED.play();
     }
 
     public void planePlaced() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/plane_placed.wav").toURI().toString());
-        clip.play();
+        PLANE_PLACED.play();
     }
-
 
     public void hit() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/hit.wav").toURI().toString());
-        clip.play();
+        HIT.play();
     }
 
     public void destroyed() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/destroyed.wav").toURI().toString());
-        clip.play();
+        DESTROYED.play();
     }
 
     public void missSound(CellType type) {
-        if (type == CellType.Sea) waterMiss();
-        else landMiss();
-    }
-
-    private void waterMiss() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/water_miss.wav").toURI().toString());
-        clip.play();
-    }
-
-    private void landMiss() {
-        if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/land_miss.mp3").toURI().toString());
-        clip.play();
+        if (type == CellType.Sea) WATER_MISS.play();
+        else LAND_MISS.play();
     }
 
     public void gameWon() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/game_won.wav").toURI().toString());
-        clip.play();
+        GAME_WON.play();
     }
 
     public void gameLost() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/lost_trumpet.wav").toURI().toString());
-        clip.play();
+        GAME_LOST.play();
     }
 
     public void intro() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/intro.wav").toURI().toString());
-        clip.play();
+        INTRO.play();
     }
 
     public void error() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/error.wav").toURI().toString());
-        clip.play();
+        ERROR.play();
+    }
+
+    private AudioClip getAudioClip(String path) {
+        AudioClip clip = null;
+        try {
+            clip = new AudioClip(BattleshipsMain.class.getResource(path).toURI().toString());
+        } catch (URISyntaxException ignored) {
+
+        }
+        return clip;
     }
 }
