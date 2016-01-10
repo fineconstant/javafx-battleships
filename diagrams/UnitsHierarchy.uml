@@ -3,45 +3,46 @@
   <ID>JAVA</ID>
   <OriginalElement>com.kduda.battleships.models.units.Ship</OriginalElement>
   <nodes>
-    <node x="463.0" y="687.0">javafx.geometry.Orientation</node>
-    <node x="237.0" y="687.0">com.kduda.battleships.models.units.UnitType</node>
-    <node x="0.0" y="687.0">com.kduda.battleships.models.units.Direction</node>
-    <node x="182.99999999999997" y="585.0">com.kduda.battleships.models.units.Ship</node>
-    <node x="363.0" y="339.0">com.kduda.battleships.models.units.Plane</node>
-    <node x="38.99999999999997" y="585.0">com.kduda.battleships.models.units.Tank</node>
-    <node x="0.0" y="339.0">com.kduda.battleships.models.units.GroundLevelUnit</node>
-    <node x="207.49999999999997" y="0.0">com.kduda.battleships.models.units.Unit</node>
-    <node x="751.0" y="0.0">com.kduda.battleships.models.units.UnitFactory</node>
+    <node x="226.0" y="779.0">javafx.geometry.Orientation</node>
+    <node x="0.0" y="779.0">com.kduda.battleships.models.units.UnitType</node>
+    <node x="751.0" y="0.0">com.kduda.battleships.models.units.Direction</node>
+    <node x="182.99999999999997" y="677.0">com.kduda.battleships.models.units.Ship</node>
+    <node x="38.99999999999997" y="677.0">com.kduda.battleships.models.units.Tank</node>
+    <node x="363.0" y="431.0">com.kduda.battleships.models.units.Plane</node>
+    <node x="0.0" y="431.0">com.kduda.battleships.models.units.GroundLevelUnit</node>
+    <node x="187.49999999999997" y="0.0">com.kduda.battleships.models.units.Unit</node>
   </nodes>
   <notes />
   <edges>
     <edge source="com.kduda.battleships.models.units.GroundLevelUnit" target="com.kduda.battleships.models.units.Unit">
       <point x="0.0" y="-98.0" />
-      <point x="171.5" y="314.0" />
-      <point x="280.25" y="314.0" />
-      <point x="-72.75" y="144.5" />
+      <point x="171.5" y="406.0" />
+      <point x="270.25" y="406.0" />
+      <point x="-82.75" y="190.5" />
     </edge>
     <edge source="com.kduda.battleships.models.units.Tank" target="com.kduda.battleships.models.units.GroundLevelUnit">
       <point x="0.0" y="-28.5" />
-      <point x="100.99999999999997" y="560.0" />
-      <point x="85.75" y="560.0" />
+      <point x="100.99999999999997" y="652.0" />
+      <point x="85.75" y="652.0" />
       <point x="-85.75" y="98.0" />
     </edge>
     <edge source="com.kduda.battleships.models.units.Ship" target="com.kduda.battleships.models.units.GroundLevelUnit">
       <point x="2.8421709430404007E-14" y="-28.5" />
-      <point x="242.0" y="560.0" />
-      <point x="257.25" y="560.0" />
+      <point x="242.0" y="652.0" />
+      <point x="257.25" y="652.0" />
       <point x="85.75" y="98.0" />
     </edge>
     <edge source="com.kduda.battleships.models.units.Plane" target="com.kduda.battleships.models.units.Unit">
       <point x="0.0" y="-98.0" />
-      <point x="534.5" y="314.0" />
-      <point x="425.75" y="314.0" />
-      <point x="72.75" y="144.5" />
+      <point x="534.5" y="406.0" />
+      <point x="435.75" y="406.0" />
+      <point x="82.75" y="190.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="530.0" y="464.0" />
-  <SelectedNodes />
+  <settings layout="Hierarchic Group" zoom="1.0" x="481.0" y="487.0" />
+  <SelectedNodes>
+    <node>com.kduda.battleships.models.units.Ship</node>
+  </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
     <Category>Properties</Category>
