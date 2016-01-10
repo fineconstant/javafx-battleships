@@ -1,6 +1,5 @@
 package com.kduda.battleships.controllers;
 
-import com.kduda.battleships.BattleshipsMain;
 import com.kduda.battleships.models.board.CellType;
 import javafx.scene.media.AudioClip;
 
@@ -90,7 +89,7 @@ public enum SoundPlayer {
     private AudioClip getAudioClip(String path) {
         AudioClip clip = null;
         try {
-            clip = new AudioClip(BattleshipsMain.class.getResource(path).toURI().toString());
+            clip = new AudioClip(getClass().getResource(path).toURI().toString());
         } catch (URISyntaxException ignored) {
 
         }
