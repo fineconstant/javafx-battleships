@@ -347,19 +347,18 @@ public abstract class Board extends Parent {
 
     private void placeUnitInCell(Unit unit, Cell cell) {
         cell.setUnit(unit);
-        //FIXME: for enemy debug
-//        if (this instance of PlayerBoard) {
-        if (unit instanceof Ship) {
-            cell.setColorsAndSave(Colors.SHIP.getColor(), Colors.SHIP.getColor());
-            SoundPlayer.INSTANCE.shipPlaced();
-        } else if (unit instanceof Tank) {
-            cell.setColorsAndSave(Colors.TANK.getColor(), Colors.TANK.getColor());
-            SoundPlayer.INSTANCE.tankPlaced();
-        } else {
-            cell.setColorsAndSave(Colors.PLANE.getColor(), Colors.PLANE.getColor());
-            SoundPlayer.INSTANCE.planePlaced();
+        if (this instanceof PlayerBoard) {
+            if (unit instanceof Ship) {
+                cell.setColorsAndSave(Colors.SHIP.getColor(), Colors.SHIP.getColor());
+                SoundPlayer.INSTANCE.shipPlaced();
+            } else if (unit instanceof Tank) {
+                cell.setColorsAndSave(Colors.TANK.getColor(), Colors.TANK.getColor());
+                SoundPlayer.INSTANCE.tankPlaced();
+            } else {
+                cell.setColorsAndSave(Colors.PLANE.getColor(), Colors.PLANE.getColor());
+                SoundPlayer.INSTANCE.planePlaced();
+            }
         }
-//        }
     }
 
     private boolean isValidPoint(int x, int y) {
