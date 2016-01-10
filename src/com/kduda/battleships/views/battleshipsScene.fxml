@@ -15,7 +15,7 @@
                 <MenuItem mnemonicParsing="true" onAction="#exitClicked" text="_Exit"/>
             </Menu>
             <Menu mnemonicParsing="true" text="_Settings">
-                <CheckMenuItem mnemonicParsing="true" text="Enable _Sound" fx:id="enableSoundsCheckItem"/>
+                <CheckMenuItem mnemonicParsing="true" text="Enable _Sound" fx:id="soundsCheckItem" onAction="#soundOptionAction"/>
             </Menu>
         </MenuBar>
     </top>

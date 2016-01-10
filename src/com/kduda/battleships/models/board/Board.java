@@ -1,6 +1,7 @@
 package com.kduda.battleships.models.board;
 
 import com.kduda.battleships.config.Colors;
+import com.kduda.battleships.controllers.SoundPlayer;
 import com.kduda.battleships.models.units.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -347,9 +348,16 @@ public abstract class Board extends Parent {
         cell.setUnit(unit);
         //FIXME: for enemy debug
 //        if (this instance of PlayerBoard) {
-        if (unit instanceof Ship) cell.setColorsAndSave(Colors.SHIP.getColor(), Colors.SHIP.getColor());
-        else if (unit instanceof Tank) cell.setColorsAndSave(Colors.TANK.getColor(), Colors.TANK.getColor());
-        else cell.setColorsAndSave(Colors.PLANE.getColor(), Colors.PLANE.getColor());
+        if (unit instanceof Ship) {
+            cell.setColorsAndSave(Colors.SHIP.getColor(), Colors.SHIP.getColor());
+            SoundPlayer.INSTANCE.shipPlaced();
+        } else if (unit instanceof Tank) {
+            cell.setColorsAndSave(Colors.TANK.getColor(), Colors.TANK.getColor());
+            SoundPlayer.INSTANCE.tankPlaced();
+        } else {
+            cell.setColorsAndSave(Colors.PLANE.getColor(), Colors.PLANE.getColor());
+            SoundPlayer.INSTANCE.planePlaced();
+        }
 //        }
     }
 

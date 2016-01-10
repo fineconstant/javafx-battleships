@@ -1,6 +1,7 @@
 package com.kduda.battleships.models.board;
 
 import com.kduda.battleships.config.Colors;
+import com.kduda.battleships.controllers.SoundPlayer;
 import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Ship;
 import com.kduda.battleships.models.units.Tank;
@@ -55,11 +56,13 @@ public class Cell extends Rectangle {
             setColorsAndSave(Colors.HIT.getColor(), Colors.HIT.getColor());
 
             if (!unit.isAlive()) {
+                SoundPlayer.INSTANCE.destroyed();
                 Unit unit = this.getUnit();
                 BOARD.destroyUnit(unit);
-            }
+            } else SoundPlayer.INSTANCE.hit();
             return true;
-        }
+        } else SoundPlayer.INSTANCE.missSound(this.TYPE);
+
         setColorsAndSave(Colors.MISS.getColor(), Colors.MISS.getColor());
         return false;
     }

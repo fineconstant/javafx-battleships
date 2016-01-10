@@ -7,6 +7,7 @@ import com.kduda.battleships.models.board.PlayerBoard;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitsFactory;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -26,7 +27,7 @@ public class BattleshipsController implements Initializable {
     public VBox playerBoardArea;
     public Label enemyShipsLabel;
     public Label playerShipsLabel;
-    public CheckMenuItem enableSoundsCheckItem;
+    public CheckMenuItem soundsCheckItem;
 
     private Board enemyBoard;
     private Board playerBoard;
@@ -35,7 +36,7 @@ public class BattleshipsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        enableSoundsCheckItem.setSelected(true);
+        soundsCheckItem.setSelected(true);
         currentUnit = UnitsFactory.INSTANCE.getNextUnit();
         initializeBoards();
     }
@@ -68,6 +69,7 @@ public class BattleshipsController implements Initializable {
         if (enemyBoard.getUnitsLeft() == 0) {
             BattleshipsConfig.INSTANCE.isGameRunning = false;
 
+            SoundPlayer.INSTANCE.gameWon();
             Alert alert = showEndGameModal(true);
 
             Optional<ButtonType> result = alert.showAndWait();
@@ -94,6 +96,7 @@ public class BattleshipsController implements Initializable {
             if (playerBoard.getUnitsLeft() == 0) {
                 BattleshipsConfig.INSTANCE.isGameRunning = false;
 
+                SoundPlayer.INSTANCE.gameLost();
                 Alert alert = showEndGameModal(false);
 
                 Optional<ButtonType> result = alert.showAndWait();
@@ -201,5 +204,9 @@ public class BattleshipsController implements Initializable {
     public void exitClicked() {
         Platform.exit();
         System.exit(0);
+    }
+
+    public void soundOptionAction(ActionEvent actionEvent) {
+        SoundPlayer.INSTANCE.isSoundEnabled = soundsCheckItem.isSelected();
     }
 }
