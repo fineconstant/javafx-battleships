@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -25,6 +26,7 @@ public class BattleshipsController implements Initializable {
     public VBox playerBoardArea;
     public Label enemyShipsLabel;
     public Label playerShipsLabel;
+    public CheckMenuItem enableSoundsCheckItem;
 
     private Board enemyBoard;
     private Board playerBoard;
@@ -33,6 +35,7 @@ public class BattleshipsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        enableSoundsCheckItem.setSelected(true);
         currentUnit = UnitsFactory.INSTANCE.getNextUnit();
         initializeBoards();
     }
@@ -97,6 +100,12 @@ public class BattleshipsController implements Initializable {
                 if (result.get() == ButtonType.OK) initializeBoards();
                 else exitClicked();
             }
+        }
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ignored) {
+
         }
     }
 
