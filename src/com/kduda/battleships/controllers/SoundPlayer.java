@@ -23,17 +23,17 @@ public enum SoundPlayer {
     boolean isSoundEnabled = true;
 
     SoundPlayer() {
-        this.SHIP_PLACED = getAudioClip("com/kduda/battleships/assets/audio/ship_placed.wav");
-        this.TANK_PLACED = getAudioClip("com/kduda/battleships/assets/audio/tank_placed.wav");
-        this.PLANE_PLACED = getAudioClip("com/kduda/battleships/assets/audio/plane_placed.wav");
-        this.HIT = getAudioClip("com/kduda/battleships/assets/audio/hit.wav");
-        this.DESTROYED = getAudioClip("com/kduda/battleships/assets/audio/destroyed.wav");
-        this.WATER_MISS = getAudioClip("com/kduda/battleships/assets/audio/water_miss.wav");
-        this.LAND_MISS = getAudioClip("com/kduda/battleships/assets/audio/land_miss.mp3");
-        this.GAME_WON = getAudioClip("com/kduda/battleships/assets/audio/game_won.wav");
-        this.GAME_LOST = getAudioClip("com/kduda/battleships/assets/audio/lost_trumpet.wav");
-        this.INTRO = getAudioClip("com/kduda/battleships/assets/audio/intro.wav");
-        this.ERROR = getAudioClip("com/kduda/battleships/assets/audio/error.wav");
+        this.SHIP_PLACED = getAudioClip("/com/kduda/battleships/assets/audio/ship_placed.wav");
+        this.TANK_PLACED = getAudioClip("/com/kduda/battleships/assets/audio/tank_placed.wav");
+        this.PLANE_PLACED = getAudioClip("/com/kduda/battleships/assets/audio/plane_placed.wav");
+        this.HIT = getAudioClip("/com/kduda/battleships/assets/audio/hit.wav");
+        this.DESTROYED = getAudioClip("/com/kduda/battleships/assets/audio/destroyed.wav");
+        this.WATER_MISS = getAudioClip("/com/kduda/battleships/assets/audio/water_miss.wav");
+        this.LAND_MISS = getAudioClip("/com/kduda/battleships/assets/audio/land_miss.mp3");
+        this.GAME_WON = getAudioClip("/com/kduda/battleships/assets/audio/game_won.wav");
+        this.GAME_LOST = getAudioClip("/com/kduda/battleships/assets/audio/lost_trumpet.wav");
+        this.INTRO = getAudioClip("/com/kduda/battleships/assets/audio/intro.wav");
+        this.ERROR = getAudioClip("/com/kduda/battleships/assets/audio/error.wav");
     }
 
     public void shipPlaced() {

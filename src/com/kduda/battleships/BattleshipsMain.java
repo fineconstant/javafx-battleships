@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class BattleshipsMain extends Application {
@@ -14,6 +15,7 @@ public class BattleshipsMain extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("views/battleshipsScene.fxml"));
+        primaryStage.getIcons().add(new Image(BattleshipsMain.class.getResource("/com/kduda/battleships/assets/images/icon.png").toURI().toString()));
         primaryStage.setTitle("Battleships");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
