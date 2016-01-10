@@ -1,12 +1,12 @@
 package com.kduda.battleships.models.board;
 
+import com.kduda.battleships.config.Colors;
 import com.kduda.battleships.models.units.GroundLevelUnit;
 import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Unit;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 public class PlayerBoard extends Board {
     public PlayerBoard(boolean isEnemyBoard,
@@ -37,8 +37,9 @@ public class PlayerBoard extends Board {
             validateGroundUnit((GroundLevelUnit) unit, cellPosition);
         else validatePlane((Plane) unit, cellPosition);
 
-        if (isCurrentUnitLocationValid) changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-        else changeCurrentUnitColors(Color.RED, Color.RED);
+        if (isCurrentUnitLocationValid)
+            changeCurrentUnitColors(Colors.HINTVALIDFILL.getColor(), Colors.HINTVALIDSTROKE.getColor());
+        else changeCurrentUnitColors(Colors.HINTINVALIDFILL.getColor(), Colors.HINTINVALIDSTROKE.getColor());
     }
 
     private void validateGroundUnit(GroundLevelUnit unit, Position cellPosition) {

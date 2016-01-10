@@ -6,11 +6,13 @@ public enum Colors {
     WATERFILL(36, 166, 254),
     WATERSTROKE(5, 12, 221),
     LANDFILL(120, 81, 58),
-    LANDSTROKE(0, 0, 0),
-    HINTVALIDFILL(255,0,0),
-    HINTVALIDSTROKE(255,0,0),
-    HINTINVALIDFILL(255,0,0),
-    HINTINVALIDSTROKE(255,0,0);
+    LANDSTROKE(10, 10, 10),
+    HINTVALIDFILL(47, 196, 54),
+    HINTVALIDSTROKE(0, 45, 3),
+    HINTINVALIDFILL(207, 60, 60),
+    HINTINVALIDSTROKE(98, 18, 32),
+    MISS(150, 150, 150),
+    HIT(204, 110, 50);
 
     private final int r;
     private final int g;

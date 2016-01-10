@@ -52,7 +52,7 @@ public class Cell extends Rectangle {
 
         if (unit != null) {
             unit.hit();
-            setColorsAndSave(Color.ORANGE, Color.ORANGE);
+            setColorsAndSave(Colors.HIT.getColor(), Colors.HIT.getColor());
 
             if (!unit.isAlive()) {
                 Unit unit = this.getUnit();
@@ -60,7 +60,7 @@ public class Cell extends Rectangle {
             }
             return true;
         }
-        setColorsAndSave(Color.GRAY, Color.GRAY);
+        setColorsAndSave(Colors.MISS.getColor(), Colors.MISS.getColor());
         return false;
     }
 
