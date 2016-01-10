@@ -43,7 +43,7 @@ public class BattleshipsController implements Initializable {
 
     private void initializeNewGame() {
         UnitsFactory.INSTANCE.initializeUnitsFactory();
-        currentUnit = UnitsFactory.INSTANCE.getNextUnit();
+        if (currentUnit == null) currentUnit = UnitsFactory.INSTANCE.getNextUnit();
         initializeUIButtons(false);
 
         enemyBoard = new EnemyBoard(this::enemyBoardClick, this::enemyBoardEntered, this::enemyBoardExited);
@@ -230,6 +230,8 @@ public class BattleshipsController implements Initializable {
     }
 
     public void newGameClicked() {
+        BattleshipsConfig.INSTANCE.isGameRunning = false;
+        BattleshipsConfig.INSTANCE.isEnemyTurn = false;
         initializeNewGame();
     }
     //endregion
