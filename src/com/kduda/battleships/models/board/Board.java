@@ -3,7 +3,7 @@ package com.kduda.battleships.models.board;
 import com.kduda.battleships.models.units.GroundLevelUnit;
 import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Unit;
-import com.kduda.battleships.models.units.UnitFactory;
+import com.kduda.battleships.models.units.UnitsFactory;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
@@ -33,7 +33,7 @@ public abstract class Board extends Parent {
         this.isCurrentUnitLocationValid = false;
         this.currentUnitCells = new ArrayList<>();
         this.random = new Random();
-        this.unitsLeft = UnitFactory.INSTANCE.getUnitsNumber();
+        this.unitsLeft = UnitsFactory.INSTANCE.getUnitsNumber();
 
         for (int y = 0; y < 22; y++) {
             HBox row = new HBox();

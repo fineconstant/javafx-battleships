@@ -54,7 +54,6 @@ public class Cell extends Rectangle {
             setColorsAndSave(Color.ORANGE,Color.ORANGE);
 
             if (!unit.isAlive()) {
-                //FIXME: pozmieniac to
                 Unit unit = this.getUnit();
                 BOARD.destroyUnit(unit);
             }

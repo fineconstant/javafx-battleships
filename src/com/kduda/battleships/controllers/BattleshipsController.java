@@ -5,7 +5,7 @@ import com.kduda.battleships.models.board.Cell;
 import com.kduda.battleships.models.board.EnemyBoard;
 import com.kduda.battleships.models.board.PlayerBoard;
 import com.kduda.battleships.models.units.Unit;
-import com.kduda.battleships.models.units.UnitFactory;
+import com.kduda.battleships.models.units.UnitsFactory;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseButton;
@@ -27,20 +27,24 @@ public class BattleshipsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        currentUnit = UnitFactory.INSTANCE.getNextUnit();
+        currentUnit = UnitsFactory.INSTANCE.getNextUnit();
         initializeBoards();
     }
 
     private void initializeBoards() {
+        UnitsFactory.INSTANCE.initializeUnitsFactory();
+        currentUnit = UnitsFactory.INSTANCE.getNextUnit();
+
         enemyBoard = new EnemyBoard(true, this::enemyBoardClick, this::enemyBoardEntered, this::enemyBoardExited);
+        if (enemyBoardArea.getChildren().size() > 1) enemyBoardArea.getChildren().remove(1);
         enemyBoardArea.getChildren().add(enemyBoard);
 
         playerBoard = new PlayerBoard(false, this::playerBoardClick, this::playerBoardEntered, this::playerBoardExited);
+        if (playerBoardArea.getChildren().size() > 1) playerBoardArea.getChildren().remove(1);
         playerBoardArea.getChildren().addAll(playerBoard);
     }
 
     private void enemyBoardClick(MouseEvent event) {
-        //TODO: click handler
         if (!BattleshipsConfig.INSTANCE.isGameRunning) return;
 
         Cell cell = (Cell) event.getSource();
@@ -51,14 +55,15 @@ public class BattleshipsController implements Initializable {
 
         if (enemyBoard.getUnitsLeft() == 0) {
             System.out.println("YOU WIN");
-            //zmiana ui
+            BattleshipsConfig.INSTANCE.isGameRunning=false;
+
+            initializeBoards();
         }
 
         if (BattleshipsConfig.INSTANCE.isEnemyTurn) enemyTurn();
     }
 
     private void enemyTurn() {
-        //todo:implement
         while (BattleshipsConfig.INSTANCE.isEnemyTurn) {
             int xPosition = this.random.nextInt(14);
             int yPosition = this.random.nextInt(22);
@@ -70,7 +75,9 @@ public class BattleshipsController implements Initializable {
             BattleshipsConfig.INSTANCE.isEnemyTurn = wasHit;
 
             if (playerBoard.getUnitsLeft() == 0) {
+                BattleshipsConfig.INSTANCE.isGameRunning=false;
                 System.out.println("YOU LOSE");
+                initializeBoards();
             }
         }
     }
@@ -118,7 +125,7 @@ public class BattleshipsController implements Initializable {
         boolean wasPlacementSuccessful = playerBoard.placeUnit(currentUnit);
 
         if (wasPlacementSuccessful)
-            this.currentUnit = UnitFactory.INSTANCE.getNextUnit();
+            this.currentUnit = UnitsFactory.INSTANCE.getNextUnit();
 
         if (currentUnit == null) startGame();
     }
@@ -131,15 +138,15 @@ public class BattleshipsController implements Initializable {
     }
 
     private void placeUnitsOnEnemyBoard() {
-        UnitFactory.INSTANCE.initializeUnitsFactory();
-        currentUnit = UnitFactory.INSTANCE.getNextUnit();
+        UnitsFactory.INSTANCE.initializeUnitsFactory();
+        currentUnit = UnitsFactory.INSTANCE.getNextUnit();
         placeUnitsRandomly(enemyBoard);
     }
 
     private void placeUnitsRandomly(Board board) {
         while (currentUnit != null) {
             board.placeUnitRandomly(currentUnit);
-            currentUnit = UnitFactory.INSTANCE.getNextUnit();
+            currentUnit = UnitsFactory.INSTANCE.getNextUnit();
         }
 
         if (!BattleshipsConfig.INSTANCE.isGameRunning)
