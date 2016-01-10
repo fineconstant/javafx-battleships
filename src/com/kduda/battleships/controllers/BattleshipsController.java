@@ -8,11 +8,14 @@ import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitsFactory;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -54,14 +57,19 @@ public class BattleshipsController implements Initializable {
         BattleshipsConfig.INSTANCE.isEnemyTurn = !wasHit;
 
         if (enemyBoard.getUnitsLeft() == 0) {
-            System.out.println("YOU WIN");
-            BattleshipsConfig.INSTANCE.isGameRunning=false;
+            BattleshipsConfig.INSTANCE.isGameRunning = false;
 
-            initializeBoards();
+            Alert alert = showEndGameModal(true);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) initializeBoards();
+            else exitClicked();
+
         }
 
         if (BattleshipsConfig.INSTANCE.isEnemyTurn) enemyTurn();
     }
+
 
     private void enemyTurn() {
         while (BattleshipsConfig.INSTANCE.isEnemyTurn) {
@@ -75,11 +83,24 @@ public class BattleshipsController implements Initializable {
             BattleshipsConfig.INSTANCE.isEnemyTurn = wasHit;
 
             if (playerBoard.getUnitsLeft() == 0) {
-                BattleshipsConfig.INSTANCE.isGameRunning=false;
-                System.out.println("YOU LOSE");
-                initializeBoards();
+                BattleshipsConfig.INSTANCE.isGameRunning = false;
+
+                Alert alert = showEndGameModal(false);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) initializeBoards();
+                else exitClicked();
             }
         }
+    }
+
+    private Alert showEndGameModal(boolean hasPlayerWon) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Game Over");
+        if (hasPlayerWon) alert.setHeaderText("You Win!");
+        else alert.setHeaderText("You Lost!");
+        alert.setContentText("Do you want to play again?");
+        return alert;
     }
 
     private void enemyBoardEntered(MouseEvent event) {
