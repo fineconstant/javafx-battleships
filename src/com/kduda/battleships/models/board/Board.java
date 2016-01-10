@@ -2,6 +2,8 @@ package com.kduda.battleships.models.board;
 
 import com.kduda.battleships.config.Colors;
 import com.kduda.battleships.models.units.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
@@ -20,18 +22,16 @@ public abstract class Board extends Parent {
     protected Cell targetCell = null;
     protected boolean isTargetCellValid = false;
     private VBox column = new VBox();
-    private boolean isEnemyBoard = false;
     private Random random = new Random();
-    private int unitsLeft;
+    private IntegerProperty unitsLeft = new SimpleIntegerProperty();
 
-    public Board(boolean isEnemyBoard, EventHandler<? super MouseEvent> mouseClickHandler,
+    public Board(EventHandler<? super MouseEvent> mouseClickHandler,
                  EventHandler<? super MouseEvent> mouseEnteredHandler,
                  EventHandler<? super MouseEvent> mouseExitedHandler) {
-        this.isEnemyBoard = isEnemyBoard;
         this.isCurrentUnitLocationValid = false;
         this.currentUnitCells = new ArrayList<>();
         this.random = new Random();
-        this.unitsLeft = UnitsFactory.INSTANCE.getUnitsNumber();
+        this.setUnitsLeft(UnitsFactory.INSTANCE.getUnitsNumber());
 
         for (int y = 0; y < 22; y++) {
             HBox row = new HBox();
@@ -47,8 +47,16 @@ public abstract class Board extends Parent {
         getChildren().add(column);
     }
 
-    public int getUnitsLeft() {
+    public IntegerProperty unitsLeftProperty() {
         return unitsLeft;
+    }
+
+    public int getUnitsLeft() {
+        return this.unitsLeft.get();
+    }
+
+    public void setUnitsLeft(int unitsLeft) {
+        this.unitsLeft.set(unitsLeft);
     }
 
     //region unit placement
@@ -318,7 +326,7 @@ public abstract class Board extends Parent {
     }
 
     public void destroyUnit(Unit unit) {
-        this.unitsLeft--;
+        this.setUnitsLeft(this.getUnitsLeft() - 1);
         ArrayList<Cell> cells = unit.getCells();
         for (Cell cell : cells) {
             for (Cell neighbor : getAdjacentCells(cell.POSITION.getX(), cell.POSITION.getY()))
@@ -338,10 +346,10 @@ public abstract class Board extends Parent {
     private void placeUnitInCell(Unit unit, Cell cell) {
         cell.setUnit(unit);
         //FIXME: for enemy debug
-//        if (!this.isEnemyBoard) {
-            if (unit instanceof Ship) cell.setColorsAndSave(Colors.SHIP.getColor(), Colors.SHIP.getColor());
-            else if (unit instanceof Tank) cell.setColorsAndSave(Colors.TANK.getColor(), Colors.TANK.getColor());
-            else cell.setColorsAndSave(Colors.PLANE.getColor(), Colors.PLANE.getColor());
+//        if (this instance of PlayerBoard) {
+        if (unit instanceof Ship) cell.setColorsAndSave(Colors.SHIP.getColor(), Colors.SHIP.getColor());
+        else if (unit instanceof Tank) cell.setColorsAndSave(Colors.TANK.getColor(), Colors.TANK.getColor());
+        else cell.setColorsAndSave(Colors.PLANE.getColor(), Colors.PLANE.getColor());
 //        }
     }
 

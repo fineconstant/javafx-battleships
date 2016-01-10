@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -22,6 +23,8 @@ import java.util.ResourceBundle;
 public class BattleshipsController implements Initializable {
     public VBox enemyBoardArea;
     public VBox playerBoardArea;
+    public Label enemyShipsLabel;
+    public Label playerShipsLabel;
 
     private Board enemyBoard;
     private Board playerBoard;
@@ -38,13 +41,16 @@ public class BattleshipsController implements Initializable {
         UnitsFactory.INSTANCE.initializeUnitsFactory();
         currentUnit = UnitsFactory.INSTANCE.getNextUnit();
 
-        enemyBoard = new EnemyBoard(true, this::enemyBoardClick, this::enemyBoardEntered, this::enemyBoardExited);
+        enemyBoard = new EnemyBoard(this::enemyBoardClick, this::enemyBoardEntered, this::enemyBoardExited);
         if (enemyBoardArea.getChildren().size() > 1) enemyBoardArea.getChildren().remove(1);
         enemyBoardArea.getChildren().add(enemyBoard);
 
-        playerBoard = new PlayerBoard(false, this::playerBoardClick, this::playerBoardEntered, this::playerBoardExited);
+        playerBoard = new PlayerBoard(this::playerBoardClick, this::playerBoardEntered, this::playerBoardExited);
         if (playerBoardArea.getChildren().size() > 1) playerBoardArea.getChildren().remove(1);
         playerBoardArea.getChildren().addAll(playerBoard);
+
+        enemyShipsLabel.textProperty().bind(enemyBoard.unitsLeftProperty().asString());
+        playerShipsLabel.textProperty().bind(playerBoard.unitsLeftProperty().asString());
     }
 
     private void enemyBoardClick(MouseEvent event) {

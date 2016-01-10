@@ -6,11 +6,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class EnemyBoard extends Board {
-    public EnemyBoard(boolean isEnemyBoard,
-                      EventHandler<? super MouseEvent> mouseClickHandler,
+    public EnemyBoard(EventHandler<? super MouseEvent> mouseClickHandler,
                       EventHandler<? super MouseEvent> mouseEnteredHandler,
                       EventHandler<? super MouseEvent> mouseExitedHandler) {
-        super(isEnemyBoard, mouseClickHandler, mouseEnteredHandler, mouseExitedHandler);
+        super(mouseClickHandler, mouseEnteredHandler, mouseExitedHandler);
     }
 
     //region not used

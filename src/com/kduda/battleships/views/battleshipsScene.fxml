@@ -3,10 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="850.0" prefWidth="950.0" stylesheets="@styles/battleshipsScene.css"
-            xmlns="http://javafx.com/javafx/8.0.40"
-            fx:controller="com.kduda.battleships.controllers.BattleshipsController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="850.0" prefWidth="950.0" stylesheets="@styles/battleshipsScene.css"
+            xmlns="http://javafx.com/javafx/8.0.40" fx:controller="com.kduda.battleships.controllers.BattleshipsController">
 
     <top>
         <MenuBar BorderPane.alignment="CENTER">
@@ -44,17 +43,21 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </BorderPane.margin>
             <VBox>
-                <Label text="Enemy units left: "/>
-                <Label text="Ships: "/>
-                <Label text="Tanks: "/>
-                <Label text="Planes: "/>
+                <HBox>
+                    <children>
+                        <Label text="Enemy units left: "/>
+                        <Label fx:id="enemyShipsLabel" text="Label"/>
+                    </children>
+                </HBox>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0"/>
             <VBox>
-                <Label text="Your units left:"/>
-                <Label text="Ships: "/>
-                <Label text="Tanks: "/>
-                <Label text="Planes: "/>
+                <HBox>
+                    <children>
+                        <Label text="Your units left:"/>
+                        <Label fx:id="playerShipsLabel" text="Label"/>
+                    </children>
+                </HBox>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0"/>
             <Region HBox.hgrow="ALWAYS"/>

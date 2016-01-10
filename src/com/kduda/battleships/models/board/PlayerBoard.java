@@ -9,11 +9,10 @@ import javafx.geometry.Orientation;
 import javafx.scene.input.MouseEvent;
 
 public class PlayerBoard extends Board {
-    public PlayerBoard(boolean isEnemyBoard,
-                       EventHandler<? super MouseEvent> mouseClickHandler,
+    public PlayerBoard(EventHandler<? super MouseEvent> mouseClickHandler,
                        EventHandler<? super MouseEvent> mouseEnteredHandler,
                        EventHandler<? super MouseEvent> mouseExitedHandler) {
-        super(isEnemyBoard, mouseClickHandler, mouseEnteredHandler, mouseExitedHandler);
+        super(mouseClickHandler, mouseEnteredHandler, mouseExitedHandler);
     }
 
     //region not used
