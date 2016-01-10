@@ -1,0 +1,6 @@
+.battlefield {
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 4px;
+    -fx-padding: 5px;
+}
