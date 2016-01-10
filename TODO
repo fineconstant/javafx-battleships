@@ -1,12 +1,5 @@
-- zaznaczanie obszaru dookola zniszczonego
 - zakoncze gry i zrobienie nowej
-
-
-* zapis i odczyt planszy ze statkami do pliku (tekstowego)
-* kontrola liczby statkow
-* zaznaczenie trafionych i nie trafionych
-* losowe rozmieszczanie statkow
-* dodatkowo:
-    - efekty dzwiekowe
-    - gra sieciowa
-    - rozne poziomy trudnosci
+- kontrola liczby jednostek
+- dzwieki
+- UI
+- zapis i odczyt planszy ze statkami do pliku (tekstowego)
