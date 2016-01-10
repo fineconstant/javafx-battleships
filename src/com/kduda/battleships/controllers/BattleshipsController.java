@@ -7,12 +7,8 @@ import com.kduda.battleships.models.board.PlayerBoard;
 import com.kduda.battleships.models.units.Unit;
 import com.kduda.battleships.models.units.UnitsFactory;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -28,22 +24,27 @@ public class BattleshipsController implements Initializable {
     public Label enemyShipsLabel;
     public Label playerShipsLabel;
     public CheckMenuItem soundsCheckItem;
+    public Button rotateUnitButton;
+    public Button randomPlacementButton;
 
     private Board enemyBoard;
     private Board playerBoard;
     private Unit currentUnit;
     private Random random = new Random();
 
+    //region initialize
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         soundsCheckItem.setSelected(true);
         currentUnit = UnitsFactory.INSTANCE.getNextUnit();
-        initializeBoards();
+        initializeNewGame();
+        SoundPlayer.INSTANCE.intro();
     }
 
-    private void initializeBoards() {
+    private void initializeNewGame() {
         UnitsFactory.INSTANCE.initializeUnitsFactory();
         currentUnit = UnitsFactory.INSTANCE.getNextUnit();
+        initializeUIButtons(false);
 
         enemyBoard = new EnemyBoard(this::enemyBoardClick, this::enemyBoardEntered, this::enemyBoardExited);
         if (enemyBoardArea.getChildren().size() > 1) enemyBoardArea.getChildren().remove(1);
@@ -56,12 +57,20 @@ public class BattleshipsController implements Initializable {
         enemyShipsLabel.textProperty().bind(enemyBoard.unitsLeftProperty().asString());
         playerShipsLabel.textProperty().bind(playerBoard.unitsLeftProperty().asString());
     }
+    //endregion
 
+    //region mouse handlers
     private void enemyBoardClick(MouseEvent event) {
-        if (!BattleshipsConfig.INSTANCE.isGameRunning) return;
+        if (!BattleshipsConfig.INSTANCE.isGameRunning) {
+            SoundPlayer.INSTANCE.error();
+            return;
+        }
 
         Cell cell = (Cell) event.getSource();
-        if (cell.wasShot()) return;
+        if (cell.wasShot()) {
+            SoundPlayer.INSTANCE.error();
+            return;
+        }
 
         boolean wasHit = enemyBoard.shoot(cell);
         BattleshipsConfig.INSTANCE.isEnemyTurn = !wasHit;
@@ -73,53 +82,11 @@ public class BattleshipsController implements Initializable {
             Alert alert = showEndGameModal(true);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) initializeBoards();
+            if (result.get() == ButtonType.OK) initializeNewGame();
             else exitClicked();
 
         }
-
         if (BattleshipsConfig.INSTANCE.isEnemyTurn) enemyTurn();
-    }
-
-
-    private void enemyTurn() {
-        while (BattleshipsConfig.INSTANCE.isEnemyTurn) {
-            int xPosition = this.random.nextInt(14);
-            int yPosition = this.random.nextInt(22);
-
-            Cell cell = playerBoard.getCell(xPosition, yPosition);
-            if (cell.wasShot()) continue;
-
-            boolean wasHit = playerBoard.shoot(cell);
-            BattleshipsConfig.INSTANCE.isEnemyTurn = wasHit;
-
-            if (playerBoard.getUnitsLeft() == 0) {
-                BattleshipsConfig.INSTANCE.isGameRunning = false;
-
-                SoundPlayer.INSTANCE.gameLost();
-                Alert alert = showEndGameModal(false);
-
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) initializeBoards();
-                else exitClicked();
-            }
-        }
-
-        //delay
-        double time = 1000 * random.nextDouble();
-        try {
-            Thread.sleep((long) time);
-        } catch (InterruptedException ignored) {
-        }
-    }
-
-    private Alert showEndGameModal(boolean hasPlayerWon) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Game Over");
-        if (hasPlayerWon) alert.setHeaderText("You Win!");
-        else alert.setHeaderText("You Lost!");
-        alert.setContentText("Do you want to play again?");
-        return alert;
     }
 
     private void enemyBoardEntered(MouseEvent event) {
@@ -151,7 +118,10 @@ public class BattleshipsController implements Initializable {
     }
 
     private void playerBoardClick(MouseEvent event) {
-        if (BattleshipsConfig.INSTANCE.isGameRunning) return;
+        if (BattleshipsConfig.INSTANCE.isGameRunning) {
+            SoundPlayer.INSTANCE.error();
+            return;
+        }
 
         Cell cell = (Cell) event.getSource();
 
@@ -169,20 +139,69 @@ public class BattleshipsController implements Initializable {
 
         if (currentUnit == null) startGame();
     }
+    //endregion
 
-    private void startGame() {
-        //TODO: ui changes
-        //TODO: zapisanie do pliku
-        BattleshipsConfig.INSTANCE.isGameRunning = true;
-        placeUnitsOnEnemyBoard();
+    private void enemyTurn() {
+        while (BattleshipsConfig.INSTANCE.isEnemyTurn) {
+            int xPosition = this.random.nextInt(14);
+            int yPosition = this.random.nextInt(22);
+
+            Cell cell = playerBoard.getCell(xPosition, yPosition);
+            if (cell.wasShot()) continue;
+
+            BattleshipsConfig.INSTANCE.isEnemyTurn = playerBoard.shoot(cell);
+
+            if (playerBoard.getUnitsLeft() == 0) {
+                BattleshipsConfig.INSTANCE.isGameRunning = false;
+
+                SoundPlayer.INSTANCE.gameLost();
+                Alert alert = showEndGameModal(false);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) initializeNewGame();
+                else exitClicked();
+            }
+        }
+
+        //delay
+        double time = 1000 * random.nextDouble();
+        try {
+            Thread.sleep((long) time);
+        } catch (InterruptedException ignored) {
+        }
     }
 
-    private void placeUnitsOnEnemyBoard() {
+    private Alert showEndGameModal(boolean hasPlayerWon) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Game Over");
+        if (hasPlayerWon) alert.setHeaderText("You Win!");
+        else alert.setHeaderText("You Lost!");
+        alert.setContentText("Do you want to play again?");
+        return alert;
+    }
+
+
+    private void startGame() {
+        initializeUIButtons(true);
+        //TODO: zapisanie do pliku
+        BattleshipsConfig.INSTANCE.isGameRunning = true;
+        placeEnemyUnits();
+    }
+
+    private void placeEnemyUnits() {
+        SoundPlayer.INSTANCE.isSoundEnabled = false;
         UnitsFactory.INSTANCE.initializeUnitsFactory();
         currentUnit = UnitsFactory.INSTANCE.getNextUnit();
         placeUnitsRandomly(enemyBoard);
+        SoundPlayer.INSTANCE.isSoundEnabled = true;
     }
 
+    private void initializeUIButtons(boolean gameStarted) {
+        rotateUnitButton.setDisable(gameStarted);
+        randomPlacementButton.setDisable(gameStarted);
+    }
+
+    //region UI methods
     private void placeUnitsRandomly(Board board) {
         while (currentUnit != null) {
             board.placeUnitRandomly(currentUnit);
@@ -206,7 +225,12 @@ public class BattleshipsController implements Initializable {
         System.exit(0);
     }
 
-    public void soundOptionAction(ActionEvent actionEvent) {
+    public void soundOptionAction() {
         SoundPlayer.INSTANCE.isSoundEnabled = soundsCheckItem.isSelected();
     }
+
+    public void newGameClicked() {
+        initializeNewGame();
+    }
+    //endregion
 }

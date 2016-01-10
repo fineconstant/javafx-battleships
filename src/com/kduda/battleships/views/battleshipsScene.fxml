@@ -11,7 +11,7 @@
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="true" text="_Game">
-                <MenuItem mnemonicParsing="true" text="_New Game"/>
+                <MenuItem mnemonicParsing="true" text="_New Game" onAction="#newGameClicked"/>
                 <MenuItem mnemonicParsing="true" onAction="#exitClicked" text="_Exit"/>
             </Menu>
             <Menu mnemonicParsing="true" text="_Settings">
@@ -80,8 +80,8 @@
             <Separator orientation="VERTICAL"/>
             <Region HBox.hgrow="ALWAYS"/>
             <HBox alignment="CENTER" spacing="5.0">
-                <Button mnemonicParsing="false" onAction="#rotateUnitClicked" text="Rotate unit (RMB)"/>
-                <Button mnemonicParsing="false" onAction="#randomPlacementClicked" text="Random placement"/>
+                <Button mnemonicParsing="false" onAction="#rotateUnitClicked" text="Rotate unit (RMB)" fx:id="rotateUnitButton"/>
+                <Button mnemonicParsing="false" onAction="#randomPlacementClicked" text="Random placement" fx:id="randomPlacementButton"/>
             </HBox>
         </HBox>
     </bottom>

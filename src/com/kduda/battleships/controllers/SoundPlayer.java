@@ -59,14 +59,25 @@ public enum SoundPlayer {
 
     public void gameWon() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/").toURI().toString());
+        AudioClip clip = new AudioClip(new File("sounds/game_won.wav").toURI().toString());
         clip.play();
     }
 
     public void gameLost() {
         if (!isSoundEnabled) return;
-        AudioClip clip = new AudioClip(new File("sounds/lost_trumpet.mp3").toURI().toString());
+        AudioClip clip = new AudioClip(new File("sounds/lost_trumpet.wav").toURI().toString());
         clip.play();
+    }
 
+    public void intro() {
+        if (!isSoundEnabled) return;
+        AudioClip clip = new AudioClip(new File("sounds/intro.wav").toURI().toString());
+        clip.play();
+    }
+
+    public void error() {
+        if (!isSoundEnabled) return;
+        AudioClip clip = new AudioClip(new File("sounds/error.wav").toURI().toString());
+        clip.play();
     }
 }

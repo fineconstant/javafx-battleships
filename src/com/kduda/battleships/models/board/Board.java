@@ -63,6 +63,7 @@ public abstract class Board extends Parent {
     //region unit placement
     public boolean placeUnit(Unit unit) {
         boolean wasUnitPlaced = placeUnitOnBoard(unit);
+        if (!wasUnitPlaced && this instanceof PlayerBoard) SoundPlayer.INSTANCE.error();
         return wasUnitPlaced;
     }
 
