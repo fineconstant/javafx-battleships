@@ -102,10 +102,11 @@ public class BattleshipsController implements Initializable {
             }
         }
 
+        //delay
+        double time = 1000 * random.nextDouble();
         try {
-            Thread.sleep(2000);
+            Thread.sleep((long) time);
         } catch (InterruptedException ignored) {
-
         }
     }
 
