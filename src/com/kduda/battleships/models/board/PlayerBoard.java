@@ -34,71 +34,34 @@ public class PlayerBoard extends Board {
         currentUnitCells.clear();
 
         if (unit instanceof GroundLevelUnit)
-            showGroundUnitHint((GroundLevelUnit) unit, cellPosition);
-        else showPlaneHint((Plane) unit, cellPosition);
+            validateGroundUnit((GroundLevelUnit) unit, cellPosition);
+        else validatePlane((Plane) unit, cellPosition);
+
+        if (isCurrentUnitLocationValid) changeCurrentUnitColors(Color.GREEN, Color.GREEN);
+        else changeCurrentUnitColors(Color.RED, Color.RED);
     }
 
-    private void showGroundUnitHint(GroundLevelUnit unit, Position cellPosition) {
-        if (unit.getOrientation() == Orientation.VERTICAL) {
-            if (isVerticalLocationDownwardsValid(unit, cellPosition)) {
-                isCurrentUnitLocationValid = true;
-                changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-            } else {
-                isCurrentUnitLocationValid = false;
-                changeCurrentUnitColors(Color.RED, Color.RED);
-            }
-
-        } else {
-            if (isHorizontalLocationForwardValid(unit, cellPosition)) {
-                isCurrentUnitLocationValid = true;
-                changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-            } else {
-                isCurrentUnitLocationValid = false;
-                changeCurrentUnitColors(Color.RED, Color.RED);
-            }
-        }
+    private void validateGroundUnit(GroundLevelUnit unit, Position cellPosition) {
+        if (unit.getOrientation() == Orientation.VERTICAL)
+            isCurrentUnitLocationValid = isVerticalLocationDownwardsValid(unit, cellPosition);
+        else
+            isCurrentUnitLocationValid = isHorizontalLocationForwardValid(unit, cellPosition);
     }
 
-    private void showPlaneHint(Plane plane, Position cellPosition) {
+    private void validatePlane(Plane plane, Position cellPosition) {
         switch (plane.getDirection()) {
             case NORTH:
-                if (isNorthLocationValid(plane, cellPosition)) {
-                    isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-                    return;
-                } else {
-                    this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED, Color.RED);
-                    return;
-                }
+                isCurrentUnitLocationValid = (isNorthLocationValid(plane, cellPosition));
+                break;
             case EAST:
-                if (isEastLocationValid(plane, cellPosition)) {
-                    isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-                    return;
-                } else {
-                    this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED, Color.RED);
-                    return;
-                }
+                isCurrentUnitLocationValid = isEastLocationValid(plane, cellPosition);
+                break;
             case SOUTH:
-                if (isSouthLocationValid(plane, cellPosition)) {
-                    isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-                    return;
-                } else {
-                    this.isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED, Color.RED);
-                    return;
-                }
+                isCurrentUnitLocationValid = isSouthLocationValid(plane, cellPosition);
+                break;
             case WEST:
-                if (isWestLocationValid(plane, cellPosition)) {
-                    isCurrentUnitLocationValid = true;
-                    changeCurrentUnitColors(Color.GREEN, Color.GREEN);
-                } else {
-                    isCurrentUnitLocationValid = false;
-                    changeCurrentUnitColors(Color.RED, Color.RED);
-                }
+                isCurrentUnitLocationValid = isWestLocationValid(plane, cellPosition);
+                break;
         }
     }
 

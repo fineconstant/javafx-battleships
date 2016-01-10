@@ -1,5 +1,6 @@
 package com.kduda.battleships.models.board;
 
+import com.kduda.battleships.config.Colors;
 import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Ship;
 import com.kduda.battleships.models.units.Tank;
@@ -27,13 +28,13 @@ public class Cell extends Rectangle {
 
         if (y > 11) {
             this.TYPE = CellType.Land;
-            setFill(Color.SANDYBROWN);
+            setColors(Colors.LANDFILL.getColor(), Colors.LANDSTROKE.getColor());
+
+
         } else {
             this.TYPE = CellType.Sea;
-            setFill(Color.BLUE);
+            setColors(Colors.WATERFILL.getColor(), Colors.WATERSTROKE.getColor());
         }
-
-        setStroke(Color.BLACK);
 
         saveCurrentColors();
     }
@@ -51,7 +52,7 @@ public class Cell extends Rectangle {
 
         if (unit != null) {
             unit.hit();
-            setColorsAndSave(Color.ORANGE,Color.ORANGE);
+            setColorsAndSave(Color.ORANGE, Color.ORANGE);
 
             if (!unit.isAlive()) {
                 Unit unit = this.getUnit();
@@ -59,7 +60,7 @@ public class Cell extends Rectangle {
             }
             return true;
         }
-        setColorsAndSave(Color.GRAY,Color.GRAY);
+        setColorsAndSave(Color.GRAY, Color.GRAY);
         return false;
     }
 

@@ -44,8 +44,8 @@ public enum UnitsFactory {
 //        units.add(createGroundLevelUnit(UnitType.TANK, 2));
 //
 //        units.add(createPlane());
-//        units.add(createPlane());
-//        units.add(createPlane());
+        units.add(createPlane());
+        units.add(createPlane());
 //        units.add(createPlane());
 
         unitsIterator = units.listIterator();
