@@ -188,11 +188,12 @@ public class BattleshipsController implements Initializable {
     }
 
     private void placeEnemyUnits() {
+        boolean soundState = SoundPlayer.INSTANCE.isSoundEnabled;
         SoundPlayer.INSTANCE.isSoundEnabled = false;
         UnitsFactory.INSTANCE.initializeUnitsFactory();
         currentUnit = UnitsFactory.INSTANCE.getNextUnit();
         placeUnitsRandomly(enemyBoard);
-        SoundPlayer.INSTANCE.isSoundEnabled = true;
+        SoundPlayer.INSTANCE.isSoundEnabled = soundState;
     }
 
     private void initializeUIButtons(boolean gameStarted) {
