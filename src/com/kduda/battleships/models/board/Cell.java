@@ -3,7 +3,6 @@ package com.kduda.battleships.models.board;
 import com.kduda.battleships.assets.Colors;
 import com.kduda.battleships.controllers.BattleshipsConfig;
 import com.kduda.battleships.controllers.SoundPlayer;
-import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Ship;
 import com.kduda.battleships.models.units.Tank;
 import com.kduda.battleships.models.units.Unit;
@@ -83,13 +82,10 @@ public class Cell extends Rectangle {
         return true;
     }
 
+    //region colors setters
     public void saveCurrentColors() {
         this.currentFill = this.getFill();
         this.currentStroke = this.getStroke();
-    }
-
-    public boolean isSurfaceValid(Plane plane) {
-        return true;
     }
 
     public void loadSavedColors() {
@@ -106,6 +102,7 @@ public class Cell extends Rectangle {
         setColors(fillColor, strokeColor);
         saveCurrentColors();
     }
+    //endregion
 
     @Override
     public String toString() {

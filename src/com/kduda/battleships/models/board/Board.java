@@ -13,12 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Board extends Parent {
-    protected ArrayList<Cell> currentUnitCells;
+public abstract class Board extends Parent implements Serializable {
+    protected ArrayList<Cell> currentUnitCells = new ArrayList<>();
     protected boolean isCurrentUnitLocationValid = false;
     protected Cell targetCell = null;
     protected boolean isTargetCellValid = false;
@@ -29,9 +30,7 @@ public abstract class Board extends Parent {
     public Board(EventHandler<? super MouseEvent> mouseClickHandler,
                  EventHandler<? super MouseEvent> mouseEnteredHandler,
                  EventHandler<? super MouseEvent> mouseExitedHandler) {
-        this.isCurrentUnitLocationValid = false;
-        this.currentUnitCells = new ArrayList<>();
-        this.random = new Random();
+
         this.setUnitsLeft(UnitsFactory.INSTANCE.getUnitsNumber());
 
         for (int y = 0; y < 22; y++) {

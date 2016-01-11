@@ -35,6 +35,7 @@ public enum SoundPlayer {
         this.ERROR = getAudioClip("/com/kduda/battleships/assets/audio/error.wav");
     }
 
+    //region playback methods
     public void shipPlaced() {
         if (!isSoundEnabled) return;
         SHIP_PLACED.play();
@@ -85,6 +86,7 @@ public enum SoundPlayer {
         if (!isSoundEnabled) return;
         ERROR.play();
     }
+    //endregion
 
     private AudioClip getAudioClip(String path) {
         AudioClip clip = null;
