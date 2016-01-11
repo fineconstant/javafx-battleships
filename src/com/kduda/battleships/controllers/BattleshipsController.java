@@ -183,7 +183,6 @@ public class BattleshipsController implements Initializable {
 
     private void startGame() {
         initializeUIButtons(true);
-        //todo:zapis do pliku
         BattleshipsConfig.INSTANCE.isGameRunning = true;
         placeEnemyUnits();
     }
