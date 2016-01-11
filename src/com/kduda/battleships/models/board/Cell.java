@@ -1,6 +1,7 @@
 package com.kduda.battleships.models.board;
 
 import com.kduda.battleships.assets.Colors;
+import com.kduda.battleships.controllers.BattleshipsConfig;
 import com.kduda.battleships.controllers.SoundPlayer;
 import com.kduda.battleships.models.units.Plane;
 import com.kduda.battleships.models.units.Ship;
@@ -22,7 +23,7 @@ public class Cell extends Rectangle {
     private Paint currentStroke;
 
     public Cell(int x, int y, Board board) {
-        super(30, 30);
+        super(BattleshipsConfig.INSTANCE.cellSize, BattleshipsConfig.INSTANCE.cellSize);
 
         this.POSITION = new Position(x, y);
         this.BOARD = board;

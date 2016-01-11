@@ -5,4 +5,5 @@ public enum BattleshipsConfig {
 
     boolean isGameRunning = false;
     boolean isEnemyTurn = false;
+    public int cellSize;
 }

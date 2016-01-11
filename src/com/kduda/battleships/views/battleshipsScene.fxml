@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="795.0" prefWidth="950.0" stylesheets="@styles/battleshipsScene.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kduda.battleships.controllers.BattleshipsController">
+<BorderPane stylesheets="@styles/battleshipsScene.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kduda.battleships.controllers.BattleshipsController">
 
     <top>
         <MenuBar BorderPane.alignment="CENTER">
@@ -20,7 +20,7 @@
 
     <center>
         <HBox alignment="CENTER">
-            <VBox fx:id="enemyBoardArea" styleClass="battlefield">
+            <VBox fx:id="enemyBoardArea" maxHeight="200.0" styleClass="battlefield">
                 <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Enemy's Battlefield">
                     <font>
                         <Font name="System Bold" size="13.0" />
@@ -30,12 +30,12 @@
                     </VBox.margin>
                 </Label>
             </VBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0">
+            <Separator orientation="VERTICAL">
                 <HBox.margin>
                     <Insets left="15.0" right="15.0" />
                 </HBox.margin>
             </Separator>
-            <VBox fx:id="playerBoardArea" styleClass="battlefield">
+            <VBox fx:id="playerBoardArea" maxHeight="200.0" styleClass="battlefield">
                 <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Your Battlefield" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="13.0" />
@@ -54,12 +54,12 @@
     <bottom>
         <HBox spacing="10.0" BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                <Insets bottom="10.0" left="10.0" right="10.0" />
             </BorderPane.margin>
             <VBox alignment="CENTER">
                 <HBox>
                     <children>
-                        <Label text="Enemy units left: " />
+                        <Label text="Enemy's units left: " />
                         <Label fx:id="enemyShipsLabel" text="Label" />
                     </children>
                 </HBox>
