@@ -3,29 +3,29 @@
   <ID>JAVA</ID>
   <OriginalElement>com.kduda.battleships.models.board.Board</OriginalElement>
   <nodes>
-    <node x="2207.0" y="0.0">com.kduda.battleships.models.board.Position</node>
+    <node x="2187.0" y="0.0">com.kduda.battleships.models.board.Position</node>
     <node x="1291.0" y="0.0">com.kduda.battleships.models.board.Cell</node>
-    <node x="1987.0" y="0.0">com.kduda.battleships.models.board.CellType</node>
+    <node x="1967.0" y="0.0">com.kduda.battleships.models.board.CellType</node>
     <node x="0.0" y="0.0">com.kduda.battleships.models.board.Board</node>
     <node x="658.25" y="1857.0">com.kduda.battleships.models.board.PlayerBoard</node>
     <node x="26.25" y="1903.0">com.kduda.battleships.models.board.EnemyBoard</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="com.kduda.battleships.models.board.EnemyBoard" target="com.kduda.battleships.models.board.Board">
-      <point x="0.0" y="-120.5" />
-      <point x="332.25" y="1832.0" />
-      <point x="311.5" y="1832.0" />
-      <point x="-311.5" y="903.5" />
-    </edge>
     <edge source="com.kduda.battleships.models.board.PlayerBoard" target="com.kduda.battleships.models.board.Board">
       <point x="0.0" y="-166.5" />
       <point x="913.75" y="1832.0" />
       <point x="934.5" y="1832.0" />
       <point x="311.5" y="903.5" />
     </edge>
+    <edge source="com.kduda.battleships.models.board.EnemyBoard" target="com.kduda.battleships.models.board.Board">
+      <point x="0.0" y="-120.5" />
+      <point x="332.25" y="1832.0" />
+      <point x="311.5" y="1832.0" />
+      <point x="-311.5" y="903.5" />
+    </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.8298642533936652" x="1188.5" y="1095.0" />
+  <settings layout="Hierarchic Group" zoom="0.7479638009049774" x="1178.5" y="1095.0" />
   <SelectedNodes>
     <node>com.kduda.battleships.models.board.EnemyBoard</node>
   </SelectedNodes>
