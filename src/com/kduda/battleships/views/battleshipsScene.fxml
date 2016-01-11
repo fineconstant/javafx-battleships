@@ -24,7 +24,7 @@
         <HBox alignment="CENTER">
             <VBox fx:id="enemyBoardArea" maxHeight="200.0" styleClass="battlefield">
                 <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
-                       text="ENEMY'S BATTLEFIELD">
+                       text="ENEMY'S BATTLEFIELD" styleClass="header">
                     <font>
                         <Font name="System Bold" size="13.0"/>
                     </font>
@@ -40,7 +40,7 @@
             </Separator>
             <VBox fx:id="playerBoardArea" maxHeight="200.0" styleClass="battlefield">
                 <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
-                       text="YOUR BATTLEFIELD" textAlignment="CENTER" >
+                       text="YOUR BATTLEFIELD" textAlignment="CENTER" styleClass="header">
                     <font>
                         <Font name="System Bold" size="13.0"/>
                     </font>

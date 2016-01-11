@@ -22,13 +22,17 @@ BorderPane {
     -fx-padding: 5;
     -fx-background-radius: 4px;
     -fx-background-color: #282828;
+    -fx-font-size: 1.5em;
 }
 
 Label {
     -fx-text-fill: #e6e6e6;
     -fx-font-family: GatsbyFLF-Bold;
-    -fx-font-size: 2em;
 
+}
+
+.header {
+    -fx-font-size: 2em;
 }
 
 Button {
@@ -42,6 +46,5 @@ Button {
     -fx-padding: 10 10 10 10;
     -fx-text-fill: #e6e6e6;
     -fx-font-family: GatsbyFLF-Bold;
-    -fx-font-size: 2em;
 }
 
