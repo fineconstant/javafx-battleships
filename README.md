@@ -12,4 +12,4 @@ Basic game with some extensions
   * Ships (white)
 3. Sound effects
 
-![GitHub Logo](/img/screenshot.png)
+![Battleships screenshot](/img/screenshot.png)
