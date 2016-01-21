@@ -1,7 +1,7 @@
 # Battleships game
 Battleships game written in JavaFX.
 
-It is a basic game with some extensions
+It is a basic game with some extensions, computer AI is a little bit primitive
 
 1. Combat area
   * Land (brown)
