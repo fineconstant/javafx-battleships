@@ -63,19 +63,15 @@
             </BorderPane.margin>
             <VBox alignment="CENTER">
                 <HBox>
-                    <children>
-                        <Label text="Enemy's units left: "/>
-                        <Label fx:id="enemyShipsLabel" text="Label"/>
-                    </children>
+                    <Label text="Enemy's units left: "/>
+                    <Label fx:id="enemyShipsLabel" text="Label"/>
                 </HBox>
             </VBox>
             <Separator orientation="VERTICAL"/>
             <VBox alignment="CENTER">
                 <HBox alignment="CENTER">
-                    <children>
-                        <Label text="Your units left: "/>
-                        <Label fx:id="playerShipsLabel" text="Label"/>
-                    </children>
+                    <Label text="Your units left: "/>
+                    <Label fx:id="playerShipsLabel" text="Label"/>
                 </HBox>
             </VBox>
             <Region HBox.hgrow="ALWAYS"/>
