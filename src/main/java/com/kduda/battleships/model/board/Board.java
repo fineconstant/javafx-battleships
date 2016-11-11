@@ -13,23 +13,24 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public abstract class Board extends Parent implements Serializable {
-    protected ArrayList<Cell> currentUnitCells = new ArrayList<>();
-    protected boolean isCurrentUnitLocationValid = false;
-    protected Cell targetCell = null;
-    protected boolean isTargetCellValid = false;
+    ArrayList<Cell> currentUnitCells = new ArrayList<>();
+    boolean isCurrentUnitLocationValid = false;
+    Cell targetCell = null;
+    boolean isTargetCellValid = false;
     private VBox column = new VBox();
     private Random random = new Random();
     private IntegerProperty unitsLeft = new SimpleIntegerProperty();
 
-    public Board(EventHandler<? super MouseEvent> mouseClickHandler,
-                 EventHandler<? super MouseEvent> mouseEnteredHandler,
-                 EventHandler<? super MouseEvent> mouseExitedHandler) {
+    Board(EventHandler<? super MouseEvent> mouseClickHandler,
+          EventHandler<? super MouseEvent> mouseEnteredHandler,
+          EventHandler<? super MouseEvent> mouseExitedHandler) {
 
         this.setUnitsLeft(UnitsFactory.INSTANCE.getUnitsNumber());
 
@@ -55,7 +56,7 @@ public abstract class Board extends Parent implements Serializable {
         return this.unitsLeft.get();
     }
 
-    public void setUnitsLeft(int unitsLeft) {
+    private void setUnitsLeft(int unitsLeft) {
         this.unitsLeft.set(unitsLeft);
     }
 
@@ -115,7 +116,7 @@ public abstract class Board extends Parent implements Serializable {
             isCurrentUnitLocationValid = isHorizontalLocationForwardValid(unit, cellPosition);
     }
 
-    protected boolean isVerticalLocationDownwardsValid(Unit unit, Position cellPosition) {
+    boolean isVerticalLocationDownwardsValid(Unit unit, Position cellPosition) {
         int unitLength = unit.getLength();
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
@@ -160,7 +161,7 @@ public abstract class Board extends Parent implements Serializable {
         return result;
     }
 
-    protected boolean isHorizontalLocationForwardValid(Unit unit, Position cellPosition) {
+    boolean isHorizontalLocationForwardValid(Unit unit, Position cellPosition) {
         int unitLength = unit.getLength();
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
@@ -225,7 +226,7 @@ public abstract class Board extends Parent implements Serializable {
         }
     }
 
-    protected boolean isNorthLocationValid(Plane plane, Position cellPosition) {
+    boolean isNorthLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
         int length = plane.getLength();
@@ -238,7 +239,7 @@ public abstract class Board extends Parent implements Serializable {
         return result;
     }
 
-    protected boolean isEastLocationValid(Plane plane, Position cellPosition) {
+    boolean isEastLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
@@ -250,7 +251,7 @@ public abstract class Board extends Parent implements Serializable {
         return result;
     }
 
-    protected boolean isSouthLocationValid(Plane plane, Position cellPosition) {
+    boolean isSouthLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
 
@@ -262,7 +263,7 @@ public abstract class Board extends Parent implements Serializable {
         return result;
     }
 
-    protected boolean isWestLocationValid(Plane plane, Position cellPosition) {
+    boolean isWestLocationValid(Plane plane, Position cellPosition) {
         int xPosition = cellPosition.getX();
         int yPosition = cellPosition.getY();
         int length = plane.getLength();
@@ -286,7 +287,7 @@ public abstract class Board extends Parent implements Serializable {
     private boolean areVerticalNeighborsValid(int xPosition, int yPosition) {
         boolean result = true;
         if (!isValidPlacementCell(xPosition, yPosition - 1)) result = false;
-        //noinspection RedundantIfStatement
+//        noinspection RedundantIfStatement
         if (!isValidPlacementCell(xPosition, yPosition + 1)) result = false;
         return result;
     }
@@ -326,7 +327,7 @@ public abstract class Board extends Parent implements Serializable {
         return cell.shootCell();
     }
 
-    public void destroyUnit(Unit unit) {
+    void destroyUnit(Unit unit) {
         this.setUnitsLeft(this.getUnitsLeft() - 1);
         ArrayList<Cell> cells = unit.getCells();
         for (Cell cell : cells) {
@@ -337,7 +338,7 @@ public abstract class Board extends Parent implements Serializable {
     //endregion
 
     //region helper methods
-    protected void changeCurrentUnitColors(Color fillColor, Color strokeColor) {
+    void changeCurrentUnitColors(Color fillColor, Color strokeColor) {
         for (Cell currCell : this.currentUnitCells) {
             currCell.saveCurrentColors();
             currCell.setColors(fillColor, strokeColor);
@@ -380,7 +381,6 @@ public abstract class Board extends Parent implements Serializable {
                 new Position(x - 1, y), //W
                 new Position(x - 1, y - 1) //NW
         };
-
         List<Cell> neighbors = new ArrayList<>();
 
         for (Position position : positions) {

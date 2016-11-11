@@ -1,19 +1,19 @@
 package com.kduda.battleships.model.board;
 
-public class Position {
+class Position {
     private final int X;
     private final int Y;
 
-    public Position(int x, int y) {
+    Position(int x, int y) {
         this.X = x;
         this.Y = y;
     }
 
-    public int getX() {
+    int getX() {
         return X;
     }
 
-    public int getY() {
+    int getY() {
         return Y;
     }
 }
