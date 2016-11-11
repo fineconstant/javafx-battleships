@@ -1,8 +1,8 @@
 package com.kduda.battleships.model.board;
 
-import com.kduda.battleships.model.util.Colors;
 import com.kduda.battleships.controller.SoundPlayer;
 import com.kduda.battleships.model.unit.*;
+import com.kduda.battleships.model.util.Colors;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
@@ -13,15 +13,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public abstract class Board extends Parent implements Serializable {
-    ArrayList<Cell> currentUnitCells = new ArrayList<>();
+    private final static int Y_SIZE = 22;
+    private final static int X_SIZE = 14;
+
     boolean isCurrentUnitLocationValid = false;
+    ArrayList<Cell> currentUnitCells = new ArrayList<>();
     Cell targetCell = null;
     boolean isTargetCellValid = false;
     private VBox column = new VBox();
@@ -34,9 +36,9 @@ public abstract class Board extends Parent implements Serializable {
 
         this.setUnitsLeft(UnitsFactory.INSTANCE.getUnitsNumber());
 
-        for (int y = 0; y < 22; y++) {
+        for (int y = 0; y < Y_SIZE; y++) {
             HBox row = new HBox();
-            for (int x = 0; x < 14; x++) {
+            for (int x = 0; x < X_SIZE; x++) {
                 Cell cell = new Cell(x, y, this);
                 cell.setOnMouseClicked(mouseClickHandler);
                 cell.setOnMouseEntered(mouseEnteredHandler);
@@ -71,8 +73,8 @@ public abstract class Board extends Parent implements Serializable {
         boolean wasUnitPlaced;
 
         do {
-            int xPosition = this.random.nextInt(14);
-            int yPosition = this.random.nextInt(22);
+            int xPosition = this.random.nextInt(X_SIZE);
+            int yPosition = this.random.nextInt(Y_SIZE);
             Position cellPosition = new Position(xPosition, yPosition);
 
             int rotation = this.random.nextInt(4);
@@ -361,8 +363,9 @@ public abstract class Board extends Parent implements Serializable {
         }
     }
 
+
     private boolean isValidPoint(int x, int y) {
-        return x >= 0 && x < 14 && y >= 0 && y < 22;
+        return x >= 0 && x < X_SIZE && y >= 0 && y < Y_SIZE;
     }
 
     public Cell getCell(int x, int y) {
@@ -372,14 +375,14 @@ public abstract class Board extends Parent implements Serializable {
 
     private Cell[] getAdjacentCells(int x, int y) {
         Position[] positions = new Position[]{
-                new Position(x, y - 1), //N
+                new Position(x, y - 1),     //N
                 new Position(x + 1, y - 1), //NE
-                new Position(x + 1, y), //E
+                new Position(x + 1, y),     //E
                 new Position(x + 1, y + 1), //SE
-                new Position(x, y + 1), //S
+                new Position(x, y + 1),     //S
                 new Position(x - 1, y + 1), //SW
-                new Position(x - 1, y), //W
-                new Position(x - 1, y - 1) //NW
+                new Position(x - 1, y),     //W
+                new Position(x - 1, y - 1)  //NW
         };
         List<Cell> neighbors = new ArrayList<>();
 
