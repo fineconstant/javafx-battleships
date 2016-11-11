@@ -105,6 +105,7 @@ public abstract class Board extends Parent implements Serializable {
         for (Cell cell : this.currentUnitCells) {
             placeUnitInCell(unit, cell);
             unit.registerCell(cell);
+            cell.stopTimer();
         }
         this.isCurrentUnitLocationValid = false;
     }
@@ -362,7 +363,6 @@ public abstract class Board extends Parent implements Serializable {
             }
         }
     }
-
 
     private boolean isValidPoint(int x, int y) {
         return x >= 0 && x < X_SIZE && y >= 0 && y < Y_SIZE;

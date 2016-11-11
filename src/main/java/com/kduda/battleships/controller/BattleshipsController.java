@@ -109,6 +109,7 @@ public class BattleshipsController implements Initializable {
         if (BattleshipsConfig.INSTANCE.isGameRunning) return;
 
         Cell cell = (Cell) event.getSource();
+        cell.stopTimer();
         playerBoard.showPlacementHint(currentUnit, cell);
     }
 

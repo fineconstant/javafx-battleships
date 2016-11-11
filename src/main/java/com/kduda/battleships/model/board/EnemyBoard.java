@@ -25,6 +25,7 @@ public class EnemyBoard extends Board {
     @Override
     public void showShootingHint() {
         targetCell.saveCurrentColors();
+        targetCell.stopTimer();
 
         if (isTargetCellValid)
             targetCell.setColors(Color.GREEN, Color.GREEN);
@@ -35,5 +36,6 @@ public class EnemyBoard extends Board {
     @Override
     public void removeShootingHint() {
         targetCell.loadSavedColors();
+        if (!targetCell.wasShot()) targetCell.startTimer();
     }
 }

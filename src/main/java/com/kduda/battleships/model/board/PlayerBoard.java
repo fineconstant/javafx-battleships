@@ -36,6 +36,8 @@ public class PlayerBoard extends Board {
             validateGroundUnit((GroundLevelUnit) unit, cellPosition);
         else validatePlane((Plane) unit, cellPosition);
 
+        currentUnitCells.forEach(Cell::stopTimer);
+
         if (isCurrentUnitLocationValid)
             changeCurrentUnitColors(Colors.HINTVALIDFILL.getColor(), Colors.HINTVALIDSTROKE.getColor());
         else changeCurrentUnitColors(Colors.HINTINVALIDFILL.getColor(), Colors.HINTINVALIDSTROKE.getColor());
@@ -66,7 +68,10 @@ public class PlayerBoard extends Board {
     }
 
     public void removePlacementHint() {
-        this.currentUnitCells.forEach(Cell::loadSavedColors);
+        this.currentUnitCells.forEach(cell -> {
+            cell.loadSavedColors();
+            if(cell.isEmpty())cell.startTimer();
+        });
     }
     //endregion
 }

@@ -1,27 +1,42 @@
 package com.kduda.battleships.model.board;
 
-import com.kduda.battleships.model.util.Colors;
 import com.kduda.battleships.config.BattleshipsConfig;
 import com.kduda.battleships.controller.SoundPlayer;
 import com.kduda.battleships.model.unit.Ship;
 import com.kduda.battleships.model.unit.Tank;
 import com.kduda.battleships.model.unit.Unit;
+import com.kduda.battleships.model.util.BackgroundFrames;
+import com.kduda.battleships.model.util.Colors;
+import javafx.animation.AnimationTimer;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
+import java.awt.image.BufferedImage;
+
 
 public class Cell extends Rectangle {
-    public final Position POSITION;
-    public final CellType TYPE;
+    private static final int FRAME_TIME_MS = 500;
+    private static final int FRAME_WIDTH = 170;
+    private static final int FRAME_HEIGHT = 256;
+    final Position POSITION;
+    private final CellType TYPE;
 
     private final Board BOARD;
     private boolean wasShot = false;
     private Unit unit = null;
     private Paint currentFill;
     private Paint currentStroke;
+    private AnimationTimer animationTimer;
+    private BufferedImage backgroundFrames;
+    private ImagePattern backgroundPattern;
+    private long lastUpdateTime = System.currentTimeMillis();
+    private int row = 0;
+    private int col = 0;
 
-    public Cell(int x, int y, Board board) {
+    Cell(int x, int y, Board board) {
         super(BattleshipsConfig.INSTANCE.cellSize, BattleshipsConfig.INSTANCE.cellSize);
 
         this.POSITION = new Position(x, y);
@@ -29,15 +44,43 @@ public class Cell extends Rectangle {
 
         if (y > 11) {
             this.TYPE = CellType.Land;
+            this.backgroundFrames = BackgroundFrames.INSTANCE.grassFrames;
             setColors(Colors.LANDFILL.getColor(), Colors.LANDSTROKE.getColor());
-
-
         } else {
             this.TYPE = CellType.Sea;
+            this.backgroundFrames = BackgroundFrames.INSTANCE.waterFrames;
             setColors(Colors.WATERFILL.getColor(), Colors.WATERSTROKE.getColor());
         }
 
+        animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long frame) {
+                if (System.currentTimeMillis() - lastUpdateTime > FRAME_TIME_MS) {
+                    if (backgroundFrames == null) return;
+
+                    BufferedImage subimage = backgroundFrames.getSubimage(FRAME_WIDTH * col, FRAME_HEIGHT * row, FRAME_WIDTH, FRAME_HEIGHT);
+                    backgroundPattern = new ImagePattern(SwingFXUtils.toFXImage(subimage, null));
+                    setFill(backgroundPattern);
+
+                    col++;
+                    row++;
+                    if (col == 3) col = 0;
+                    if (row == 4) row = 0;
+                    lastUpdateTime = System.currentTimeMillis();
+                }
+            }
+        };
+        animationTimer.start();
+
         saveCurrentColors();
+    }
+
+    public void stopTimer() {
+        this.animationTimer.stop();
+    }
+
+    void startTimer() {
+        this.animationTimer.start();
     }
 
     public Unit getUnit() {
@@ -48,9 +91,9 @@ public class Cell extends Rectangle {
         this.unit = unit;
     }
 
-    public boolean shootCell() {
+    boolean shootCell() {
         this.wasShot = true;
-
+        this.stopTimer();
         if (unit != null) {
             unit.hit();
             setColorsAndSave(Colors.HIT.getColor(), Colors.HIT.getColor());
@@ -67,11 +110,11 @@ public class Cell extends Rectangle {
         return false;
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return this.unit == null;
     }
 
-    public boolean isSurfaceValid(Unit unit) {
+    boolean isSurfaceValid(Unit unit) {
         if (unit instanceof Ship && this.TYPE == CellType.Land)
             return false;
 
@@ -83,33 +126,33 @@ public class Cell extends Rectangle {
     }
 
     //region colors setters
-    public void saveCurrentColors() {
+    void saveCurrentColors() {
         this.currentFill = this.getFill();
         this.currentStroke = this.getStroke();
     }
 
-    public void loadSavedColors() {
+    void loadSavedColors() {
         this.setFill(this.currentFill);
         this.setStroke(this.currentStroke);
     }
 
-    public void setColors(Color fillColor, Color strokeColor) {
+    void setColors(Color fillColor, Color strokeColor) {
         this.setFill(fillColor);
         this.setStroke(strokeColor);
     }
 
-    public void setColorsAndSave(Color fillColor, Color strokeColor) {
+    void setColorsAndSave(Color fillColor, Color strokeColor) {
         setColors(fillColor, strokeColor);
         saveCurrentColors();
     }
     //endregion
 
+    public boolean wasShot() {
+        return this.wasShot;
+    }
+
     @Override
     public String toString() {
         return "x = " + this.POSITION.getX() + ", y = " + this.POSITION.getY();
-    }
-
-    public boolean wasShot() {
-        return this.wasShot;
     }
 }
