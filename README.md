@@ -12,4 +12,6 @@ It is a basic game with some extensions, computer AI is a little bit primitive
   * Ships (white)
 3. Sound effects
 
+### NOW WITH ANIMATIONS!!! ###
+
 ![Battleships screenshot](/img/screenshot.png)
