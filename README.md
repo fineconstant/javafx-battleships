@@ -1,4 +1,7 @@
 # Battleships game
+
+Profiled with [![jprofiler](https://www.ej-technologies.com/images/product_banners/jprofiler_medium.png)](https://www.ej-technologies.com/products/jprofiler/overview.html) [Java profiler](https://www.ej-technologies.com/images/product_banners/jprofiler_medium.png).
+
 Battleships game written in JavaFX.
 
 It is a basic game with some extensions, computer AI is a little bit primitive
